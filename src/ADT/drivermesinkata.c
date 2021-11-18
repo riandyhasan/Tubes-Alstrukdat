@@ -6,5 +6,6 @@ void printKata(Kata kata);
 
 int main() {
   readConfig();
+  readInput();
   return 0;
 }

@@ -53,6 +53,22 @@ void STARTKATA()
     }
 }
 
+void STARTCOMMAND()
+/* I.S. : CC sembarang
+   F.S. : EndKata = true, dan CC = MARK;
+          atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
+{
+    STARTINPUT();
+    IgnoreBlank();
+    if (CC == MARK) EndKata = true;
+    else /* CC != MARK */
+    {
+        EndKata = false;
+        SalinKata();
+    }
+}
+
 void ADVKATA()
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
@@ -76,7 +92,7 @@ int KataToInt(Kata CKata){
 }
 
 void printKata(Kata kata){
-  for(int i = 0; i < kata.Length; i++){
+  for(int i = 1; i <= kata.Length; i++){
     printf("%c", kata.TabKata[i]);
   }
   printf("\n");
@@ -102,4 +118,9 @@ void readConfig(){
     printf("mapLen: %d\n", mapLen);
     printf("nTel: %d\n", nTel);
     printf("maxRoll: %d\n", maxRoll);
+}
+
+void readInput(){
+    STARTCOMMAND();
+    printKata(CKata);
 }

@@ -38,12 +38,4 @@ void STARTKATA();
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 
-void ADVKATA();
-/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
-   F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
-          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndKata = true.
-   Proses : Akuisisi kata menggunakan procedure SalinKata */
-
-
 #endif
