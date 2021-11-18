@@ -5,17 +5,6 @@
 void printKata(Kata kata);
 
 int main() {
-  STARTKATA();
-  while (!EndKata) {
-    printKata(CKata);
-    ADVKATA();
-  }
+  readConfig();
   return 0;
-}
-
-void printKata(Kata kata){
-  for(int i = 0; i < kata.Length; i++){
-    printf("%c", kata.TabKata[i]);
-  }
-  printf("\n");
 }
