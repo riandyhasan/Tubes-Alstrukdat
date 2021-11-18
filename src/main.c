@@ -1,0 +1,1 @@
+// Ini buat manggil semua fungsi di game
