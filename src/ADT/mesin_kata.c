@@ -92,7 +92,7 @@ int KataToInt(Kata CKata){
 }
 
 void printKata(Kata kata){
-  for(int i = 1; i <= kata.Length; i++){
+  for(int i = 0; i < kata.Length; i++){
     printf("%c", kata.TabKata[i]);
   }
   printf("\n");
