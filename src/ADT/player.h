@@ -4,7 +4,7 @@
 #include "../boolean.h"
 #include "listlinier.h"
 #include <stdlib.h>
-#define Nil NULL
+
 /* Deklarasi type elemen */
 typedef struct {
 int playernum;
@@ -13,6 +13,8 @@ List buff;
 } Player;
 
 /* Selektor */
-#define INFOPLAYER(p) (p)->playernum
+#define INFOPLAYER(p) (p).playernum
+
+void CreatePlayer(Player *p, int id);
 
 #endif
