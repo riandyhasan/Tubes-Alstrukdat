@@ -4,24 +4,53 @@
 
 #include "../boolean.h"
 #include "player.h"
+#include <stdlib.h>
 
-#define Nil 0
-/* Nil adalah stack dengan elemen kosong . */
-/* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
+#define Nil NULL
 
-typedef int infotype;
-typedef int address;   /* indeks tabel */
-
-/* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
-/* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
+/* Deklarasi type elemen */
+typedef struct StateNode *address;
+typedef struct StateNode {
+  Player pemain;
+  int position;
+  address next;   
+} PlayerState;
 typedef struct {
-  Player pemain; /* tabel penyimpan elemen */
-  int position;  /* alamat TOP: elemen puncak */
+  address First;  
 } State;
-/* Definisi akses dengan Selektor : Set dan Get */
 
-/* ************ Prototype ************ */
-/* *** Konstruktor/Kreator *** */
+/* Selektor */
+#define PLAYERPOS(ps) (ps)->position
+#define PLAYER(ps) (ps)->pemain
+#define Next(ps) (ps)->next
+#define FIRST(s) (s)->First
+
+
+
+void CreateRound (State *S);
+/* Membuat sebuah State baru */
+
+boolean IsEmptyState(State S);
+/* Mengirim true jika state kosong */
+
+address SearchPlayer(State S, Player P);
+/* Mencari address dari Player */
+
+address PlayerTurn(Player p, int post);
+/* Mengembalikan sebuah address yang menyimpan turn pemain  */
+
+void AddPlayerToGame(int nPlayer);
+  /* I.S. Sembarang  */
+/* F.S. Player ditambahkan ke dalam sebanyak yang diinginkan */
+
+void ChangePlayerPosition(State *S, Player P, int newPost);
+/* I.S. Sembarang, turn sudah dialokasi  */
+/* F.S. turn ditambahkan sebagai elemen terakhir yang baru */
+
+void AddTurn(State *S, address turn);
+/* I.S. Sembarang, turn sudah dialokasi  */
+/* F.S. turn ditambahkan sebagai elemen terakhir yang baru */
+
 
 
 #endif
