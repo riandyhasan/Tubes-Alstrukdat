@@ -1,7 +1,7 @@
 // Implementasi dari stack.h.
 
 #include "stack.h"
-
+#include "state.c"
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
