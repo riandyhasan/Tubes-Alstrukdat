@@ -14,6 +14,8 @@ List buff;
 
 /* Selektor */
 #define INFOPLAYER(p) (p).playernum
+#define INFOSKILL(p) (p).skill
+#define INFOBUFF(p) (p).buff
 
 void CreatePlayer(Player *p, int id);
 
