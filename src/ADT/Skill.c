@@ -1,116 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "boolean.h"
-#include "Skill.h"
-
-
-/* PROTOTYPE */
-/****************** TEST LIST KOSONG ******************/
-boolean IsEmpty (ListSkill L){
-/* Mengirim true jika list kosong */
-
-    return (First(L) == Nil && Last(L) == Nil);
-}
-
-/****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty (ListSkill *L){
-/* I.S. sembarang             */
-/* F.S. Terbentuk list kosong */
-
-    First(*L) = Nil;
-    Last(*L) = Nil;
-}
-
-/****************** Manajemen Memori ******************/
-idx Alokasi (infoSkill X){
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
-
-    Skill *P = (Skill *)malloc(sizeof(Skill));
-
-    if (P != Nil){
-        infoSkill(P) = X;
-        Next(P) = Nil;
-
-        return P;
-    }
-    else{
-        return Nil;
-    }
-}
-
-void Dealokasi (idx *P){
-/* I.S. P terdefinisi */
-/* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
-
-    free(P);
-}
-
-/****************** PRIMITIF BERDASARKAN ALAMAT ******************/
-
-/*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertFirst (ListSkill *L, infoSkill X){
-/* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
-
-    idx P;
-
-    P = Alokasi(X);
-
-    if (IsEmpty(*L)){
-        Last(*L) = P;
-    }
-
-    Next(P) = First(*L);
-    First(*L) = P;
-
-    neff(P)++ ;
-}
-
-
-void InsertLast (ListSkill *L, infoSkill X){
-/* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. P ditambahkan sebagai elemen terakhir yang baru */
-
-
-    if (IsEmpty(*L)){
-        InsertFirst(L, X);
-    }
-    else{
-
-        idx P;
-
-        P = Alokasi(X);
-
-        Next(Last(*L)) = P;
-        Last(*L) = P;
-
-        neff(P)++ ;
-    }
-}
-
-
-/*** PENGHAPUSAN SEBUAH ELEMEN ***/
-
-void DelAt (ListSkill *L, infoSkill X){
-/* I.S. Sembarang */
-/* F.S. Jika ada elemen list beraddress P, dengan Info(P)=X  */
-/* Maka P dihapus dari list dan di-dealokasi */
-/* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
-/* List mungkin menjadi kosong karena penghapusan */
-
-    idx P;
-    
-    P = Search(*L, X);
-    
-    if (P != Nil){
-        
-    }
-}
-
+#include "listlinier.h"
+#include "player.h"
 
 /****************** PROSES GET SKILL ******************/
 
@@ -175,38 +66,15 @@ int GetSkills (){
 
 /****************** PROSES SEMUA ELEMEN ******************/
 
-int NbElmt (ListSkill L){
-/* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
-
-    int count;
-    idx P;
-
-    count = 0;
-    
-    if (!IsEmpty(L)){
-        P = First(L);
-
-        while (Next(P) != Nil){
-            count = count + 1 ;
-            P = Next(P);
-        }
-
-        count = count + 1;
-    }
-
-    return count;
-}
-
-
-void PrintSkill (ListSkill L){
+void PrintSkill (Player P){
 /* mengeluarkan list skill yang dimiliki player */
 
     int i;
-    idx p;
+    address p;
 
-    p = First(L);
+    p = First(LSPlayer(P));
 
-    while (i < NbElmt(L)){
+    while (i < NbElmt(LSPlayer(P))){
         if (p == 1){
             printf("Pintu Ga Ke Mana Mana");
         }
@@ -234,7 +102,7 @@ void PrintSkill (ListSkill L){
 }
 
 
-void CommandSkill (playerName){
+void CommandSkill (Player P){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
     int idSkill, player1, player2;
@@ -243,22 +111,22 @@ void CommandSkill (playerName){
     scanf("%d", idSkill);
 
     if (idSkill == 1){
-        printf(playerName, "memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!");
+        printf(INFOPLAYER(P), "memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!");
     }
     else if (idSkill == 2){
-        printf(playerName, "memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.");
+        printf(INFOPLAYER(P), "memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.");
     }
     else if (idSkill == 3){
-        printf(playerName, "memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll");
+        printf(INFOPLAYER(P), "memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll");
     }
     else if (idSkill == 4){
-        printf(playerName, "memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll");
+        printf(INFOPLAYER(P), "memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll");
     }
     else if (idSkill == 5){
-        printf(playerName, "memakai skill Mesin Penukar Posisi. Pilih pemain yang ingin ditukar posisinya : ");
+        printf(INFOPLAYER(P), "memakai skill Mesin Penukar Posisi. Pilih pemain yang ingin ditukar posisinya : ");
     }
     else if (idSkill == 6){
-        printf(playerName, "Teknologi Gagal. Anda tidak mendapatkan skill");
+        printf(INFOPLAYER(P), "Teknologi Gagal. Anda tidak mendapatkan skill");
     }
 
     useSkill(idSkill);

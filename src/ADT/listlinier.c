@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "listlinier.h"
+#include "player.h"
 
 boolean IsEmpty (List L){
     /* Mengirim true jika list kosong */
@@ -19,7 +20,7 @@ void CreateEmpty (List *L){
     First(*L) = Nil;
 }
 
-address Alokasi (infotype X){
+address Alokasi (infoSkill X){
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
@@ -29,7 +30,7 @@ address Alokasi (infotype X){
 	
     P = (address) malloc (sizeof(ElmtList));
     if (P != Nil){
-        Info(P) = X;
+        InfoSkill(P) = X;
         Next(P) = Nil;
         return P;
     }
@@ -45,7 +46,7 @@ void Dealokasi (address *P){
     free(*P);
 }
 
-address Search (List L, infotype X){
+address Search (List L, infoSkill X){
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
@@ -61,7 +62,7 @@ address Search (List L, infotype X){
     }
 }
 
-void InsVFirst (List *L, infotype X){
+void InsVFirst (List *L, infoSkill X){
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
@@ -75,7 +76,7 @@ void InsVFirst (List *L, infotype X){
     }
 }
 
-void InsVLast (List *L, infotype X){
+void InsVLast (List *L, infoSkill X){
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
@@ -95,7 +96,7 @@ void InsVLast (List *L, infotype X){
     }
 }
 
-void DelVFirst (List *L, infotype *X){
+void DelVFirst (List *L, infoSkill *X){
 /* I.S. List L tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dealokasi */
@@ -107,7 +108,7 @@ void DelVFirst (List *L, infotype *X){
     Dealokasi(&P);
 }
 
-void DelVLast (List *L, infotype *X){
+void DelVLast (List *L, infoSkill *X){
 /* I.S. list tidak kosong */
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
@@ -126,48 +127,8 @@ void DelVLast (List *L, infotype *X){
     }
 }
 
-void InsertFirst (List *L, address P){
-/* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
-    if (P != Nil){
-        Next(P) = First(*L);
-        First(*L) = P;
-    }
-}
-void InsertAfter (List *L, address P, address Prec){
-/* I.S. Prec pastilah elemen list dan bukan elemen terakhir, */
-/*      P sudah dialokasi  */
-/* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
-    Next(P) = Next(Prec);
-    Next(Prec) = P;
-}
-void InsertLast (List *L, address P){
-/* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. P ditambahkan sebagai elemen terakhir yang baru */
-    address loc;
-    if (P != Nil){
-    if(IsEmpty(*L)) InsertFirst(L, P);
-    else{
-        loc = First(*L);
-        while (Next(loc) != Nil){
-            loc = Next(loc);
-        }
-        Next(loc) = P;
-        Next(P) = Nil;
-        }
-    }
-}
 
-void DelFirst (List *L, address *P){
-/* I.S. List tidak kosong */
-/* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
-/*      Elemen list berkurang satu (mungkin menjadi kosong) */
-/* First element yg baru adalah suksesor elemen pertama yang lama */
-    *P= First(*L);
-    First(*L) = Next(*P);
-}
-
-void DelP (List *L, infotype X){
+void DelP (List *L, infoSkill X){
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen list beraddress P, dengan Info(P)=X  */
 /* Maka P dihapus dari list dan di-dealokasi */
@@ -189,6 +150,8 @@ void DelP (List *L, infotype X){
         }
     }
 }
+
+
 void DelLast (List *L, address *P){
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
@@ -208,6 +171,7 @@ void DelLast (List *L, address *P){
     }
 }
 
+
 void DelAfter (List *L, address *Pdel, address Prec){
 /* I.S. List tidak kosong. Prec adalah anggota list  */
 /* F.S. Menghapus Next(Prec): */
@@ -215,6 +179,7 @@ void DelAfter (List *L, address *Pdel, address Prec){
     *Pdel = Next(Prec);
     Next(Prec) = Next(*Pdel);
 }
+
 
 void PrintInfo (List L){
 /* I.S. List mungkin kosong */
@@ -237,6 +202,7 @@ void PrintInfo (List L){
     }
 }
 
+
 int NbElmt (List L){
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
     int count;
@@ -254,126 +220,135 @@ int NbElmt (List L){
     }
 }
 
-/*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
-infotype Max (List L){
-/* Mengirimkan nilai Info(P) yang maksimum */
-    int max;
-    address P;
-    P = First(L);
-    max = Info(P);
-    while (P != Nil){
-        if (Info(P) > max) max = Info(P);
-        P = Next(P);
+/****************** PROSES GET SKILL ******************/
+
+void printRandoms (int lower, int upper, int count){
+
+    int i;
+
+    for (i = 0; i < count; i++) {
+        int num = (rand() % (upper - lower + 1)) + lower ;
+        printf("%d ", num);
     }
-    return max;
 }
 
-/****************** PROSES TERHADAP LIST ******************/
-void Konkat1 (List *L1, List *L2, List *L3){
-/* I.S. L1 dan L2 sembarang */
-/* F.S. L1 dan L2 kosong, L3 adalah hasil konkatenasi L1 & L2 */
-/* Konkatenasi dua buah list : L1 dan L2    */
-/* menghasilkan L3 yang baru (dengan elemen list L1 dan L2) */
-/* dan L1 serta L2 menjadi list kosong.*/
-/* Tidak ada alokasi/dealokasi pada prosedur ini */
-    address P;
-    CreateEmpty(L3);
-    First(*L3) = First(*L1);
-    First(*L1) = Nil;
-    if (IsEmpty(*L3)){
-        First(*L3) = First(*L2);
-    } else {
-        P = First(*L3);
-        while (Next(P) != Nil){
-            P = Next(P);
+int DrivePrintRandoms (int lower, int upper, int count){
+
+    srand(time(0));
+  
+    printRandoms(lower, upper, count);
+}
+
+int GetSkills (){
+
+    /* 
+    1 : Pintu Ga Ke Mana Mana
+    2 : Cermin Pengganda
+    3 : Senter Pembesar Hoki
+    4 : Senter Pengecil Hoki
+    5 : Mesin Penukar Posisi
+    6 : Teknologi Gagal*/
+
+    int TabSkill[100];
+    int i, SkillDrop, SkillGet ;
+
+    for (i=0; i<100; i++){
+        if (0 <= i <= 15){
+            TabSkill[i] = 1 ;
         }
-        Next(P) = First(*L2);
-    }
-    First(*L2) = Nil;
-}
-
-address AdrMax (List L){
-/* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
-    address P;
-    int max;
-
-    P = First(L);
-    max = Max(L);
-    while (P != Nil && Info(P) != max){
-        P = Next(P);
-    }
-    return P;
-}
-
-infotype Min (List L){
-/* Mengirimkan nilai info(P) yang minimum */
-    int min;
-    address P;
-    P = First(L);
-    min = Info(P);
-    while (P != Nil){
-        if (Info(P) < min) min = Info(P);
-        P = Next(P);
-    }
-    return min;
-}
-
-address AdrMin (List L){
-/* Mengirimkan address P, dengan info(P) yang bernilai minimum */
-    address P;
-    int min;
-
-    P = First(L);
-    min = Min(L);
-    while (P != Nil && Info(P) != min){
-        P = Next(P);
-    }
-    return P;
-}
-
-float Average (List L){
-/* Mengirimkan nilai rata-rata info(P) */
-    address P;
-    float avg;
-    int count;
-    P = First(L);
-
-    if (IsEmpty(L)) return 0;
-    else{
-    avg = 0;
-    count = 0;
-    while (P != Nil){
-        avg += Info(P);
-        count++;
-        P = Next(P);
-    }
-    return avg/count;
-    }
-}
-
-void InversList (List *L){
-/* I.S. sembarang. */
-/* F.S. elemen list dibalik : */
-/* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-/* Membalik elemen list, tanpa melakukan alokasi/dealokasi. */
-    address P, last, Prec;
-
-
-    if (!IsEmpty(*L)){
-        address P = First(*L);
-        while (Next(P) != Nil){
-            P = Next(P);
+        else if (16 <= i <= 23){
+            TabSkill[i] = 2 ;
         }
-        last = P;
-        while (P != First(*L)){
-            Prec = First(*L);
-            while (Next(Prec) != P){
-                Prec = Next(Prec);
-            }
-            Next(P) = Prec;
-            P = Next(P);
+        else if (24 <= i <= 43){
+            TabSkill[i] = 3 ;
         }
-        Next(P) = Nil;
-        First(*L) = last;
+        else if (44 <= i <= 63){
+            TabSkill[i] = 4 ;
+        }
+        else if (64 <= i <= 68){
+            TabSkill[i] = 5 ;
+        }
+        else if (69 <= i <= 99){
+            TabSkill[i] = 6 ;
+        }
     }
+
+    srand(time(0));
+    SkillDrop = DrivePrintRandoms(0, 100, 1);
+    SkillGet = TabSkill[SkillDrop];
+
+    return SkillGet;
 }
+
+
+/****************** PROSES SEMUA ELEMEN ******************/
+
+void PrintSkill (Player P){
+/* mengeluarkan list skill yang dimiliki player */
+
+    int i;
+    address p;
+
+    p = First(LSPlayer(P));
+
+    while (i < NbElmt(LSPlayer(P))){
+        if (p == 1){
+            printf("Pintu Ga Ke Mana Mana");
+        }
+        else if (p == 2){
+            printf("Cermin Pengganda");
+        }
+        else if (p == 3){
+            printf("Senter Pembesar Hoki");
+        }
+        else if (p == 4){
+            printf("Senter Pengecil Hoki");
+        }
+        else if (p == 5){
+            printf("Mesin Penukar Posisi");
+        }
+        else if (p == 6){
+            printf("Teknologi Gagal");
+        }
+
+        p = Next(p);
+        i = i + 1;
+    }
+
+    printf("Tekan 0 untuk keluar. Masukkan bilangan negatif untuk membuang skill.");
+}
+
+
+void CommandSkill (Player P){
+/* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
+
+    int idSkill, player1, player2;
+
+    printf("Masukkan skill : ");
+    scanf("%d", idSkill);
+
+    if (idSkill == 1){
+        printf(INFOPLAYER(P), "memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!");
+    }
+    else if (idSkill == 2){
+        printf(INFOPLAYER(P), "memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.");
+    }
+    else if (idSkill == 3){
+        printf(INFOPLAYER(P), "memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll");
+    }
+    else if (idSkill == 4){
+        printf(INFOPLAYER(P), "memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll");
+    }
+    else if (idSkill == 5){
+        printf(INFOPLAYER(P), "memakai skill Mesin Penukar Posisi. Pilih pemain yang ingin ditukar posisinya : ");
+    }
+    else if (idSkill == 6){
+        printf(INFOPLAYER(P), "Teknologi Gagal. Anda tidak mendapatkan skill");
+    }
+
+    useSkill(idSkill);
+}
+
+
+void useSkill ();
+/* menggunakan skill yang dimiliki oleh player */
