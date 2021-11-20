@@ -9,37 +9,37 @@
 
 boolean IsEmptyState (State S){
     /* Mengirim true jika state kosong */
-    return First(S) == Nil;
+    return FIRSTPLAYER(S) == Nil;
 }
 
-address PlayerTurn(Player p, int post){
-  /* Mengembalikan sebuah address yang menyimpan turn pemain  */
-  address turn;
-  turn = (address) malloc (sizeof(PlayerState));
+addrPlayer PlayerTurn(Player p, int post){
+  /* Mengembalikan sebuah addrPlayer yang menyimpan turn pemain  */
+  addrPlayer turn;
+  turn = (addrPlayer) malloc (sizeof(PlayerState));
   if (turn != Nil){
         PLAYER(turn) = p;
         PLAYERPOS(turn) = post;
-        Next(turn) = Nil;
+        NextPlayer(turn) = Nil;
    }
   return turn;
 }
 
-void AddTurn (State *S, address turn){
+void AddTurn (State *S, addrPlayer turn){
 /* I.S. Sembarang, turn sudah dialokasi  */
 /* F.S. turn ditambahkan sebagai elemen terakhir yang baru */
-    address loc;
+    addrPlayer loc;
     if (turn != Nil){
     if(IsEmptyState(*S)) {
-        Next(turn) = First(*S);
-        First(*S) = turn;
+        NextPlayer(turn) = FIRSTPLAYER(*S);
+        FIRSTPLAYER(*S) = turn;
     }
     else{
-        loc = First(*S);
-        while (Next(loc) != Nil){
-            loc = Next(loc);
+        loc = FIRSTPLAYER(*S);
+        while (NextPlayer(loc) != Nil){
+            loc = NextPlayer(loc);
         }
-        Next(loc) = turn;
-        Next(turn) = Nil;
+        NextPlayer(loc) = turn;
+        NextPlayer(turn) = Nil;
         }
     }
 }
@@ -47,7 +47,7 @@ void AddTurn (State *S, address turn){
 
 void CreateRound (State *S){
   /* Membuat sebuah State baru */
-  First(*S) = Nil;
+  FIRSTPLAYER(*S) = Nil;
 }
 
 void AddPlayerToGame(int nPlayer){
@@ -57,19 +57,19 @@ void AddPlayerToGame(int nPlayer){
   CreateRound(&newState);
   for(int i = 1; i <= nPlayer; i++){
     Player newPlayer;
-    address turn;
+    addrPlayer turn;
     CreatePlayer(&newPlayer, i);
-    turn = PlayerTurn(newPlayer, 0);
+    turn = PlayerTurn(newPlayer, 1);
     AddTurn(&newState, turn);
   }
 }
 
-address SearchPlayer(State S, Player P){
-  /* Mencari address dari Player */
-  address loc;
-  loc = First(S);
+addrPlayer SearchPlayer(State S, Player P){
+  /* Mencari addrPlayer dari Player */
+  addrPlayer loc;
+  loc = FIRSTPLAYER(S);
   while (loc != Nil && INFOPLAYER(PLAYER(loc)) != INFOPLAYER(P)){
-    loc = Next(loc);
+    loc = NextPlayer(loc);
   }
   return loc; 
 }
@@ -77,7 +77,7 @@ address SearchPlayer(State S, Player P){
 void ChangePlayerPosition(State *S, Player P, int newPost){
 /* I.S. Game sudah dimulai dan player telah memiliki posisi masing-masin  */
 /* F.S. Posisi player diubah sesuai dengan roll yang dilakukan */
-  address players;
+  addrPlayer players;
   players = SearchPlayer(*S, P);
   if(!IsEmptyState(*S) && players != Nil) {
       PLAYERPOS(players) = newPost;

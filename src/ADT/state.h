@@ -9,21 +9,21 @@
 #define Nil NULL
 
 /* Deklarasi type elemen */
-typedef struct StateNode *address;
+typedef struct StateNode *addrPlayer;
 typedef struct StateNode {
   Player pemain;
   int position;
-  address next;   
+  addrPlayer nextp;   
 } PlayerState;
 typedef struct {
-  address First;  
+  addrPlayer FirstP;  
 } State;
 
 /* Selektor */
 #define PLAYERPOS(ps) (ps)->position
 #define PLAYER(ps) (ps)->pemain
-#define Next(ps) (ps)->next
-#define FIRST(s) (s)->First
+#define NextPlayer(ps) (ps)->nextp
+#define FIRSTPLAYER(s) (s).FirstP
 
 
 
@@ -33,11 +33,11 @@ void CreateRound (State *S);
 boolean IsEmptyState(State S);
 /* Mengirim true jika state kosong */
 
-address SearchPlayer(State S, Player P);
-/* Mencari address dari Player */
+addrPlayer SearchPlayer(State S, Player P);
+/* Mencari addrPlayer dari Player */
 
-address PlayerTurn(Player p, int post);
-/* Mengembalikan sebuah address yang menyimpan turn pemain  */
+addrPlayer PlayerTurn(Player p, int post);
+/* Mengembalikan sebuah addrPlayer yang menyimpan turn pemain  */
 
 void AddPlayerToGame(int nPlayer);
   /* I.S. Sembarang  */
@@ -47,7 +47,7 @@ void ChangePlayerPosition(State *S, Player P, int newPost);
 /* I.S. Sembarang, turn sudah dialokasi  */
 /* F.S. turn ditambahkan sebagai elemen terakhir yang baru */
 
-void AddTurn(State *S, address turn);
+void AddTurn(State *S, addrPlayer turn);
 /* I.S. Sembarang, turn sudah dialokasi  */
 /* F.S. turn ditambahkan sebagai elemen terakhir yang baru */
 
