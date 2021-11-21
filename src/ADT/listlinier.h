@@ -1,7 +1,7 @@
 /* File : listlinier.h */
 /* contoh ADT list berkait dengan representasi fisik pointer  */
 /* Representasi address dengan pointer */
-/* infoSkill adalah integer */
+/* skill_info adalah integer */
 
 #ifndef listlinier_H
 #define listlinier_H
@@ -10,13 +10,13 @@
 
 #define Nil NULL
 
-typedef int infoSkill;
+typedef int skill_info;
 
 typedef struct tElmtlist *address;
 typedef struct tElmtlist { 
-	infoSkill idSkill;
+	skill_info idSkill;
 	address next;
-	int neff
+	int neff ;
 } ElmtList;
 
 typedef struct {
@@ -28,7 +28,7 @@ typedef struct {
 /* Setiap elemen dengan address P dapat diacu Info(P), Next(P) */
 /* Elemen terakhir list : jika addressnya Last, maka Next(Last)=Nil */
 
-#define InfoSkill(P) (P)->idSkill
+#define Info_Skill(P) (P)->idSkill
 #define Next(P) (P)->next
 #define First(L) (L).First
 
@@ -43,7 +43,7 @@ void CreateEmpty (List *L);
 /* F.S. Terbentuk list kosong */
 
 /****************** Manajemen Memori ******************/
-address Alokasi (infoSkill X);
+address Alokasi (skill_info X);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
@@ -54,7 +54,7 @@ void Dealokasi (address *P);
 /* Melakukan dealokasi/pengembalian address P */
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address Search (List L, infoSkill X);
+address Search (List L, skill_info X);
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
@@ -64,13 +64,13 @@ address Search (List L, infoSkill X);
 
 /*** PENAMBAHAN ELEMEN ***/
 
-void InsVFirst (List *L, infoSkill X);
+void InsVFirst (List *L, skill_info X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
 
 
-void InsVLast (List *L, infoSkill X);
+void InsVLast (List *L, skill_info X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
@@ -79,13 +79,13 @@ void InsVLast (List *L, infoSkill X);
 
 /*** PENGHAPUSAN ELEMEN ***/
 
-void DelVFirst (List *L, infoSkill *X);
+void DelVFirst (List *L, skill_info *X);
 /* I.S. List L tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dealokasi */
 
 
-void DelVLast (List *L, infoSkill *X);
+void DelVLast (List *L, skill_info *X);
 /* I.S. list tidak kosong */
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
@@ -95,7 +95,7 @@ void DelVLast (List *L, infoSkill *X);
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
 
 
-void DelP (List *L, infoSkill X);
+void DelP (List *L, skill_info X);
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen list beraddress P, dengan Info(P)=X  */
 /* Maka P dihapus dari list dan di-dealokasi */
@@ -129,48 +129,5 @@ void PrintInfo (List L);
 
 int NbElmt (List L);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
-
-
-/****************** PROSES GET SKILL ******************/
-
-void printRandoms (int lower, int upper, int count);
-/* I.S. Batas atas dan batas bawah serta jumlah output yang diinginkan terdefinisi */
-
-
-int DrivePrintRandoms (int lower, int upper, int count);
-/* Mengirimkan hasil angka yang telah dirandom */
-
-
-int GetSkills ();
-/* Mengirimkan hasil skill yang didapat menggunakan randomizer */
-
-
-/****************** PROSES SEMUA ELEMEN ******************/
-
-int NbElmt (ListSkill L);
-/* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
-
-
-/******************************* SKILL *******************************/
-
-void PrintSkill ();
-/* mengeluarkan list skill yang dimiliki player */
-
-
-void CommandSkill ();
-/* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
-
-
-void useSkill ();
-/* menggunakan skill yang dimiliki oleh player */
-
-void SenterPembesarHoki ();
-
-void SenterPengecilHoki ();
-
-void MesinPenukarPosisi ();
-
-void TeknologiGagal ();
-
 
 #endif

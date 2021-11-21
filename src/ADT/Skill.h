@@ -6,7 +6,7 @@
 #include "listlinier.h"
 #include "player.h"
 
-/****************** PROSES GET SKILL ******************/
+/****************** PROSES GET SKILL MELALUI RANDOMIZER ******************/
 
 void printRandoms (int lower, int upper, int count);
 /* I.S. Batas atas dan batas bawah serta jumlah output yang diinginkan terdefinisi */
@@ -19,30 +19,34 @@ int DrivePrintRandoms (int lower, int upper, int count);
 int GetSkills ();
 /* Mengirimkan hasil skill yang didapat menggunakan randomizer */
 
+void insPlayerSkill (Player P);
 
-/****************** PROSES SEMUA ELEMEN ******************/
-
-int NbElmt (ListSkill L);
-/* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
-
-
-/******************************* SKILL *******************************/
+/******************************* PROSES SKILL *******************************/
 
 void PrintSkill ();
 /* mengeluarkan list skill yang dimiliki player */
 
 
-void CommandSkill ();
+int CommandSkill (Player P);
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
 
 void useSkill ();
 /* menggunakan skill yang dimiliki oleh player */
 
-void SenterPembesarHoki ();
+boolean PintuGaKemanaMana;
+/* Mengirimkan true apabila skill digunakan */
 
-void SenterPengecilHoki ();
+boolean CerminPengganda;
+/* Mengirimkan true apabila skill digunakan */
 
-void MesinPenukarPosisi ();
+boolean SenterPembesarHoki;
+/* Mengirimkan true apabila skill digunakan */
 
-void TeknologiGagal ();
+boolean SenterPengecilHoki;
+/* Mengirimkan true apabila skill digunakan */
+
+boolean MesinPenukarPosisi;
+/* Mengirimkan true apabila skill digunakan */
+
+#endif

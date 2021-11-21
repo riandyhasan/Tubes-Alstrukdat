@@ -1,4 +1,5 @@
 #include "Teleporter.h"
+#include "skill.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,7 +47,10 @@ void GetTeleporter (PlayerState * PS, arrayTele T, ElType X) {
 /* Mengirimkan alamat indeks petak keluar dari player yang harus menggunakan teleporter */
     IdxType i;
     for (i = IdxMin; i < IdxMax; i++) {
-        if (PLAYERPOS(PS) == T.bufferTele[i].IdxMasuk) {
+        if (PintuGaKemanaMana){
+            /*DO NOTHING*/
+        }
+        else if (PLAYERPOS(PS) == T.bufferTele[i].IdxMasuk) {
             PLAYERPOS(PS) = T.bufferTele[i].IdxKeluar;
         }
     }

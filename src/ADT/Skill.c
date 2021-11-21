@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "listlinier.h"
+#include "skill.h"
 #include "player.h"
 
-/****************** PROSES GET SKILL ******************/
+/****************** PROSES GET SKILL MELALUI RANDOMIZER ******************/
 
 void printRandoms (int lower, int upper, int count){
 
@@ -63,8 +64,22 @@ int GetSkills (){
     return SkillGet;
 }
 
+void insPlayerSkill (Player P){
 
-/****************** PROSES SEMUA ELEMEN ******************/
+    int X ;
+
+    X = GetSkills() ;
+
+    if (X == 6){
+        /*DO NOTHING*/
+    }
+    else{
+        InsVLast (&INFOSKILL(P), X);
+    }
+}
+
+
+/****************** PROSES SKILL ******************/
 
 void PrintSkill (Player P){
 /* mengeluarkan list skill yang dimiliki player */
@@ -72,26 +87,23 @@ void PrintSkill (Player P){
     int i;
     address p;
 
-    p = First(LSPlayer(P));
+    p = First(INFOSKILL(P));
 
-    while (i < NbElmt(LSPlayer(P))){
-        if (p == 1){
+    while (i < NbElmt(INFOSKILL(P))){
+        if (idSkill(p) == 1){
             printf("Pintu Ga Ke Mana Mana");
         }
-        else if (p == 2){
+        else if (idSkill(p) == 2){
             printf("Cermin Pengganda");
         }
-        else if (p == 3){
+        else if (idSkill(p) == 3){
             printf("Senter Pembesar Hoki");
         }
-        else if (p == 4){
+        else if (idSkill(p) == 4){
             printf("Senter Pengecil Hoki");
         }
-        else if (p == 5){
+        else if (idSkill(p) == 5){
             printf("Mesin Penukar Posisi");
-        }
-        else if (p == 6){
-            printf("Teknologi Gagal");
         }
 
         p = Next(p);
@@ -102,36 +114,39 @@ void PrintSkill (Player P){
 }
 
 
-void CommandSkill (Player P){
+int CommandSkill (Player P){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
-    int idSkill, player1, player2;
+    int idSkill ;
 
     printf("Masukkan skill : ");
     scanf("%d", idSkill);
 
     if (idSkill == 1){
         printf(INFOPLAYER(P), "memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!");
+        PintuGaKemanaMana = true ;
     }
     else if (idSkill == 2){
         printf(INFOPLAYER(P), "memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.");
+        CerminPengganda = true ;
     }
     else if (idSkill == 3){
         printf(INFOPLAYER(P), "memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll");
+        SenterPembesarHoki = true ;
     }
     else if (idSkill == 4){
         printf(INFOPLAYER(P), "memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll");
+        SenterPengecilHoki = true ;
     }
     else if (idSkill == 5){
         printf(INFOPLAYER(P), "memakai skill Mesin Penukar Posisi. Pilih pemain yang ingin ditukar posisinya : ");
-    }
-    else if (idSkill == 6){
-        printf(INFOPLAYER(P), "Teknologi Gagal. Anda tidak mendapatkan skill");
+        MesinPenukarPosisi = true ;
     }
 
-    useSkill(idSkill);
+    DelP (&INFOSKILL(P), idSkill) ;
+
+    return idSkill;
 }
 
 
-void useSkill ();
-/* menggunakan skill yang dimiliki oleh player */
+ 

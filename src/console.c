@@ -3,10 +3,22 @@
 #include <stdio.h>
 #include <time.h>
 #include "./ADT/stack.c"
+#include "skill.h"
 
 int roll(int maxN){
-    srand (time(NULL));
-    return (rand() % maxN) + 1;
+
+    if (SenterPembesarHoki){
+        srand (time(NULL));
+        return (rand() % maxN) + (maxN/2);
+    }
+    else if (SenterPengecilHoki){
+        srand (time(NULL));
+        return (rand() % (maxN/2)) + 1;
+    }
+    else{
+        srand (time(NULL));
+        return (rand() % maxN) + 1;
+    }
 }
 
 void endturn(){
