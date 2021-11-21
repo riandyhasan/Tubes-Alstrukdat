@@ -12,7 +12,6 @@
 /* INI BELUM SELESAI ADT NYA */
 
 typedef int IdxType;
-typedef int ElType;
 
 typedef struct {
     int IdxMasuk;
@@ -33,25 +32,34 @@ int TotalElmt (arrayTele T);
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 /* *** Daya tampung container *** */
+
 int MaxElmt (arrayTele T);
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 /* *** Selektor INDEKS *** */
 
-Teleporter GetElmt (arrayTele T, IdxType i);
-/* Prekondisi : Tabel tidak kosong, i antara FirstIdx(T)..LastIdx(T) */
-/* Mengirimkan elemen tabel yang ke-i */
+IdxType GetFirstIdx (arrayTele T);
+/* Prekondisi : Tabel T tidak kosong */
+/* Mengirimkan indeks elemen pertama */
+IdxType GetLastIdx (arrayTele T);
+/* Prekondisi : Tabel T tidak kosong */
+/* Mengirimkan indeks elemen terakhir */
+/* *** Menghasilkan sebuah elemen *** */
 
-void PetakIn (arrayTele * T, ElType X);
-/* Mengirimkan alamat indeks petak yang merupakan teleporter */
+void PetakInAndOut (arrayTele * T, int X, int Y);
+/* I.S T Kosong */
+/* F.S T berisi alamat indeks petak yang merupakan teleporter dan petak keluar dari teleporter */
 
-void PetakOut (arrayTele * T, ElType X);
-/* Mengirimkan alamat indeks petak keluar*/
+int GetPetakIn (arrayTele T, IdxType i);
+/* Mengirimkan alamat Petak yang terdapat Teleporter */
 
-void GetTeleporter (PlayerState * PS, arrayTele T, ElType X);
+int GetPetakOut (arrayTele T, IdxType i);
+/* Mengirimkan alamat Petak Keluar dari Teleporter */
+
+void GetTeleporter (PlayerState * PS, arrayTele T, Teleporter X);
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Teleporter ditemukan dan Mengarahkan player ke petak keluar jika player tidak mempunyai buff imunitas */
 
-void cmdInspect (arrayTele T, PlayerState PS, ElType X);
+void cmdInspect (arrayTele T, PlayerState PS, int X);
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Mengirimkan indeks petak masuk, petak keluar, serta informasi mengenai petak kosong dan petak terlarang */
 

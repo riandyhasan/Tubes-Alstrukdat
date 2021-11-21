@@ -1,5 +1,5 @@
 #include "Teleporter.h"
-#include "skill.h"
+#include "Skill.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,43 +25,65 @@ int MaxElmt (arrayTele T) {
     return (IdxMax);
 }
 
-Teleporter GetElmt (arrayTele T, IdxType i) {
-/* Prekondisi : Tabel tidak kosong, i antara FirstIdx(T)..LastIdx(T) */
-/* Mengirimkan elemen tabel T yang ke-i */
-    return T.bufferTele[i];
+IdxType GetFirstIdx (arrayTele T) {
+/* Prekondisi : Tabel T tidak kosong */
+/* Mengirimkan indeks elemen pertama */
+    return IdxMin;
 }
 
-void PetakIn (arrayTele * T, ElType X) {
+IdxType GetLastIdx (arrayTele T) {
+/* Prekondisi : Tabel T tidak kosong */
+/* Mengirimkan indeks elemen terakhir */
+/* *** Menghasilkan sebuah elemen *** */
+    return TotalElmt(T);
+}
+
+
+void PetakInAndOut (arrayTele * T, int X, int Y) {
 /* Mengirimkan alamat indeks petak yang merupakan teleporter */
     IdxType i;
-    T->bufferTele[i].IdxMasuk = X;
+    for (i = GetFirstIdx(*T); i < GetLastIdx(*T); i++) {
+        T->bufferTele[i].IdxMasuk = X;
+        T->bufferTele[i].IdxKeluar = Y;
+    }
 }
 
-void PetakOut (arrayTele * T, ElType X) {
-/* Mengirimkan alamat indeks petak keluar */
-    IdxType i;
-    T->bufferTele[i].IdxKeluar = X;
+int GetPetakIn (arrayTele T, IdxType i) { 
+/* Mengirimkan alamat Petak yang terdapat Teleporter */
+    return T.bufferTele[i].IdxMasuk;
+    /* Masih error gabisa nge return value yang bener */
 }
 
-void GetTeleporter (PlayerState * PS, arrayTele T, ElType X) { 
+int GetPetakOut (arrayTele T, IdxType i) { 
+/* Mengirimkan alamat Petak Keluar dari Teleporter */
+    return T.bufferTele[i].IdxKeluar;
+    /* Masih error gabisa nge return value yang bener */
+}
+
+void GetTeleporter (PlayerState * PS, arrayTele T, Teleporter X) { 
 /* Mengirimkan alamat indeks petak keluar dari player yang harus menggunakan teleporter */
     IdxType i;
-    for (i = IdxMin; i < IdxMax; i++) {
-        if (PintuGaKemanaMana == true){
+    for (i = GetFirstIdx(T); i < GetLastIdx(T); i++) {
+        if (PintuGaKemanaMana){
             /*DO NOTHING*/
         }
         else if (PLAYERPOS(PS) == T.bufferTele[i].IdxMasuk) {
             PLAYERPOS(PS) = T.bufferTele[i].IdxKeluar;
+        } else if (PLAYERPOS(PS) != T.bufferTele[i].IdxMasuk) {
+            /* Nanti di kondisiin kalo misal playerpos nunjuk petak yang kosong (.) doang, keluar pernyataan dia petak kosong */
+            /* Kalo ketemu (#) Kondisiinnya dia petak terlarang */
         }
     }
 }
 
-void cmdInspect (arrayTele T, PlayerState PS, ElType X) { 
+void cmdInspect (arrayTele T, PlayerState PS, int X) { 
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Mengirimkan indeks petak masuk, petak keluar, serta informasi mengenai petak kosong dan petak terlarang */
     int IdxPetak;
     printf("Masukkan Petak: ");
     scanf("%d", &IdxPetak);
+    /* if (GetTeleporter(&PS,T,IdxPetak)) { */
+
 }
 
 
