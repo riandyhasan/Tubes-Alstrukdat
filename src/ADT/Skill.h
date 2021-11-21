@@ -27,26 +27,26 @@ void PrintSkill ();
 /* mengeluarkan list skill yang dimiliki player */
 
 
-int CommandSkill (Player P);
+void CommandSkill (Player P, boolean *PintuGaKemanaMana, boolean *CerminPengganda, boolean *SenterPembesarHoki, boolean *SenterPengecilHoki, boolean *MesinPenukarPosisi);
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
 
 void useSkill ();
 /* menggunakan skill yang dimiliki oleh player */
 
-boolean PintuGaKemanaMana;
+boolean PintuGaKemanaMana = false;
 /* Mengirimkan true apabila skill digunakan */
 
-boolean CerminPengganda;
+boolean CerminPengganda = false;
 /* Mengirimkan true apabila skill digunakan */
 
-boolean SenterPembesarHoki;
+boolean SenterPembesarHoki = false;
 /* Mengirimkan true apabila skill digunakan */
 
-boolean SenterPengecilHoki;
+boolean SenterPengecilHoki = false;
 /* Mengirimkan true apabila skill digunakan */
 
-boolean MesinPenukarPosisi;
+boolean MesinPenukarPosisi = false;
 /* Mengirimkan true apabila skill digunakan */
 
 #endif
