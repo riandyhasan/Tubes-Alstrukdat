@@ -58,7 +58,10 @@ void AddPlayerToGame(int nPlayer){
   for(int i = 1; i <= nPlayer; i++){
     Player newPlayer;
     addrPlayer turn;
-    CreatePlayer(&newPlayer, i);
+    char Name;
+    printf("Masukkan nama player ke-%d: ", i);
+    scanf("%s",&Name);
+    CreatePlayer(&newPlayer, i, Name);
     turn = PlayerTurn(newPlayer, 1);
     AddTurn(&newState, turn);
   }

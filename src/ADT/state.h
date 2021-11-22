@@ -25,8 +25,6 @@ typedef struct {
 #define NextPlayer(ps) (ps)->nextp
 #define FIRSTPLAYER(s) (s).FirstP
 
-
-
 void CreateRound (State *S);
 /* Membuat sebuah State baru */
 
