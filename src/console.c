@@ -7,11 +7,11 @@
 
 int roll(int maxN){
 
-    if (SenterPembesarHoki){
+    if (SenterPembesarHoki == true){
         srand (time(NULL));
         return (rand() % maxN) + (maxN/2);
     }
-    else if (SenterPengecilHoki){
+    else if (SenterPengecilHoki == true){
         srand (time(NULL));
         return (rand() % (maxN/2)) + 1;
     }

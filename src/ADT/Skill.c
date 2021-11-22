@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "listlinier.h"
 #include "skill.h"
+#include "state.h"
 #include "player.h"
 
 /****************** PROSES GET SKILL MELALUI RANDOMIZER ******************/
@@ -85,36 +86,41 @@ void PrintSkill (Player P){
 /* mengeluarkan list skill yang dimiliki player */
 
     int i;
-    address p;
+    address T;
 
-    p = First(INFOSKILL(P));
+    T = First(INFOSKILL(P));
+    i = 1;
 
-    while (i < NbElmt(INFOSKILL(P))){
-        if (idSkill(p) == 1){
+    while (T != Nil){
+        printf("%d. ", i);
+
+        if (Info_Skill(T) == 1){
             printf("Pintu Ga Ke Mana Mana");
         }
-        else if (idSkill(p) == 2){
+        else if (Info_Skill(T) == 2){
             printf("Cermin Pengganda");
         }
-        else if (idSkill(p) == 3){
+        else if (Info_Skill(T) == 3){
             printf("Senter Pembesar Hoki");
         }
-        else if (idSkill(p) == 4){
+        else if (Info_Skill(T) == 4){
             printf("Senter Pengecil Hoki");
         }
-        else if (idSkill(p) == 5){
+        else if (Info_Skill(T) == 5){
             printf("Mesin Penukar Posisi");
         }
 
-        p = Next(p);
-        i = i + 1;
+        T = Next(T);
+        i++ ;
+
+        printf("\n");
     }
 
     printf("Tekan 0 untuk keluar. Masukkan bilangan negatif untuk membuang skill.");
 }
 
 
-int CommandSkill (Player P){
+void CommandSkill (Player P, boolean *PintuGaKemanaMana, boolean *CerminPengganda, boolean *SenterPembesarHoki, boolean *SenterPengecilHoki, boolean *MesinPenukarPosisi ){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
     int idSkill ;
@@ -123,30 +129,45 @@ int CommandSkill (Player P){
     scanf("%d", idSkill);
 
     if (idSkill == 1){
-        printf(INFOPLAYER(P), "memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!");
-        PintuGaKemanaMana = true ;
+        printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!", INFOPLAYER(P));
+        *PintuGaKemanaMana = true ;
     }
     else if (idSkill == 2){
-        printf(INFOPLAYER(P), "memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.");
-        CerminPengganda = true ;
+        printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.", INFOPLAYER(P));
+        *CerminPengganda = true ;
     }
     else if (idSkill == 3){
-        printf(INFOPLAYER(P), "memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll");
-        SenterPembesarHoki = true ;
+        printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll", INFOPLAYER(P));
+        *SenterPembesarHoki = true ;
     }
     else if (idSkill == 4){
-        printf(INFOPLAYER(P), "memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll");
-        SenterPengecilHoki = true ;
+        printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll", INFOPLAYER(P));
+        *SenterPengecilHoki = true ;
     }
     else if (idSkill == 5){
-        printf(INFOPLAYER(P), "memakai skill Mesin Penukar Posisi. Pilih pemain yang ingin ditukar posisinya : ");
-        MesinPenukarPosisi = true ;
+        printf("%d memakai skill Mesin Penukar Posisi.", INFOPLAYER(P));
+        *MesinPenukarPosisi = true ;
     }
 
     DelP (&INFOSKILL(P), idSkill) ;
 
-    return idSkill;
 }
 
+void TukarPosisiPlayer (Player P1, Player P2, State *S){
 
- 
+    int temp;
+    addrPlayer Plyr1, Plyr2;
+
+    Plyr1 = SearchPlayer(*S, P1);
+    temp = PLAYERPOS(Plyr1);
+
+    Plyr2 = SearchPlayer(*S, P2);
+
+    ChangePlayerPosition (S, P1, PLAYERPOS(Plyr2));
+    ChangePlayerPosition (S, P2, temp);
+
+}
+
+void DoubleMirror(){
+    
+}
