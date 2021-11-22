@@ -1,9 +1,3 @@
-// Nama: Riandy Hasan
-// NIM : 18220058
-// Tanggal: Kamis, 28 Oktober 2021 
-// Topik: Praktikum 5 - ADT List Linier
-// Deskripsi: Implementasi dari listlinier.h
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "listlinier.h"
@@ -219,4 +213,3 @@ int NbElmt (List L){
         return count;
     }
 }
-
