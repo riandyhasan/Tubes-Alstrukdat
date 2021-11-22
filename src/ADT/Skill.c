@@ -73,9 +73,26 @@ void insPlayerSkill (Player P){
 
     if (X == 6){
         /*DO NOTHING*/
+        printf("Maaf, anda kurang beruntung :D\n");
     }
     else{
         InsVLast (&INFOSKILL(P), X);
+
+        if (X == 1){
+            printf("Pintu Ga Ke Mana Mana berhasil dimasukkan ke dalam list!\n");
+        }
+        else if (X == 2){
+            printf("Cermin Pengganda berhasil dimasukkan ke dalam list!\n");
+        }
+        else if (X == 3){
+            printf("Senter Pembesar Hoki berhasil dimasukkan ke dalam list!\n");
+        }
+        else if (X == 4){
+            printf("Senter Pengecil Hoki berhasil dimasukkan ke dalam list!\n");
+        }
+        else if (X == 5){
+            printf("Mesin Penukar Posisi berhasil dimasukkan ke dalam list!\n");
+        }
     }
 }
 
@@ -95,19 +112,19 @@ void PrintSkill (Player P){
         printf("%d. ", i);
 
         if (Info_Skill(T) == 1){
-            printf("Pintu Ga Ke Mana Mana");
+            printf("Pintu Ga Ke Mana Mana\n");
         }
         else if (Info_Skill(T) == 2){
-            printf("Cermin Pengganda");
+            printf("Cermin Pengganda\n");
         }
         else if (Info_Skill(T) == 3){
-            printf("Senter Pembesar Hoki");
+            printf("Senter Pembesar Hoki\n");
         }
         else if (Info_Skill(T) == 4){
-            printf("Senter Pengecil Hoki");
+            printf("Senter Pengecil Hoki\n");
         }
         else if (Info_Skill(T) == 5){
-            printf("Mesin Penukar Posisi");
+            printf("Mesin Penukar Posisi\n");
         }
 
         T = Next(T);
@@ -128,29 +145,52 @@ void CommandSkill (Player P, boolean *PintuGaKemanaMana, boolean *CerminPenggand
     printf("Masukkan skill : ");
     scanf("%d", idSkill);
 
-    if (idSkill == 1){
-        printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!", INFOPLAYER(P));
-        *PintuGaKemanaMana = true ;
+    if (idSkill > 0){
+        
+        if (idSkill == 1){
+            printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!\n", INFOPLAYER(P));
+            *PintuGaKemanaMana = true ;
+        }
+        else if (idSkill == 2){
+            printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", INFOPLAYER(P));
+            *CerminPengganda = true ;
+        }
+        else if (idSkill == 3){
+            printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll\n", INFOPLAYER(P));
+            *SenterPembesarHoki = true ;
+        }
+        else if (idSkill == 4){
+            printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll\n", INFOPLAYER(P));
+            *SenterPengecilHoki = true ;
+        }
+        else if (idSkill == 5){
+            printf("%d memakai skill Mesin Penukar Posisi.\n", INFOPLAYER(P));
+            *MesinPenukarPosisi = true ;
+        }
     }
-    else if (idSkill == 2){
-        printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.", INFOPLAYER(P));
-        *CerminPengganda = true ;
-    }
-    else if (idSkill == 3){
-        printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll", INFOPLAYER(P));
-        *SenterPembesarHoki = true ;
-    }
-    else if (idSkill == 4){
-        printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll", INFOPLAYER(P));
-        *SenterPengecilHoki = true ;
-    }
-    else if (idSkill == 5){
-        printf("%d memakai skill Mesin Penukar Posisi.", INFOPLAYER(P));
-        *MesinPenukarPosisi = true ;
-    }
+    else if (idSkill < 0){
 
-    DelP (&INFOSKILL(P), idSkill) ;
-
+        if (idSkill == -1){
+            printf("%d membuang skill Pintu Ga Ke Mana Mana.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 1) ;
+        }
+        else if (idSkill == -2){
+            printf("%d membuang skill Cermin Pengganda.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 2) ;
+        }
+        else if (idSkill == -3){
+            printf("%d membuang skill Senter Pembesar Hoki.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 3) ;
+        }
+        else if (idSkill == -4){
+            printf("%d membuang skill Senter Pengecil Hoki.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 4) ;
+        }
+        else if (idSkill == -5){
+            printf("%d membuang skill Mesin Penukar Posisi.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 5) ;
+        }
+    }
 }
 
 void TukarPosisiPlayer (Player P1, Player P2, State *S){
@@ -168,6 +208,21 @@ void TukarPosisiPlayer (Player P1, Player P2, State *S){
 
 }
 
-void DoubleMirror(){
+void DoubleMirror(Player *P){
     
+    List X;
+    int i;
+
+    X = INFOSKILL(*P);
+
+    if (NbElmt(X) < 9){
+        DelP(&X, 2);
+
+        for (i=0; i=1; i++){
+            InsPlayerSkill(P);
+        }
+    }
+    else{
+        printf("Kamu tidak memiliki space cukup untuk skill ini. Skill terhapus dan kamu tidak mendapat apa apa !\n");
+    }
 }
