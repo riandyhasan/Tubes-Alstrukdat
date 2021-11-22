@@ -21,20 +21,23 @@ int roll(int maxN){
     }
 }
 
-void endturn(){
-
+void endturn(Stack *S, State turn){
+    Push(&S, turn);
+    // next turn
 }
 
 void turn(Stack *S){
 
 }
 
-void undo(Stack *S){
-   State pop;
-   Pop(S, &pop);
+void undo(Stack *S, int NPlayer){
+    for (int i = 0; i < NPlayer; i++){
+        State pop;
+        Pop(S, &pop);
+   }
 }
 
-void save(char filename){
+void save(char filename[50]){
     FILE *f = fopen(filename, "w");
     if (f == NULL)
     {
