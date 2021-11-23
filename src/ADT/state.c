@@ -48,6 +48,7 @@ void AddTurn (State *S, addrPlayer turn){
 void CreateRound (State *S){
   /* Membuat sebuah State baru */
   FIRSTPLAYER(*S) = Nil;
+  NPLAYER(*S) = 0;
 }
 
 void AddPlayerToGame(int nPlayer){
@@ -55,6 +56,7 @@ void AddPlayerToGame(int nPlayer){
 /* F.S. Player ditambahkan ke dalam sebanyak yang diinginkan */
   State newState;
   CreateRound(&newState);
+  NPLAYER(newState) = nPlayer;
   for(int i = 1; i <= nPlayer; i++){
     Player newPlayer;
     addrPlayer turn;
@@ -77,6 +79,24 @@ addrPlayer SearchPlayer(State S, Player P){
   return loc; 
 }
 
+Player SearchPlayerByName(State S, char name[50]){
+  addrPlayer loc;
+  loc = FIRSTPLAYER(S);
+  while (loc != Nil && NAME(PLAYER(loc)) != name[50]){
+    loc = NextPlayer(loc);
+  }
+  return PLAYER(loc);
+}
+
+Player SearchPlayerByPlayerNum(State S, int idx){
+  addrPlayer loc;
+  loc = FIRSTPLAYER(S);
+  while (loc != Nil && NAME(PLAYER(loc)) != idx){
+    loc = NextPlayer(loc);
+  }
+  return PLAYER(loc);
+}
+
 void ChangePlayerPosition(State *S, Player P, int newPost){
 /* I.S. Game sudah dimulai dan player telah memiliki posisi masing-masin  */
 /* F.S. Posisi player diubah sesuai dengan roll yang dilakukan */
@@ -85,4 +105,13 @@ void ChangePlayerPosition(State *S, Player P, int newPost){
   if(!IsEmptyState(*S) && players != Nil) {
       PLAYERPOS(players) = newPost;
     }
+}
+
+void ShowPlayer(State S){
+  addrPlayer loc;
+  loc = FIRSTPLAYER(S);
+  for(int i=1; i <= NPLAYER(S); i++) {
+    printf("%d. %c\n",INFOPLAYER(PLAYER(loc)),  NAME(PLAYER(loc)));
+    loc = NextPlayer(loc);
+  }
 }

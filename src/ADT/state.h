@@ -16,7 +16,8 @@ typedef struct StateNode {
   addrPlayer nextp;   
 } PlayerState;
 typedef struct {
-  addrPlayer FirstP;  
+  addrPlayer FirstP;
+  int nPlayer;  
 } State;
 
 /* Selektor */
@@ -24,6 +25,7 @@ typedef struct {
 #define PLAYER(ps) (ps)->pemain
 #define NextPlayer(ps) (ps)->nextp
 #define FIRSTPLAYER(s) (s).FirstP
+#define NPLAYER(s) (s).nPlayer
 
 void CreateRound (State *S);
 /* Membuat sebuah State baru */
