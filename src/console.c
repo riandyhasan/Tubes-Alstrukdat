@@ -3,15 +3,20 @@
 #include <stdio.h>
 #include <time.h>
 #include "./ADT/stack.c"
-#include "skill.h"
+#include "./ADT/map.c"
 
-int roll(int maxN){
+extern Map M;
+extern Stack S;
 
-    if (SenterPembesarHoki == true){
+int roll(Map M, State S, int Pnum){
+    int maxN;
+    Player p = SearchPlayerByPlayerNum(S, Pnum);
+    maxN = MAXROLL(M);
+    if (BUFF(INFOBUFF(p))[2] == true){
         srand (time(NULL));
         return (rand() % maxN) + (maxN/2);
     }
-    else if (SenterPengecilHoki == true){
+    else if (BUFF(INFOBUFF(p))[3] == true){
         srand (time(NULL));
         return (rand() % (maxN/2)) + 1;
     }
@@ -21,7 +26,7 @@ int roll(int maxN){
     }
 }
 
-void endturn(Stack *S, State turn){
+void endturn(State turn){
     Push(&S, turn);
     // next turn
 }
@@ -30,10 +35,10 @@ void turn(Stack *S){
 
 }
 
-void undo(Stack *S, int NPlayer){
-    for (int i = 0; i < NPlayer; i++){
-        State pop;
-        Pop(S, &pop);
+void undo(){
+    State pop;
+    for (int i = 0; i < NPLAYER(InfoTop(S)); i++){
+        Pop(&S, &pop);
    }
 }
 
@@ -42,9 +47,25 @@ void save(char filename[50]){
     if (f == NULL)
     {
         printf("Punten, file gak bisa dibuka!\n");
-        exit(1);
     }
 
     //Write something
     fclose(f);
+}
+
+void newGame() {
+	char name[50];
+    int nPlayer;
+	printf("Masukkan nama file konfigurasi permainan: ");
+    scanf("%s", &name);
+    inisialisasiMap(&M);
+    readMap(&M, name);
+    CreateEmptyStack(&S);
+    printf("Berhasil memuat level. Permainan dimulai!\n\n");
+    printf("Konfigurasi player!\n");
+    printf("Masukkan jumlah pemain: ");
+    scanf("%d", &nPlayer);
+    printf("\nMenambahkan player!\n");
+    AddPlayerToGame(nPlayer);
+    printf("\n%d Player telah ditambahkan!", nPlayer);
 }
