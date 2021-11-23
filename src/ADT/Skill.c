@@ -145,7 +145,7 @@ void PrintSkill (Player P){
 }
 
 
-void CommandSkill (Player *P, boolean *PintuGaKemanaMana, boolean *CerminPengganda, boolean *SenterPembesarHoki, boolean *SenterPengecilHoki, boolean *MesinPenukarPosisi ){
+void CommandSkill (Player *P){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
     int UseSkill, i;
@@ -164,27 +164,27 @@ void CommandSkill (Player *P, boolean *PintuGaKemanaMana, boolean *CerminPenggan
 
         if ( Info_Skill(T) == 1){
             printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!\n", INFOPLAYER(*P));
-            *PintuGaKemanaMana = true ;
+            BUFF(INFOBUFF(*P))[0] = true;
             DelP (&INFOSKILL(*P), 1) ;
         }
         else if (Info_Skill(T) == 2){
             printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", INFOPLAYER(*P));
-            *CerminPengganda = true ;
+            BUFF(INFOBUFF(*P))[1] = true;
             DelP (&INFOSKILL(*P), 2) ;
         }
         else if (Info_Skill(T) == 3){
             printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll\n", INFOPLAYER(*P));
-            *SenterPembesarHoki = true ;
+            BUFF(INFOBUFF(*P))[2] = true;
             DelP (&INFOSKILL(*P), 3) ;
         }
         else if (Info_Skill(T) == 4){
             printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll\n", INFOPLAYER(*P));
-            *SenterPengecilHoki = true ;
+            BUFF(INFOBUFF(*P))[3] = true;
             DelP (&INFOSKILL(*P), 4) ;
         }
         else if (Info_Skill(T) == 5){
             printf("%d memakai skill Mesin Penukar Posisi.\n", INFOPLAYER(*P));
-            *MesinPenukarPosisi = true ;
+            // Tukar Posisi
             DelP (&INFOSKILL(*P), 5) ;
         }
     }
