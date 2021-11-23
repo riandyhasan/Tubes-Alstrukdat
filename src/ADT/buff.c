@@ -24,10 +24,10 @@ void printBuff (Buff b) {
     }
 }
 
-void resetBuff (Buff b) {
+void resetBuff (Buff *b) {
 /* me-reset seluruh buff kecuali imunitas teleport setiap ronde
 (karena buff hanya berlaku sekali di suatu ronde) */
     for (int i = 0; i < 4; i++) {
-        BUFF(b)[i] = false;
+        BUFF(*b)[i] = false;
     }
 }

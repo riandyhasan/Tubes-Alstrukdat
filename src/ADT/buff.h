@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "listlinier.h"
 #include "player.h"
-#include "boolean.h"
+#include "../boolean.h"
 
 typedef struct {
 boolean isActive[4];
@@ -26,7 +26,7 @@ boolean isActive[4];
 void printBuff ();
 /* mengeluarkan list Buff yang dimiliki player */
 
-void resetBuff (Buff b);
+void resetBuff (Buff *b);
 /* me-reset seluruh buff kecuali imunitas teleport setiap ronde
 (karena buff hanya berlaku sekali di suatu ronde) */
 
