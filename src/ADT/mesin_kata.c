@@ -26,7 +26,7 @@ void SalinKata()
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
-    int i = 0;
+    int i = 1;
     CKata.Length = 0;
     while(CC != BLANK && CC != ENTER){
         IgnoreBlank();
@@ -92,32 +92,10 @@ int KataToInt(Kata CKata){
 }
 
 void printKata(Kata kata){
-  for(int i = 0; i < kata.Length; i++){
+  for(int i = 1; i <= kata.Length; i++){
     printf("%c", kata.TabKata[i]);
   }
   printf("\n");
-}
-
-void readConfig(){
-    int mapLen, nTel, maxRoll, telSucc, telPred;
-    STARTKATA();
-    mapLen = KataToInt(CKata);
-    // panjang map = mapLen
-    // SalinMap
-    ADVKATA();
-    ADVKATA();
-    maxRoll = KataToInt(CKata);
-    ADVKATA();
-    nTel = KataToInt(CKata);
-    for (int i = 0; i < nTel-1; i++){
-    //     isi map dengan teleporter
-    ADVKATA();
-    ADVKATA();
-    }
-    EndKata = true;
-    printf("mapLen: %d\n", mapLen);
-    printf("nTel: %d\n", nTel);
-    printf("maxRoll: %d\n", maxRoll);
 }
 
 void readInput(){
