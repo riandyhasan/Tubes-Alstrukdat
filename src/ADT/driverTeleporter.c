@@ -13,17 +13,17 @@ int main () {
     PlayerState ps;
     Teleporter tele;
 
-    MakeEmpty(&arrTele);
+    MakeEmptyTele(&arrTele);
 
     PetakInAndOut(&tele,addIn,addOut);
 
-    TotalElmt(arrTele);
+    TotalElmtTele(arrTele);
 
     MaxElmt(arrTele);
 
-    GetFirstIdx(arrTele);
+    GetFirstIdxTele(arrTele);
 
-    GetLastIdx(arrTele);
+    GetLastIdxTele(arrTele);
 
     IsTeleport(arrTele,noPetak);
 

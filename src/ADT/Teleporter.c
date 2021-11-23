@@ -1,10 +1,11 @@
 #include "Teleporter.h"
+#include "map.h"
 #include "Skill.h"
 #include "state.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-/* BLM SELESAI */
+
 
 void MakeEmptyTele (arrayTele * T) {
 /* I.S. sembarang */
@@ -92,20 +93,20 @@ void PrintTele (arrayTele T) {
 }
 
 void CmdInspect (arrayTele T) {
-    int TeleOut;
+    int teleOut;
     int i, petak;
+    Map peta;
     printf("Masukkan Petak: ");
     scanf("%d", &petak);
-    TeleOut = PetakOut(T,petak);
+    teleOut = PetakOut(T,petak);
     if (IsTeleport(T,petak)) {
-        printf("Petak %d memiliki teleporter menuju %d", petak, TeleOut);
+        printf("Petak %d memiliki teleporter menuju %d.", petak, teleOut);
     } else {
-        /* Jika map nya kosong atau terlarang */
-        /* if /* (petak != T.bufferTele[i].IdxMasuk ) /* ini harusnya pake kondisi map kalo . apa kalo # apa 
-                                                    jdnya kondisi ini blm fix */ 
-            /* INI DIISI UNTUK PETAK KOSONG */
-       /*  } else {
-            /* INI DIISI UNTUK PETAK TERLARANG*/
+       if (isForbidden(peta,petak)) {
+           printf("Petak %d merupakan petak terlarang.", petak);
+       } else {
+           printf("Petak %d merupakan petak kosong.", petak);
+       }
     }
 }
 
