@@ -3,9 +3,10 @@
 #include "player.h"
 
 void CreatePlayer(Player *p, char name[50], int id){
-    List skill, buff;
+    List skill;
+    Buff buff;
     CreateEmptyList(&skill);
-    CreateEmptyList(&buff);
+    resetBuff(&buff);
     INFOPLAYER(*p) = id;
     NAME(*p) = name[50];
     INFOSKILL(*p) = skill;

@@ -3,6 +3,7 @@
 #define _PEMAIN_H
 #include "../boolean.h"
 #include "listlinier.h"
+#include "buff.h"
 #include <stdlib.h>
 
 /* Deklarasi type elemen */
@@ -10,7 +11,7 @@ typedef struct {
 int playernum;
 char name;
 List skill;
-List buff;
+Buff buff;
 } Player;
 
 /* Selektor */
