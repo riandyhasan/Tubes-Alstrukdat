@@ -140,53 +140,54 @@ void PrintSkill (Player P){
 void CommandSkill (Player P, boolean *PintuGaKemanaMana, boolean *CerminPengganda, boolean *SenterPembesarHoki, boolean *SenterPengecilHoki, boolean *MesinPenukarPosisi ){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
-    int idSkill ;
+    int UseSkill ;
+    List T;
 
     printf("Masukkan skill : ");
-    scanf("%d", idSkill);
+    scanf("%d", UseSkill);
 
-    if (idSkill > 0){
+    if ( UseSkill > 0){
         
-        if (idSkill == 1){
+        if (  == 1){
             printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!\n", INFOPLAYER(P));
             *PintuGaKemanaMana = true ;
         }
-        else if (idSkill == 2){
+        else if (UseSkill == 2){
             printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", INFOPLAYER(P));
             *CerminPengganda = true ;
         }
-        else if (idSkill == 3){
+        else if (UseSkill == 3){
             printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll\n", INFOPLAYER(P));
             *SenterPembesarHoki = true ;
         }
-        else if (idSkill == 4){
+        else if (UseSkill == 4){
             printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll\n", INFOPLAYER(P));
             *SenterPengecilHoki = true ;
         }
-        else if (idSkill == 5){
+        else if (UseSkill == 5){
             printf("%d memakai skill Mesin Penukar Posisi.\n", INFOPLAYER(P));
             *MesinPenukarPosisi = true ;
         }
     }
-    else if (idSkill < 0){
+    else if (UseSkill < 0){
 
-        if (idSkill == -1){
+        if (UseSkill == -1){
             printf("%d membuang skill Pintu Ga Ke Mana Mana.\n", INFOPLAYER(P));
             DelP (&INFOSKILL(P), 1) ;
         }
-        else if (idSkill == -2){
+        else if (UseSkill == -2){
             printf("%d membuang skill Cermin Pengganda.\n", INFOPLAYER(P));
             DelP (&INFOSKILL(P), 2) ;
         }
-        else if (idSkill == -3){
+        else if (UseSkill == -3){
             printf("%d membuang skill Senter Pembesar Hoki.\n", INFOPLAYER(P));
             DelP (&INFOSKILL(P), 3) ;
         }
-        else if (idSkill == -4){
+        else if (UseSkill == -4){
             printf("%d membuang skill Senter Pengecil Hoki.\n", INFOPLAYER(P));
             DelP (&INFOSKILL(P), 4) ;
         }
-        else if (idSkill == -5){
+        else if (UseSkill == -5){
             printf("%d membuang skill Mesin Penukar Posisi.\n", INFOPLAYER(P));
             DelP (&INFOSKILL(P), 5) ;
         }
