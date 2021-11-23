@@ -9,33 +9,29 @@
 #define IdxMax 100
 #define IdxMin 0
 
-/* INI BELUM SELESAI ADT NYA */
-
 typedef int IdxType;
 
 typedef struct {
-    int IdxMasuk;
-    int IdxKeluar;
+    int IdxMasuk; /* Petak Masuk yang terdapat Teleporter */
+    int IdxKeluar; /* Petak Keluar dari Teleporter */
 } Teleporter;
 
 typedef struct {
-    Teleporter bufferTele[IdxMax];
-    int Neff;
+    Teleporter bufferTele[IdxMax]; /* Menyimpan Teleporter */
+    int Neff; /* Jumlah Teleporter dalam array */
 } arrayTele;
 
 
 void MakeEmpty (arrayTele * T);
 /* I.S. sembarang */
-/* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
+/* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax */
 
 int TotalElmt (arrayTele T);
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
-/* *** Daya tampung container *** */
 
 int MaxElmt (arrayTele T);
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
-/* *** Selektor INDEKS *** */
 
 IdxType GetFirstIdx (arrayTele T);
 /* Prekondisi : Tabel T tidak kosong */
@@ -43,24 +39,30 @@ IdxType GetFirstIdx (arrayTele T);
 IdxType GetLastIdx (arrayTele T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen terakhir */
-/* *** Menghasilkan sebuah elemen *** */
 
-void PetakInAndOut (arrayTele * T, int X, int Y);
-/* I.S T Kosong */
-/* F.S T berisi alamat indeks petak yang merupakan teleporter dan petak keluar dari teleporter */
+/* Konstruktor Teleporter */
+void PetakInAndOut (Teleporter * T, int X, int Y);
+/* I.S T terdefinisi
+   F.S Membuat sebuah teleporter terdefinisi terdiri dari Petak Masuk dan Petak Keluar  */
 
-int GetPetakIn (arrayTele T, IdxType i);
-/* Mengirimkan alamat Petak yang terdapat Teleporter */
+boolean IsTeleport(arrayTele aT, int nomorPetak);
+/* Mengecek apakah sebuah petak merupakan sebuah teleporter */
+/* Mengirimkan nilai true jika petak tersebut merupakan teleporter */
 
-int GetPetakOut (arrayTele T, IdxType i);
-/* Mengirimkan alamat Petak Keluar dari Teleporter */
+int PetakOut (arrayTele aT, int nomorPetak);
+/* Mendapatkan petak keluar dari sebuah kumpulan tele pada petak masuk tertentu */
 
-void GetTeleporter (PlayerState * PS, arrayTele T, Teleporter X);
+void MovePemain (PlayerState * PS, arrayTele T);
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Teleporter ditemukan dan Mengarahkan player ke petak keluar jika player tidak mempunyai buff imunitas */
 
-void cmdInspect (arrayTele T, PlayerState PS, int X);
+void PrintTele (arrayTele T);
+/* I.S T terdefinisi dan tidak kosong */
+/* F.S Mengirimkan indeks petak masuk dan petak keluar */
+
+/* COMMAND INSPECT */
+void CmdInspect (arrayTele T);
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Mengirimkan indeks petak masuk, petak keluar, serta informasi mengenai petak kosong dan petak terlarang */
 
-#endif /* adtteleport_h */
+#endif /* Teleporter_h */
