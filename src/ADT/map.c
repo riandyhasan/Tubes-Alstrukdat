@@ -1,6 +1,7 @@
 #include "map.h"
-#include "array.h"
-#include "mesin_kata.h"
+#include "array.c"
+#include "mesin_kata.c"
+#include "string.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,16 +12,18 @@ void inisialisasiMap(Map *M){
 }
 
 
-void readMap(Map *M){
+void readMap(Map *M, char filename[50]){
     int mapLen, nTel, maxRoll, telSucc, telPred;
-    STARTKATA();
+    STARTKATA(filename);
     mapLen = KataToInt(CKata);
     // panjang map = mapLen
     SetNeff(&MAPC(*M), mapLen);
     ADVKATA();
     // salin map
     for (int i = 1; i <= mapLen; i++){
-        SetEl(&MAPC(*M),i, CKata.TabKata);
+        char copy;
+        strcpy(copy, CKata.TabKata);
+        MAPC(*M).TI[i] = copy;
     }
     ADVKATA();
     maxRoll = KataToInt(CKata);
@@ -33,7 +36,7 @@ void readMap(Map *M){
         telSucc = KataToInt(CKata);
         ADVKATA();
         telPred = KataToInt(CKata);
-        PetakInAndOut(&TELE(*M), telSucc, telPred);
+        PetakInAndOut(&TELE(*M).bufferTele[i], telSucc, telPred);
     }
     EndKata = true;
 }

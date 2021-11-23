@@ -3,7 +3,6 @@
 /* Penempatan elemen selalu rapat kiri */
 
 #include "../boolean.h"
-
 #ifndef ARRAY_H 
 #define ARRAY_H
 
@@ -37,7 +36,7 @@ typedef struct
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong */
-void MakeEmpty (TabChar *T);
+void MakeEmptyArr (TabChar *T);
 /* I.S. sembarang */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
 
@@ -91,7 +90,7 @@ boolean IsIdxEff (TabChar T, IdxType i);
 boolean IsEmptyArr(TabChar T);
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
 /* *** Test tabel penuh *** */
-boolean IsFull (TabChar T);
+boolean IsFullArr (TabChar T);
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 
 #endif

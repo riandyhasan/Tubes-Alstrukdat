@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "listlinier.h"
-#include "skill.h"
-#include "state.h"
-#include "player.h"
+#include "listlinier.c"
+#include "skill.c"
+#include "state.c"
+#include "player.c"
 
 /****************** PROSES GET SKILL MELALUI RANDOMIZER ******************/
 

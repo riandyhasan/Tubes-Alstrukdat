@@ -37,13 +37,13 @@ void SalinKata()
     CKata.Length = i;
 }
           
-void STARTKATA()
+void STARTKATA(char filename[50])
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
-    START();
+    START(filename);
     IgnoreBlank();
     if (CC == MARK) EndKata = true;
     else /* CC != MARK */

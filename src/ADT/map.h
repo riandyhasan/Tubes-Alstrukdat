@@ -27,7 +27,7 @@ void inisialisasiMap(Map *M);
 /* Konstruktor dari Map */
 /* Alokasi memori sebesar ukuran dari map. */
 
-void readMap(Map *M);
+void readMap(Map *M, char filename[50]);
 /* Membaca file konfigurasi map */
 
 boolean isForbidden(Map M, int loc);

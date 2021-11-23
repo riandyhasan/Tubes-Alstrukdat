@@ -2,6 +2,7 @@
 // Implementasi dari state.h
 #include "../boolean.h"
 #include "state.h"
+#include "player.c"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -60,10 +61,10 @@ void AddPlayerToGame(int nPlayer){
   for(int i = 1; i <= nPlayer; i++){
     Player newPlayer;
     addrPlayer turn;
-    char Name;
+    char Name[50];
     printf("Masukkan nama player ke-%d: ", i);
     scanf("%s",&Name);
-    CreatePlayer(&newPlayer, i, Name);
+    CreatePlayer(&newPlayer, Name, i);
     turn = PlayerTurn(newPlayer, 1);
     AddTurn(&newState, turn);
   }

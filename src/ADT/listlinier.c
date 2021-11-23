@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "listlinier.h"
-#include "player.h"
+#include "player.c"
 
-boolean IsEmpty (List L){
+boolean IsEmptyList (List L){
     /* Mengirim true jika list kosong */
     return First(L) == Nil;
 }
 
-void CreateEmpty (List *L){
+void CreateEmptyList (List *L){
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
     First(*L) = Nil;

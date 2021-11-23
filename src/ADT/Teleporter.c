@@ -1,7 +1,7 @@
-#include "Teleporter.h"
-#include "map.h"
-#include "Skill.h"
-#include "state.h"
+#include "teleporter.h"
+#include "map.c"
+#include "skill.c"
+#include "state.c"
 #include <stdio.h>
 #include <stdlib.h>
 

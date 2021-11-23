@@ -52,6 +52,6 @@ boolean IsEmptyArr (TabChar T){
     return (T.Neff == 0);
 }
 
-boolean IsFull (TabChar T){
+boolean IsFullArr (TabChar T){
     return (T.Neff == IdxMax);
 }
