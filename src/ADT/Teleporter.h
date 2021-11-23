@@ -7,7 +7,7 @@
 #include "state.h"
 
 #define IdxMax 100
-#define IdxMin 0
+#define IdxMin 1
 
 typedef int IdxType;
 
@@ -22,21 +22,21 @@ typedef struct {
 } arrayTele;
 
 
-void MakeEmpty (arrayTele * T);
+void MakeEmptyTele (arrayTele * T);
 /* I.S. sembarang */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax */
 
-int TotalElmt (arrayTele T);
+int TotalElmtTele (arrayTele T);
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 
-int MaxElmt (arrayTele T);
+int MaxElmtTele (arrayTele T);
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 
-IdxType GetFirstIdx (arrayTele T);
+IdxType GetFirstIdxTele (arrayTele T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen pertama */
-IdxType GetLastIdx (arrayTele T);
+IdxType GetLastIdxTele (arrayTele T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen terakhir */
 

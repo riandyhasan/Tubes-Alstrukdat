@@ -6,7 +6,7 @@
 
 /* BLM SELESAI */
 
-void MakeEmpty (arrayTele * T) {
+void MakeEmptyTele (arrayTele * T) {
 /* I.S. sembarang */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax */
     int i;
@@ -17,24 +17,24 @@ void MakeEmpty (arrayTele * T) {
     (*T).Neff = 0;
 }
 
-int TotalElmt (arrayTele T) {
+int TotalElmtTele (arrayTele T) {
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
    return T.Neff;
 }
 
-int MaxElmt (arrayTele T) {
+int MaxElmtTele (arrayTele T) {
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
     return IdxMax;
 }
 
-IdxType GetFirstIdx (arrayTele T) {
+IdxType GetFirstIdxTele (arrayTele T) {
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen pertama */
     return IdxMin;
 }
 
-IdxType GetLastIdx (arrayTele T) {
+IdxType GetLastIdxTele (arrayTele T) {
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen terakhir */
     return T.Neff;
