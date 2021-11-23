@@ -145,7 +145,7 @@ void PrintSkill (Player P){
 }
 
 
-void CommandSkill (Player *P){
+void CommandSkill (Player *P, State *S){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
     int UseSkill, i;
@@ -184,7 +184,22 @@ void CommandSkill (Player *P){
         }
         else if (Info_Skill(T) == 5){
             printf("%d memakai skill Mesin Penukar Posisi.\n", INFOPLAYER(*P));
-            // Tukar Posisi
+            int playernum2;
+            boolean same;
+            Player P2;
+            ShowPlayer(*S);
+            prinft("Silahkan masukkan no pemain yang ingin ditukar: ");
+            scanf("%d", &playernum2);
+            P2 = SearchPlayerByPlayerNum(*S, playernum2);
+            same = isSamePlayer(*P, P2);
+            while(same){
+                prinft("Tidak dapat menukar dengan diri sendiri!\n");
+                prinft("Silahkan masukkan no pemain yang ingin ditukar: ");
+                scanf("%d", &playernum2);
+                P2 = SearchPlayerByPlayerNum(*S, playernum2);
+                same = isSamePlayer(*P, P2);
+            }
+            TukarPosisiPlayer(P1, P2, &S);
             DelP (&INFOSKILL(*P), 5) ;
         }
     }
