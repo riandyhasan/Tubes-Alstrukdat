@@ -33,4 +33,11 @@ void readMap(Map *M);
 boolean isForbidden(Map M, int loc);
 /* Mengecek apakah isi map merupakan #, true jika # */
 
+
+/* COMMAND INSPECT */
+void CmdInspect (Map peta);
+/* I.S T terdefinisi dan tidak kosong */
+/* F.S Mengirimkan indeks petak masuk, petak keluar, serta informasi mengenai petak kosong dan petak terlarang */
+
+
 #endif

@@ -4,16 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// typedef struct MapStruct {
-//     TabChar mapConfig;
-//     int defaultMaxRoll;
-//     arrayTele tele;
-// } Map;
-// #define MAPC(M) M.mapConfig;
-// #define MAXROLL(M) (M).defaultMaxRoll;
-// #define TELE(M) (M).tele;
-
-
 void inisialisasiMap(Map *M){
     MakeEmptyArr(&MAPC(*M));
     MAXROLL(*M) = 0;
@@ -50,4 +40,21 @@ void readMap(Map *M){
 
 boolean isForbidden(Map M, int loc){
     return MAPC(M).TI[loc] == "#";
+}
+
+void CmdInspect (Map peta) {
+    int teleOut;
+    int petak;
+    printf("Masukkan Petak: ");
+    scanf("%d", &petak);
+    teleOut = PetakOut(TELE(peta),petak);
+    if (IsTeleport(TELE(peta),petak)) {
+        printf("Petak %d memiliki teleporter menuju %d.", petak, teleOut);
+    } else {
+       if (isForbidden(peta,petak)) {
+           printf("Petak %d merupakan petak terlarang.", petak);
+       } else {
+           printf("Petak %d merupakan petak kosong.", petak);
+       }
+    }
 }
