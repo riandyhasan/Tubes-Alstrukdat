@@ -22,4 +22,6 @@ Buff buff;
 
 void CreatePlayer(Player *p, char name[50], int id);
 
+boolean isSamePlayer(Player p1, Player p2);
+
 #endif
