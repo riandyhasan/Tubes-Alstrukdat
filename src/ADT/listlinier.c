@@ -49,7 +49,7 @@ address Search (List L, skill_info X){
     P = First(L);
     if (IsEmpty(L)) return Nil;
     else{
-        while (P != Nil && Info(P) != X){
+        while (P != Nil && Info_Skill(P) != X){
             P = Next(P);
         }
         return P;
@@ -97,7 +97,7 @@ void DelVFirst (List *L, skill_info *X){
     address P;
 
     P = First(*L);
-    *X = Info(P);
+    *X = Info_Skill(P);
     First(*L) = Next(P);
     Dealokasi(&P);
 }
@@ -113,12 +113,22 @@ void DelVLast (List *L, skill_info *X){
         while(Next(Next(P)) != Nil){
             P = Next(P);
         }
-        *X = Info(Next(P));
+        *X = Info_Skill(Next(P));
         Dealokasi(&Next(P));
         Next(P) = Nil;
     }else{
         DelVFirst(L, X);
     }
+}
+
+
+void DelFirst (List *L, address *P){
+/* I.S. List tidak kosong */
+/* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
+/*      Elemen list berkurang satu (mungkin menjadi kosong) */
+/* First element yg baru adalah suksesor elemen pertama yang lama */
+    *P= First(*L);
+    First(*L) = Next(*P);
 }
 
 
@@ -132,10 +142,10 @@ void DelP (List *L, skill_info X){
 
     if(!IsEmpty(*L)){
         P = First(*L);
-        if(Info(P) == X){
+        if(Info_Skill(P) == X){
             DelFirst(L, &loc);
         }else{
-            while(Next(P) != Nil && Info(Next(P)) != X){
+            while(Next(P) != Nil && Info_Skill(Next(P)) != X){
                 P = Next(P);
             }
             if(Next(P) != Nil){
@@ -187,7 +197,7 @@ void PrintInfo (List L){
         printf("[");
         P = First(L);
         while (P != Nil){
-            printf("%d", Info(P));
+            printf("%d", Info_Skill(P));
             P = Next(P);
             if (P != Nil)
                 printf(",");

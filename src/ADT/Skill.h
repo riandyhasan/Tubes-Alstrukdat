@@ -8,7 +8,7 @@
 
 /****************** PROSES GET SKILL MELALUI RANDOMIZER ******************/
 
-void printRandoms (int lower, int upper, int count);
+int printRandoms (int lower, int upper, int count);
 /* I.S. Batas atas dan batas bawah serta jumlah output yang diinginkan terdefinisi */
 
 
@@ -19,7 +19,7 @@ int DrivePrintRandoms (int lower, int upper, int count);
 int GetSkills ();
 /* Mengirimkan hasil skill yang didapat menggunakan randomizer */
 
-void insPlayerSkill (Player P);
+void insPlayerSkill (Player *P);
 
 /******************************* PROSES SKILL *******************************/
 
@@ -27,26 +27,26 @@ void PrintSkill ();
 /* mengeluarkan list skill yang dimiliki player */
 
 
-void CommandSkill (Player P, boolean *PintuGaKemanaMana, boolean *CerminPengganda, boolean *SenterPembesarHoki, boolean *SenterPengecilHoki, boolean *MesinPenukarPosisi);
+void CommandSkill (Player *P, boolean *PintuGaKemanaMana, boolean *CerminPengganda, boolean *SenterPembesarHoki, boolean *SenterPengecilHoki, boolean *MesinPenukarPosisi);
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
 
 void useSkill ();
 /* menggunakan skill yang dimiliki oleh player */
 
-boolean PintuGaKemanaMana = false;
+boolean PintuGaKemanaMana ;
 /* Mengirimkan true apabila skill digunakan */
 
-boolean CerminPengganda = false;
+boolean CerminPengganda ;
 /* Mengirimkan true apabila skill digunakan */
 
-boolean SenterPembesarHoki = false;
+boolean SenterPembesarHoki ;
 /* Mengirimkan true apabila skill digunakan */
 
-boolean SenterPengecilHoki = false;
+boolean SenterPengecilHoki ;
 /* Mengirimkan true apabila skill digunakan */
 
-boolean MesinPenukarPosisi = false;
+boolean MesinPenukarPosisi ;
 /* Mengirimkan true apabila skill digunakan */
 
 #endif

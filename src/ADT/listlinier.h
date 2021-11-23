@@ -79,6 +79,12 @@ void InsVLast (List *L, skill_info X);
 
 /*** PENGHAPUSAN ELEMEN ***/
 
+void DelFirst (List *L, address *P);
+/* I.S. List tidak kosong */
+/* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
+/*      Elemen list berkurang satu (mungkin menjadi kosong) */
+/* First element yg baru adalah suksesor elemen pertama yang lama */
+
 void DelVFirst (List *L, skill_info *X);
 /* I.S. List L tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
