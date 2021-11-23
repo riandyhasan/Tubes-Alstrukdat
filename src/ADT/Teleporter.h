@@ -60,9 +60,4 @@ void PrintTele (arrayTele T);
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Mengirimkan indeks petak masuk dan petak keluar */
 
-/* COMMAND INSPECT */
-void CmdInspect (arrayTele T);
-/* I.S T terdefinisi dan tidak kosong */
-/* F.S Mengirimkan indeks petak masuk, petak keluar, serta informasi mengenai petak kosong dan petak terlarang */
-
 #endif /* Teleporter_h */

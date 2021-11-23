@@ -11,7 +11,7 @@ void MakeEmptyTele (arrayTele * T) {
 /* I.S. sembarang */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax */
     int i;
-    for (i = IdxMin; i < IdxMax; i++) {
+    for (i = IdxMin; i <= IdxMax; i++) {
         (*T).bufferTele[i].IdxMasuk = -1;
         (*T).bufferTele[i].IdxKeluar = -1;
     }
@@ -51,7 +51,7 @@ void PetakInAndOut (Teleporter * T, int X, int Y) {
 
 boolean IsTeleport (arrayTele aT, int nomorPetak){
 /* Mengecek apakah sebuah petak merupakan sebuah teleport */
-    int i = 0;
+    int i = 1;
     while ((nomorPetak != aT.bufferTele[i].IdxMasuk) && (i < aT.Neff-1)) {
         i++;
     }
@@ -60,7 +60,7 @@ boolean IsTeleport (arrayTele aT, int nomorPetak){
 
 int PetakOut (arrayTele aT, int nomorPetak){
 /* Mendapatkan petak keluar dari sebuah kumpulan tele pada petak masuk tertentu */
-    int i = 0;
+    int i = 1;
     int Out;
     while (aT.bufferTele[i].IdxMasuk != nomorPetak) {
         i++;
@@ -86,27 +86,9 @@ void MovePemain (PlayerState * PS, arrayTele T) {
 void PrintTele (arrayTele T) { 
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Mencetak indeks petak masuk, petak keluar */
-    int i = 0;
-    for (i = 0; i < T.Neff ;i++) {
+    int i = 1;
+    for (i = 0; i <= T.Neff ;i++) {
         printf("%d Masuk: %d, Keluar: %d\n",i+1, T.bufferTele[i].IdxMasuk, T.bufferTele[i].IdxKeluar);
-    }
-}
-
-void CmdInspect (arrayTele T) {
-    int teleOut;
-    int i, petak;
-    Map peta;
-    printf("Masukkan Petak: ");
-    scanf("%d", &petak);
-    teleOut = PetakOut(T,petak);
-    if (IsTeleport(T,petak)) {
-        printf("Petak %d memiliki teleporter menuju %d.", petak, teleOut);
-    } else {
-       if (isForbidden(peta,petak)) {
-           printf("Petak %d merupakan petak terlarang.", petak);
-       } else {
-           printf("Petak %d merupakan petak kosong.", petak);
-       }
     }
 }
 
