@@ -1,88 +1,53 @@
 #include "map.h"
 #include "array.h"
-#include "mesinkata.h"
+#include "mesin_kata.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../boolean.h"
-#include <string.h>
 
-Map* MAP;
+// typedef struct MapStruct {
+//     TabChar mapConfig;
+//     int defaultMaxRoll;
+//     arrayTele tele;
+// } Map;
+// #define MAPC(M) M.mapConfig;
+// #define MAXROLL(M) (M).defaultMaxRoll;
+// #define TELE(M) (M).tele;
 
-void inisialisasiMap(){
-    MAP = (Map*)malloc(sizeof(Map));
+
+void inisialisasiMap(Map *M){
+    MakeEmptyArr(&MAPC(*M));
+    MAXROLL(*M) = 0;
+    MakeEmptyTele(&TELE(*M));
 }
 
-void alokasiMap(int N){
-    MAP -> mapConfig.TI = (char*)malloc(sizeof(char)*N+3);
-    MAP -> mapConfig.Neff = N;
-    MAP -> teleporters.TI = (int*)malloc(sizeof(int)*N+1);
-    MAP -> teleporters.Neff = N;
-    int x;
-    for(x=0; x<=N; x++){
-        MAP -> teleporters.TI[x] = 0;
-    }
-}
 
-void dealokasiMap(){
-    free(MAP);
-}
-
-void readMap (const char* fileloc){
-    int N; /* Panjang dari map */
-    int M; /* Jumlah dari teleporter */ 
-    int MaxRoll; /* Jumlah maksimum roll dadu */
-    int src, dest; /* Petak masuk dan keluar dari teleporter */
-    int i, j; 
-    const char* errorloc = "file konfigurasi";
-
-    STARTKATA(fileloc, false);
-
-    N = atoi(CKata.TabKata);
-    alokasiMap(N);
-
+void readMap(Map *M){
+    int mapLen, nTel, maxRoll, telSucc, telPred;
+    STARTKATA();
+    mapLen = KataToInt(CKata);
+    // panjang map = mapLen
+    SetNeff(&MAPC(*M), mapLen);
     ADVKATA();
-    if (CKata.Length != N) {
-        logErrorThenExit("Panjang peta harus sesuai dengan input sebelumnya", errorloc);
+    // salin map
+    for (int i = 1; i <= mapLen; i++){
+        SetEl(&MAPC(*M),i, CKata.TabKata);
     }
-    
-    i = 1;
-    // validasi semua isi dari mapconfig kecuali ujung
-    while(CKata.TabKata[i] == '.' || CKata.TabKata[i] == '#'){
-        if(i == N-2){
-            break;
-        }
-        i++;
-    }
-    if(i != N-2){
-        logErrorThenExit("Petak hanya boleh diisi karakter '.' atau '#'", errorloc);
-    }
-    strcpy((MAP->mapConfig.TI), "|");
-    strcat((MAP->mapConfig.TI), CKata.TabKata);
-
-    // Input MaxRoll
     ADVKATA();
-    MaxRoll = atoi(CKata.TabKata);
-    MAP->defaultMaxRoll = MaxRoll;
-
-    // Input jumlah teleporter
+    maxRoll = KataToInt(CKata);
+    MAXROLL(*M) = maxRoll;
     ADVKATA();
-    M = atoi(CKata.TabKata);
-
-    // Input dan validasi dari teleporters
-    for (i = 0 ; i < M ; i ++){
+    nTel = KataToInt(CKata);
+    TELE(*M).Neff = nTel;
+    for (int i = 1; i <= nTel; i++){
         ADVKATA();
-        src = atoi(CKata.TabKata);
-        if (i == M - 1){
-            MBR = true;
-        }
+        telSucc = KataToInt(CKata);
         ADVKATA();
-        dest = atoi(CKata.TabKata);
-        if (src == dest){
-            logErrorThenExit("Petak masuk dan keluar teleporter tidak boleh sama", errorloc);
-        }
-        if (src < 1 || dest < 1 || src > N || dest > N){
-            logErrorThenExit("Teleporter harus berada dalam map", errorloc);
-        }
-        MAP->teleporters.TI[src] = dest;
+        telPred = KataToInt(CKata);
+        PetakInAndOut(&TELE(*M), telSucc, telPred);
     }
-};
+    EndKata = true;
+}
+
+boolean isForbidden(Map M, int loc){
+    return MAPC(M).TI[loc] == "#";
+}
