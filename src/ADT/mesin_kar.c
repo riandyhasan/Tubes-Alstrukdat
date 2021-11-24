@@ -1,9 +1,8 @@
 /* File: mesinkar.c */
 /* Implementasi Mesin Karakter */
-
-#include "mesin_kar.h"
 #include <stdio.h>
 #include <string.h>
+#include "mesin_kar.h"
 
 char CC;
 boolean EOP;
@@ -12,7 +11,7 @@ static FILE *pita;
 static int retval;
 
 
-void START(char filename[50]) {
+void START(char *filename) {
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita posisinya adalah pada jendela.
    I.S. : sembarang
@@ -24,11 +23,12 @@ void START(char filename[50]) {
     char file[100];
     strcpy(file, dir);
     strcat(file, filename);
+    printf("Membuka file pada directory %s\n", file);
+    printf("Loading.....\n");
     pita = fopen(file, "r");
     if (pita == NULL) {
 		printf("Punten, file gak bisa dibuka!\n");
 	} else {
-      printf("Loading.....");
 		printf("Memuat konfigurasi dari file %s...\n", filename);
 	}
     ADV();

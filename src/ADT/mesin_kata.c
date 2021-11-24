@@ -1,8 +1,6 @@
 // Implementasi mesin_kata.h 
 
 #include "mesin_kata.h"
-#include "mesin_kar.c"
-
 #include <stdio.h>
 #include <stdlib.h>
 boolean EndKata;
@@ -37,7 +35,7 @@ void SalinKata()
     CKata.Length = i;
 }
           
-void STARTKATA(char filename[50])
+void STARTKATA(char *filename)
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
