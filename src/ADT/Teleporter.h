@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../boolean.h"
-#include "state.h"
 
 #define IdxMax 100
 #define IdxMin 1

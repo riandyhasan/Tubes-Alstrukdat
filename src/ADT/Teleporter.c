@@ -1,7 +1,4 @@
 #include "teleporter.h"
-#include "map.c"
-#include "skill.c"
-#include "state.c"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -73,15 +70,15 @@ int PetakOut (arrayTele aT, int nomorPetak){
     return Out;
 }
 
-void MovePemain (PlayerState * PS, arrayTele T) { 
-/* Teleporter ditemukan dan Mengarahkan player ke petak keluar jika player tidak mempunyai buff imunitas */
-    int i;
-    if (PintuGaKemanaMana) {
-        /* DO NOTHING */
-    } else if (IsTeleport(T,PLAYERPOS(PS)) && (!PintuGaKemanaMana)) {
-        PLAYERPOS(PS) = PetakOut(T,PLAYERPOS(PS));
-    }
-}
+// void MovePemain (PlayerState * PS, arrayTele T) { 
+// /* Teleporter ditemukan dan Mengarahkan player ke petak keluar jika player tidak mempunyai buff imunitas */
+//     int i;
+//     if ((*PS -> pemain).buff)[0]) {
+//         /* DO NOTHING */
+//     } else if (IsTeleport(T,PLAYERPOS(PS)) && (!(*PS -> pemain).buff[0])) {
+//         PLAYERPOS(PS) = PetakOut(T,PLAYERPOS(PS));
+//     }
+// }
 
 void PrintTele (arrayTele T) { 
 /* I.S T terdefinisi dan tidak kosong */
