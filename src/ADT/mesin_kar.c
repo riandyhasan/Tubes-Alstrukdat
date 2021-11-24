@@ -8,8 +8,6 @@ char CC;
 boolean EOP;
 
 static FILE *pita;
-static int retval;
-
 
 void START(char *filename) {
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
@@ -19,19 +17,19 @@ void START(char *filename) {
           Jika CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    char *dir = "../../data/";
+    char *dir = "../data/";
     char file[100];
     strcpy(file, dir);
     strcat(file, filename);
-    printf("Membuka file pada directory %s\n", file);
+    printf("Membuka file pada directory %s\n", filename);
     printf("Loading.....\n");
     pita = fopen(file, "r");
     if (pita == NULL) {
 		printf("Punten, file gak bisa dibuka!\n");
 	} else {
-		printf("Memuat konfigurasi dari file %s...\n", filename);
+		printf("Memuat konfigurasi dari file %s\n", filename);
 	}
-    ADV();
+   ADV();
 }
 
 
@@ -48,6 +46,10 @@ void STARTINPUT(){
     ADV();
 }
 
+void ADVLAST(){
+   
+}
+
 void ADV() {
 /* Pita dimajukan satu karakter.
    I.S. : Karakter pada jendela =
@@ -57,9 +59,8 @@ void ADV() {
           Jika  CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    retval = fscanf(pita,"%c",&CC);
-    printf("%c", CC);
-    EOP = (CC == MARK);
+    CC = getc(pita);
+    EOP = (CC == EOF);
     if (EOP) {
        fclose(pita);
     }

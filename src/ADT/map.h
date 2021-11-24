@@ -17,9 +17,7 @@ typedef struct MapStruct {
 } Map;
 
 /* Selektor */
-#define MAPC(M) (M).mapConfig
 #define MAXROLL(M) (M).defaultMaxRoll
-#define TELE(M) (M).tele
 
 void inisialisasiMap(Map *M);
 /* Konstruktor dari Map */

@@ -26,13 +26,12 @@ void SalinKata()
 {
     int i = 1;
     CKata.Length = 0;
-    while(CC != BLANK && CC != ENTER){
-        IgnoreBlank();
+    while(CC != BLANK && CC != ENTER ){
         CKata.TabKata[i] = CC;
         i++;
         ADV();
     }
-    CKata.Length = i;
+    CKata.Length = i-1;
 }
           
 void STARTKATA(char *filename)
@@ -43,7 +42,7 @@ void STARTKATA(char *filename)
 {
     START(filename);
     IgnoreBlank();
-    if (CC == MARK) EndKata = true;
+    if (CC == EOF) EndKata = true;
     else /* CC != MARK */
     {
         EndKata = false;
@@ -75,7 +74,7 @@ void ADVKATA()
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 {
     IgnoreBlank();
-    if (CC == MARK) 
+    if (CC == EOF) 
     {
         EndKata = true;
     }
@@ -86,7 +85,11 @@ void ADVKATA()
 }
 
 int KataToInt(Kata CKata){
-    return atoi(CKata.TabKata);
+    char kata[CKata.Length];
+    for (int i = 0; i < CKata.Length; i++){
+        kata[i] = CKata.TabKata[i+1];
+    }
+    return atoi(kata);
 }
 
 void printKata(Kata kata){

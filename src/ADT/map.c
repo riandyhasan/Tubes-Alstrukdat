@@ -3,9 +3,9 @@
 #include "map.h"
 
 void inisialisasiMap(Map *M){
-    MakeEmptyArr(&MAPC(*M));
+    MakeEmptyArr(&(*M).mapConfig);
     MAXROLL(*M) = 0;
-    MakeEmptyTele(&TELE(*M));
+    MakeEmptyTele(&(*M).tele);
 }
 
 
@@ -14,30 +14,29 @@ void readMap(Map *M, char *filename){
     STARTKATA(filename);
     mapLen = KataToInt(CKata);
     // panjang map = mapLen
-    SetNeff(&MAPC(*M), mapLen);
+    SetNeff(&(*M).mapConfig, mapLen);
     ADVKATA();
     // salin map
     for (int i = 1; i <= mapLen; i++){
-        MAPC(*M).TI[i] = CKata.TabKata[i];
+        (*M).mapConfig.TI[i] = CKata.TabKata[i];
     }
     ADVKATA();
     maxRoll = KataToInt(CKata);
     MAXROLL(*M) = maxRoll;
     ADVKATA();
     nTel = KataToInt(CKata);
-    TELE(*M).Neff = nTel;
+    (*M).tele.Neff = nTel;
     for (int i = 1; i <= nTel; i++){
         ADVKATA();
         telSucc = KataToInt(CKata);
         ADVKATA();
         telPred = KataToInt(CKata);
-        PetakInAndOut(&TELE(*M).bufferTele[i], telSucc, telPred);
+        PetakInAndOut(&(*M).tele.bufferTele[i], telSucc, telPred);
     }
-    EndKata = true;
 }
 
 boolean isForbidden(Map M, int loc){
-    return MAPC(M).TI[loc] == '#';
+    return M.mapConfig.TI[loc] == '#';
 }
 
 void CmdInspect (Map peta) {
@@ -45,8 +44,8 @@ void CmdInspect (Map peta) {
     int petak;
     printf("Masukkan Petak: ");
     scanf("%d", &petak);
-    teleOut = PetakOut(TELE(peta),petak);
-    if (IsTeleport(TELE(peta),petak)) {
+    teleOut = PetakOut(peta.tele,petak);
+    if (IsTeleport(peta.tele,petak)) {
         printf("Petak %d memiliki teleporter menuju %d.", petak, teleOut);
     } else {
        if (isForbidden(peta,petak)) {
