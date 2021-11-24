@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "listlinier.c"
-#include "skill.c"
+#include "listlinier.h"
+#include "skill.h"
+#include "state.h"
 #include "state.c"
-#include "player.c"
+#include "player.h"
 
 /****************** PROSES GET SKILL MELALUI RANDOMIZER ******************/
 
@@ -145,13 +146,16 @@ void PrintSkill (Player P){
 }
 
 
-void CommandSkill (Player *P, State *S){
+void CommandSkill (State *S, int id){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
     int UseSkill, i;
     address T;
+    Player P;
 
-    T = First(INFOSKILL(*P));
+    P = SearchPlayerByPlayerNum(*S, id);
+
+    T = First(INFOSKILL(P));
 
     printf("Masukkan skill : ");
     scanf("%d", &UseSkill);
@@ -163,44 +167,28 @@ void CommandSkill (Player *P, State *S){
         }
 
         if ( Info_Skill(T) == 1){
-            printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!\n", INFOPLAYER(*P));
-            BUFF(INFOBUFF(*P))[0] = true;
-            DelP (&INFOSKILL(*P), 1) ;
+            printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!\n", INFOPLAYER(P));
+            BUFF(INFOBUFF(P))[0] = true;
+            DelP (&INFOSKILL(P), 1) ;
         }
         else if (Info_Skill(T) == 2){
-            printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", INFOPLAYER(*P));
-            BUFF(INFOBUFF(*P))[1] = true;
-            DelP (&INFOSKILL(*P), 2) ;
+            printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", INFOPLAYER(P));
+            BUFF(INFOBUFF(P))[1] = true;
+            DelP (&INFOSKILL(P), 2) ;
         }
         else if (Info_Skill(T) == 3){
-            printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll\n", INFOPLAYER(*P));
-            BUFF(INFOBUFF(*P))[2] = true;
-            DelP (&INFOSKILL(*P), 3) ;
+            printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll\n", INFOPLAYER(P));
+            BUFF(INFOBUFF(P))[2] = true;
+            DelP (&INFOSKILL(P), 3) ;
         }
         else if (Info_Skill(T) == 4){
-            printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll\n", INFOPLAYER(*P));
-            BUFF(INFOBUFF(*P))[3] = true;
-            DelP (&INFOSKILL(*P), 4) ;
+            printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll\n", INFOPLAYER(P));
+            BUFF(INFOBUFF(P))[3] = true;
+            DelP (&INFOSKILL(P), 4) ;
         }
         else if (Info_Skill(T) == 5){
-            printf("%d memakai skill Mesin Penukar Posisi.\n", INFOPLAYER(*P));
-            int playernum2;
-            boolean same;
-            Player P2;
-            ShowPlayer(*S);
-            prinft("Silahkan masukkan no pemain yang ingin ditukar: ");
-            scanf("%d", &playernum2);
-            P2 = SearchPlayerByPlayerNum(*S, playernum2);
-            same = isSamePlayer(*P, P2);
-            while(same){
-                prinft("Tidak dapat menukar dengan diri sendiri!\n");
-                prinft("Silahkan masukkan no pemain yang ingin ditukar: ");
-                scanf("%d", &playernum2);
-                P2 = SearchPlayerByPlayerNum(*S, playernum2);
-                same = isSamePlayer(*P, P2);
-            }
-            TukarPosisiPlayer(P1, P2, &S);
-            DelP (&INFOSKILL(*P), 5) ;
+            UseTukarPosisiPlayer(&S, id) ;
+            DelP (&INFOSKILL(P), 5) ;
         }
     }
     else if (UseSkill < 0){
@@ -210,24 +198,24 @@ void CommandSkill (Player *P, State *S){
         }
 
         if (Info_Skill(T) == 1){
-            printf("%d membuang skill Pintu Ga Ke Mana Mana.\n", INFOPLAYER(*P));
-            DelP (&INFOSKILL(*P), 1) ;
+            printf("%d membuang skill Pintu Ga Ke Mana Mana.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 1) ;
         }
         else if (Info_Skill(T) == 2){
-            printf("%d membuang skill Cermin Pengganda.\n", INFOPLAYER(*P));
-            DelP (&INFOSKILL(*P), 2) ;
+            printf("%d membuang skill Cermin Pengganda.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 2) ;
         }
         else if (Info_Skill(T) == 3){
-            printf("%d membuang skill Senter Pembesar Hoki.\n", INFOPLAYER(*P));
-            DelP (&INFOSKILL(*P), 3) ;
+            printf("%d membuang skill Senter Pembesar Hoki.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 3) ;
         }
         else if (Info_Skill(T) == 4){
-            printf("%d membuang skill Senter Pengecil Hoki.\n", INFOPLAYER(*P));
-            DelP (&INFOSKILL(*P), 4) ;
+            printf("%d membuang skill Senter Pengecil Hoki.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 4) ;
         }
         else if (Info_Skill(T) == 5){
-            printf("%d membuang skill Mesin Penukar Posisi.\n", INFOPLAYER(*P));
-            DelP (&INFOSKILL(*P), 5) ;
+            printf("%d membuang skill Mesin Penukar Posisi.\n", INFOPLAYER(P));
+            DelP (&INFOSKILL(P), 5) ;
         }
     }
     else if (UseSkill == 0){
@@ -248,6 +236,29 @@ void TukarPosisiPlayer (Player P1, Player P2, State *S){
     ChangePlayerPosition (S, P1, PLAYERPOS(Plyr2));
     ChangePlayerPosition (S, P2, temp);
 
+}
+
+void UseTukarPosisiPlayer (State *S, int Playernum1){
+    int playernum2;
+    boolean same;
+    Player P1, P2;
+
+    P1 = SearchPlayerByPlayerNum(*S, Playernum1);
+
+    ShowPlayer(*S);
+    prinft("Silahkan masukkan no pemain yang ingin ditukar: ");
+    scanf("%d", &playernum2);
+    
+    P2 = SearchPlayerByPlayerNum(*S, playernum2);
+    same = isSamePlayer(P1, P2);
+    while(same){
+        prinft("Tidak dapat menukar dengan diri sendiri!\n");
+        prinft("Silahkan masukkan no pemain yang ingin ditukar: ");
+        scanf("%d", &playernum2);
+        P2 = SearchPlayerByPlayerNum(*S, playernum2);
+        same = isSamePlayer(P1, P2);
+    }
+    TukarPosisiPlayer(P1, P2, &S);
 }
 
 void DoubleMirror(Player *P){
