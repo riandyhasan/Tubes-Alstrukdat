@@ -1,9 +1,6 @@
-#include "map.h"
-#include "array.c"
-#include "mesin_kata.c"
-#include "string.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "map.h"
 
 void inisialisasiMap(Map *M){
     MakeEmptyArr(&MAPC(*M));
@@ -12,7 +9,7 @@ void inisialisasiMap(Map *M){
 }
 
 
-void readMap(Map *M, char filename[50]){
+void readMap(Map *M, char *filename){
     int mapLen, nTel, maxRoll, telSucc, telPred;
     STARTKATA(filename);
     mapLen = KataToInt(CKata);
@@ -21,9 +18,7 @@ void readMap(Map *M, char filename[50]){
     ADVKATA();
     // salin map
     for (int i = 1; i <= mapLen; i++){
-        char copy;
-        strcpy(copy, CKata.TabKata);
-        MAPC(*M).TI[i] = copy;
+        MAPC(*M).TI[i] = CKata.TabKata[i];
     }
     ADVKATA();
     maxRoll = KataToInt(CKata);
@@ -42,7 +37,7 @@ void readMap(Map *M, char filename[50]){
 }
 
 boolean isForbidden(Map M, int loc){
-    return MAPC(M).TI[loc] == "#";
+    return MAPC(M).TI[loc] == '#';
 }
 
 void CmdInspect (Map peta) {

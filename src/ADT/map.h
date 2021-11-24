@@ -4,8 +4,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "array.h"
-#include "teleporter.h"
 
 // Definisi
 // Map berisi mapConfig : konfigurasi peta;
@@ -27,7 +25,7 @@ void inisialisasiMap(Map *M);
 /* Konstruktor dari Map */
 /* Alokasi memori sebesar ukuran dari map. */
 
-void readMap(Map *M, char filename[50]);
+void readMap(Map *M, char *filename);
 /* Membaca file konfigurasi map */
 
 boolean isForbidden(Map M, int loc);
