@@ -5,8 +5,8 @@
 #include <time.h>
 #include "adt.h"
 
-Map *M;
-Stack *S;
+Map M;
+Stack S;
 
 int roll(Map M, State S, int Pnum){
     int maxN;
@@ -27,7 +27,7 @@ int roll(Map M, State S, int Pnum){
 }
 
 void endturn(State turn){
-    Push(S, turn);
+    Push(&S, turn);
     // next turn
 }
 
@@ -37,8 +37,8 @@ void turn(Stack *S){
 
 void undo(){
     State pop;
-    for (int i = 0; i < NPLAYER(InfoTop(*S)); i++){
-        Pop(S, &pop);
+    for (int i = 0; i < NPLAYER(InfoTop(S)); i++){
+        Pop(&S, &pop);
    }
 }
 
@@ -52,40 +52,6 @@ void save(char filename[50]){
     //Write something
     fclose(f);
 }
-
-void UseTukarPosisiPlayer (State *S, int Playernum1){
-    int playernum2;
-    boolean same;
-    Player P1, P2;
-
-    P1 = SearchPlayerByPlayerNum(*S, Playernum1);
-
-    ShowPlayer(*S);
-    printf("Silahkan masukkan no pemain yang ingin ditukar: ");
-    scanf("%d", &playernum2);
-    
-    P2 = SearchPlayerByPlayerNum(*S, playernum2);
-    same = isSamePlayer(P1, P2);
-    while(same){
-        printf("Tidak dapat menukar dengan diri sendiri!\n");
-        printf("Silahkan masukkan no pemain yang ingin ditukar: ");
-        scanf("%d", &playernum2);
-        P2 = SearchPlayerByPlayerNum(*S, playernum2);
-        same = isSamePlayer(P1, P2);
-    }
-    
-    int temp;
-    addrPlayer Plyr1, Plyr2;
-
-    Plyr1 = SearchPlayer(*S, P1);
-    temp = PLAYERPOS(Plyr1);
-
-    Plyr2 = SearchPlayer(*S, P2);
-
-    ChangePlayerPosition (&Plyr1, PLAYERPOS(Plyr2));
-    ChangePlayerPosition (&Plyr2, temp);
-}
-
 
 void CommandSkill (State *S, int id){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
@@ -174,14 +140,16 @@ void newGame() {
     int nPlayer;
 	printf("Masukkan nama file konfigurasi permainan: ");
     scanf("%s", &name);
-    // inisialisasiMap(M);
-    readMap(M, name);
-    CreateEmptyStack(S);
-    printf("Berhasil memuat level. Permainan dimulai!\n\n");
-    printf("Konfigurasi player!\n");
-    printf("Masukkan jumlah pemain: ");
-    scanf("%d", &nPlayer);
-    printf("\nMenambahkan player!\n");
-    AddPlayerToGame(nPlayer);
-    printf("\n%d Player telah ditambahkan!", nPlayer);
+    inisialisasiMap(&(M));
+    readMap(&M, name);
+    CreateEmptyStack(&S);
+    if (pita != NULL){
+        printf("Berhasil memuat konfigurasi. Permainan dimulai!\n\n");
+        printf("Konfigurasi player!\n");
+        printf("Masukkan jumlah pemain: ");
+        scanf("%d", &nPlayer);
+        printf("\nMenambahkan player!");
+        AddPlayerToGame(nPlayer);
+        printf("\n%d Player telah ditambahkan!", nPlayer);
+    }
 }
