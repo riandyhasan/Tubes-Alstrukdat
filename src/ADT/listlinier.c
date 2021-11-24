@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "listlinier.h"
-#include "player.c"
 
 boolean IsEmptyList (List L){
     /* Mengirim true jika list kosong */
@@ -47,7 +46,7 @@ address Search (List L, skill_info X){
     address P;
 
     P = First(L);
-    if (IsEmpty(L)) return Nil;
+    if (IsEmptyList(L)) return Nil;
     else{
         while (P != Nil && Info_Skill(P) != X){
             P = Next(P);
@@ -77,7 +76,7 @@ void InsVLast (List *L, skill_info X){
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
     address P, last;
 
-        if(IsEmpty(*L)) InsVFirst(L, X);
+        if(IsEmptyList(*L)) InsVFirst(L, X);
         else {
             P = Alokasi(X);
             if (P != Nil){
@@ -140,7 +139,7 @@ void DelP (List *L, skill_info X){
 /* List mungkin menjadi kosong karena penghapusan */
     address P, loc;
 
-    if(!IsEmpty(*L)){
+    if(!IsEmptyList(*L)){
         P = First(*L);
         if(Info_Skill(P) == X){
             DelFirst(L, &loc);
@@ -192,7 +191,7 @@ void PrintInfo (List L){
 /* Jika list kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
     address P;
-    if(IsEmpty(L)) printf("[]");
+    if(IsEmptyList(L)) printf("[]");
     else{
         printf("[");
         P = First(L);
@@ -212,7 +211,7 @@ int NbElmt (List L){
     int count;
     address P;
 
-    if (IsEmpty(L)) return 0;
+    if (IsEmptyList(L)) return 0;
     else{
         count = 0;
         P = First(L);
