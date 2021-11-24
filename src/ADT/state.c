@@ -2,7 +2,6 @@
 // Implementasi dari state.h
 #include "../boolean.h"
 #include "state.h"
-#include "player.c"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -18,7 +17,7 @@ addrPlayer PlayerTurn(Player p, int post){
   addrPlayer turn;
   turn = (addrPlayer) malloc (sizeof(PlayerState));
   if (turn != Nil){
-        PLAYER(turn) = p;
+        turn-> pemain = p;
         PLAYERPOS(turn) = post;
         NextPlayer(turn) = Nil;
    }
@@ -74,7 +73,7 @@ addrPlayer SearchPlayer(State S, Player P){
   /* Mencari addrPlayer dari Player */
   addrPlayer loc;
   loc = FIRSTPLAYER(S);
-  while (loc != Nil && INFOPLAYER(PLAYER(loc)) != INFOPLAYER(P)){
+  while (loc != Nil && INFOPLAYER(loc -> pemain) != INFOPLAYER(P)){
     loc = NextPlayer(loc);
   }
   return loc; 
@@ -83,28 +82,26 @@ addrPlayer SearchPlayer(State S, Player P){
 Player SearchPlayerByName(State S, char name[50]){
   addrPlayer loc;
   loc = FIRSTPLAYER(S);
-  while (loc != Nil && NAME(PLAYER(loc)) != name[50]){
+  while (loc != Nil && NAME(loc -> pemain) != name[50]){
     loc = NextPlayer(loc);
   }
-  return PLAYER(loc);
+  return loc -> pemain;
 }
 
 Player SearchPlayerByPlayerNum(State S, int idx){
   addrPlayer loc;
   loc = FIRSTPLAYER(S);
-  while (loc != Nil && NAME(PLAYER(loc)) != idx){
+  while (loc != Nil && NAME(loc -> pemain) != idx){
     loc = NextPlayer(loc);
   }
-  return PLAYER(loc);
+  return loc -> pemain;
 }
 
-void ChangePlayerPosition(State *S, Player P, int newPost){
+void ChangePlayerPosition(addrPlayer *P, int newPost){
 /* I.S. Game sudah dimulai dan player telah memiliki posisi masing-masin  */
 /* F.S. Posisi player diubah sesuai dengan roll yang dilakukan */
-  addrPlayer players;
-  players = SearchPlayer(*S, P);
-  if(!IsEmptyState(*S) && players != Nil) {
-      PLAYERPOS(players) = newPost;
+  if(P != Nil) {
+      PLAYERPOS(*P) = newPost;
     }
 }
 
@@ -112,7 +109,7 @@ void ShowPlayer(State S){
   addrPlayer loc;
   loc = FIRSTPLAYER(S);
   for(int i=1; i <= NPLAYER(S); i++) {
-    printf("%d. %c\n",INFOPLAYER(PLAYER(loc)),  NAME(PLAYER(loc)));
+    printf("%d. %c\n",INFOPLAYER(loc -> pemain),  NAME(loc -> pemain));
     loc = NextPlayer(loc);
   }
 }

@@ -3,7 +3,6 @@
 #define state_H
 
 #include "../boolean.h"
-#include "player.h"
 #include <stdlib.h>
 
 #define Nil NULL
@@ -15,6 +14,7 @@ typedef struct StateNode {
   int position;
   addrPlayer nextp;   
 } PlayerState;
+
 typedef struct {
   addrPlayer FirstP;
   int nPlayer;  
@@ -22,7 +22,6 @@ typedef struct {
 
 /* Selektor */
 #define PLAYERPOS(ps) (ps)->position
-#define PLAYER(ps) (ps)->pemain
 #define NextPlayer(ps) (ps)->nextp
 #define FIRSTPLAYER(s) (s).FirstP
 #define NPLAYER(s) (s).nPlayer
@@ -43,7 +42,7 @@ void AddPlayerToGame(int nPlayer);
   /* I.S. Sembarang  */
 /* F.S. Player ditambahkan ke dalam sebanyak yang diinginkan */
 
-void ChangePlayerPosition(State *S, Player P, int newPost);
+void ChangePlayerPosition(addrPlayer *P, int newPost);
 /* I.S. Sembarang, turn sudah dialokasi  */
 /* F.S. turn ditambahkan sebagai elemen terakhir yang baru */
 
@@ -51,6 +50,10 @@ void AddTurn(State *S, addrPlayer turn);
 /* I.S. Sembarang, turn sudah dialokasi  */
 /* F.S. turn ditambahkan sebagai elemen terakhir yang baru */
 
+Player SearchPlayerByName(State S, char name[50]);
 
+Player SearchPlayerByPlayerNum(State S, int idx);
+
+void ShowPlayer(State S);
 
 #endif
