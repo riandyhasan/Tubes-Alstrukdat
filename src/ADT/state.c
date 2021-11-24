@@ -61,11 +61,12 @@ void AddPlayerToGame(int nPlayer){
     Player newPlayer;
     addrPlayer turn;
     char Name[50];
-    printf("Masukkan nama player ke-%d: ", i);
+    printf("\nMasukkan nama player ke-%d: ", i);
     scanf("%s",&Name);
     CreatePlayer(&newPlayer, Name, i);
     turn = PlayerTurn(newPlayer, 1);
     AddTurn(&newState, turn);
+    printf("Player %s berhasil ditambahkan!", Name);
   }
 }
 
@@ -112,4 +113,38 @@ void ShowPlayer(State S){
     printf("%d. %c\n",INFOPLAYER(loc -> pemain),  NAME(loc -> pemain));
     loc = NextPlayer(loc);
   }
+}
+
+
+void UseTukarPosisiPlayer (State *S, int Playernum1){
+    int playernum2;
+    boolean same;
+    Player P1, P2;
+
+    P1 = SearchPlayerByPlayerNum(*S, Playernum1);
+
+    ShowPlayer(*S);
+    printf("Silahkan masukkan no pemain yang ingin ditukar: ");
+    scanf("%d", &playernum2);
+    
+    P2 = SearchPlayerByPlayerNum(*S, playernum2);
+    same = isSamePlayer(P1, P2);
+    while(same){
+        printf("Tidak dapat menukar dengan diri sendiri!\n");
+        printf("Silahkan masukkan no pemain yang ingin ditukar: ");
+        scanf("%d", &playernum2);
+        P2 = SearchPlayerByPlayerNum(*S, playernum2);
+        same = isSamePlayer(P1, P2);
+    }
+    
+    int temp;
+    addrPlayer Plyr1, Plyr2;
+
+    Plyr1 = SearchPlayer(*S, P1);
+    temp = PLAYERPOS(Plyr1);
+
+    Plyr2 = SearchPlayer(*S, P2);
+
+    ChangePlayerPosition (&Plyr1, PLAYERPOS(Plyr2));
+    ChangePlayerPosition (&Plyr2, temp);
 }
