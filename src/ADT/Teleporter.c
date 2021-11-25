@@ -48,34 +48,19 @@ void PetakInAndOut (Teleporter * T, int X, int Y) {
 
 boolean IsTeleport (arrayTele aT, int nomorPetak){
 /* Mengecek apakah sebuah petak merupakan sebuah teleport */
-    int i = 1;
-    while ((nomorPetak != aT.bufferTele[i].IdxMasuk) && (i < aT.Neff-1)) {
-        i++;
-    }
-    return aT.bufferTele[i].IdxMasuk == nomorPetak;
+    return aT.bufferTele[nomorPetak].IdxMasuk > -1 && aT.bufferTele[nomorPetak].IdxKeluar > -1;
 }
 
 int PetakOut (arrayTele aT, int nomorPetak){
 /* Mendapatkan petak keluar dari sebuah kumpulan tele pada petak masuk tertentu */
-    int i = 1;
-    int Out;
-    while (aT.bufferTele[i].IdxMasuk != nomorPetak) {
-        i++;
-    }
-    if (aT.bufferTele[i].IdxMasuk != nomorPetak){
-        return Out = -1; /* Mengirimkan -1 jika petak tersebut tidak memiliki petak keluar */
-    } else {
-        return Out = aT.bufferTele[i].IdxKeluar; /* Mengirimkan IdxKeluar ketika petak masuk memiliki petak keluar */
-    }
-    return Out;
+    return aT.bufferTele[nomorPetak].IdxKeluar;
 }
 
 void PrintTele (arrayTele T) { 
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Mencetak indeks petak masuk, petak keluar */
-    int i = 1;
-    for (i = 0; i <= T.Neff ;i++) {
-        printf("%d Masuk: %d, Keluar: %d\n",i+1, T.bufferTele[i].IdxMasuk, T.bufferTele[i].IdxKeluar);
+    for (int i = 1; i <= T.Neff ;i++) {
+        printf("%d Masuk: %d, Keluar: %d\n",i, T.bufferTele[i].IdxMasuk, T.bufferTele[i].IdxKeluar);
     }
 }
 
