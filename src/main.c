@@ -5,5 +5,6 @@
 
 int main(){
     newGame();
+    startGame();
     return 0;
 }

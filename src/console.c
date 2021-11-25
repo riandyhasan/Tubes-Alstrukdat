@@ -7,10 +7,12 @@
 
 Map M;
 Stack S;
+State turn;
+int playerturn = 1;
 
-int roll(Map M, State S, int Pnum){
+int roll(){
     int maxN;
-    Player p = SearchPlayerByPlayerNum(S, Pnum);
+    Player p = SearchPlayerByPlayerNum(turn, playerturn);
     maxN = MAXROLL(M);
     if (p.buff[2] == true){
         srand (time(NULL));
@@ -26,13 +28,10 @@ int roll(Map M, State S, int Pnum){
     }
 }
 
+
 void endturn(State turn){
     Push(&S, turn);
-    // next turn
-}
-
-void turn(Stack *S){
-
+    playerturn = (playerturn + 1) % turn.nPlayer;
 }
 
 void undo(){
@@ -53,14 +52,14 @@ void save(char filename[50]){
     fclose(f);
 }
 
-void CommandSkill (State *S, int id){
+void CommandSkill (){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
     int UseSkill, i;
     address T;
     Player P;
 
-    P = SearchPlayerByPlayerNum(*S, id);
+    P = SearchPlayerByPlayerNum(turn, playerturn);
 
     T = First(INFOSKILL(P));
 
@@ -94,7 +93,7 @@ void CommandSkill (State *S, int id){
             DelP (&INFOSKILL(P), 4) ;
         }
         else if (Info_Skill(T) == 5){
-            UseTukarPosisiPlayer(S, id) ;
+            UseTukarPosisiPlayer(&turn, playerturn) ;
             DelP (&INFOSKILL(P), 5) ;
         }
     }
@@ -135,6 +134,58 @@ void CommandSkill (State *S, int id){
 
 // }
 
+
+
+
+void cmdPlayer(){
+    char MAP[] = "MAP";
+    char SKILL[] = "SKILL";
+    char BUFF[] = "BUFF";
+    char INSPECT[] = "INSPECT";
+    char ROLL[] = "ROLL";
+    char SAVE[] = "SAVE";
+    char ENDTURN[] = "ENDTURN";
+    char UNDO[] = "UNDO";
+    readInput();
+    if (IsKataSama(CKata, SKILL)){
+        CommandSkill();
+    }
+    else if (IsKataSama(CKata, MAP)){
+        printf("MAP");
+    }
+    else if (IsKataSama(CKata, BUFF)){
+        printf("BUFF");
+    }
+    else if (IsKataSama(CKata, INSPECT)){
+        printf("INSPECT");
+    }
+    else if (IsKataSama(CKata, ROLL)){
+        printf("ROLL");
+    }
+    else if (IsKataSama(CKata, SAVE)){
+        printf("SAVE");
+    }
+    else if (IsKataSama(CKata, ENDTURN)){
+        printf("ENDTURN");
+    }
+    else if (IsKataSama(CKata, UNDO)){
+        printf("UNDO");
+    }
+}
+
+
+void playerTurn(){
+
+    printf("Saatnya turn player ke-%d\n", playerturn);
+    Player P = SearchPlayerByPlayerNum(turn, playerturn);
+    addrPlayer Pt = SearchPlayer(turn,P);
+    printf("Posisi player: ");
+    showPlayerPos(M, PLAYERPOS(Pt));
+    insPlayerSkill(&turn, playerturn);
+    cmdPlayer();
+}
+
+
 void newGame() {
 	char name[100];
     int nPlayer;
@@ -149,7 +200,15 @@ void newGame() {
         printf("Masukkan jumlah pemain: ");
         scanf("%d", &nPlayer);
         printf("\nMenambahkan player!");
-        AddPlayerToGame(nPlayer);
-        printf("\n%d Player telah ditambahkan!", nPlayer);
+        CreateRound(&turn);
+        AddPlayerToGame(&turn, nPlayer);
+        printf("\n%d Player telah ditambahkan!\n", nPlayer);
+        playerturn = 1;
     }
+}
+
+void startGame(){
+    printf("Pemain pada game ini adalah:\n");
+    ShowPlayer(turn);
+    playerTurn();
 }
