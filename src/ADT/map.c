@@ -39,6 +39,16 @@ boolean isForbidden(Map M, int loc){
     return M.mapConfig.TI[loc] == '#';
 }
 
+void showPlayerPos(Map M, int loc){
+    for(int i=1; i <= M.mapConfig.Neff; i++){
+        if (i == loc) printf("*");
+        else{
+            printf("%c", M.mapConfig.TI[i]);
+        }
+    }
+    printf("\n");
+}
+
 void CmdInspect (Map peta) {
     int teleOut;
     int petak;
