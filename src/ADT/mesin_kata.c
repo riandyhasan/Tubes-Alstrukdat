@@ -100,7 +100,7 @@ void printKata(Kata kata){
 }
 
 void readInput(){
-    printf("\nMasukkan command: ");
+    printf("Masukkan command: ");
     STARTCOMMAND();
 }
 

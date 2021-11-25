@@ -31,10 +31,10 @@ boolean isSamePlayer(Player p1, Player p2);
     4. Senter pengecil hoki
 */
 
-void printBuff (boolean b[4]);
+void printBuff (Player P);
 /* mengeluarkan list Buff yang dimiliki player */
 
-void resetBuff (boolean (*b)[4]);
+void resetBuff (Player *P);
 /* me-reset seluruh buff kecuali imunitas teleport setiap ronde
 (karena buff hanya berlaku sekali di suatu ronde) */
 

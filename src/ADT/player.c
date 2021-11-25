@@ -5,12 +5,10 @@
 
 void CreatePlayer(Player *p, char *name, int id){
     List skill;
-    boolean buff[4];
     CreateEmptyList(&skill);
-    resetBuff(&buff);
+    resetBuff(p);
     INFOPLAYER(*p) = id;
     strcpy(NAME(*p),name);
-    printf("Nama pemain: %s\n", NAME(*p));
     INFOSKILL(*p) = skill;
 }
 
@@ -21,29 +19,54 @@ boolean isSamePlayer(Player p1, Player p2){
 
 /******************************* BUFF *******************************/
 
-void printBuff (boolean b[4]) {
+
+int countBuff (Player P){
+    int count = 0;
+    for (int i=0; i<4;i++){
+        if (P.buff[i]) count++;
+    }
+    return count;
+}
+
+
+void printBuff (Player P) {
 /* mengeluarkan list Buff yang dimiliki player */
-    for (int i = 0; i < 4; i++) {
-        if (b[0]) {
-            printf("Anda mendapatkan buff imunitas teleport. Anda tidak akan kemana-mana.");
-        }
-        else if (b[1]) {
-            printf("Anda mendapatkan buff cermin pengganda. Selamat, anda bisa mendapatkan 2 skill baru!");
-        }
-        else if (b[2]) {
-            printf("Anda mendapatkan buff senter pembesar hoki. Selamat, hoki anda jadi besar!");
-        }
-        else if (b[3]) {
-            printf("Anda mendapatkan buff senter pengecil hoki. Anda kurang beruntung, Player.");
+    int pbuff = countBuff(P);
+    if (pbuff == 0) printf("%s tidak memiliki buff!\n", NAME(P));
+    else{
+        printf ("%s memiliki buff:\n", NAME(P));
+
+        int i = 1;
+        while (i <= pbuff){
+            if (P.buff[i-1]){
+                printf ("%d. ", i);
+                switch(i){
+                    case 1:
+                        printf("Imunitas teleport. Anda tidak akan kemana-mana.\n");
+                        break;
+                    case 2:
+                        printf("Cermin pengganda. Anda bisa mendapatkan 2 skill baru!\n");
+                        break;
+                    case 3:
+                        printf("Senter pembesar hoki. Roll anda akan membesar!\n");
+                        break;
+                    case 4:
+                        printf("Senter pengecil hoki. Roll anda akan mengecil\n");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            i ++;
         }
     }
 }
 
-void resetBuff (boolean (*b)[4]) {
+void resetBuff (Player *P) {
 /* me-reset seluruh buff kecuali imunitas teleport setiap ronde
 (karena buff hanya berlaku sekali di suatu ronde) */
     for (int i = 0; i < 4; i++) {
-        (*b)[i] = false;
+        (*P).buff[i] = false;
     }
 }
 
@@ -126,6 +149,7 @@ void PrintSkill (Player P){
     else{
 
         while (T != Nil){
+            printf("%s memiliki skill:\n", NAME(P));
             printf("%d. ", i);
 
             if (Info_Skill(T) == 1){
@@ -143,13 +167,10 @@ void PrintSkill (Player P){
             else if (Info_Skill(T) == 5){
                 printf("Mesin Penukar Posisi\n");
             }
-
             T = Next(T);
             i++ ;
 
             printf("\n");
         }
     }
-
-    printf("Tekan 0 untuk keluar. Masukkan bilangan negatif untuk membuang skill.");
 }
