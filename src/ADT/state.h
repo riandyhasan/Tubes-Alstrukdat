@@ -12,6 +12,7 @@ typedef struct StateNode *addrPlayer;
 typedef struct StateNode {
   Player pemain;
   int position;
+  boolean isRoll;
   addrPlayer nextp;   
 } PlayerState;
 
@@ -22,6 +23,7 @@ typedef struct {
 
 /* Selektor */
 #define PLAYERPOS(ps) (ps)->position
+#define ROLLED(ps) (ps)-> isRoll
 #define NextPlayer(ps) (ps)->nextp
 #define FIRSTPLAYER(s) (s).FirstP
 #define NPLAYER(s) (s).nPlayer
@@ -56,11 +58,11 @@ Player SearchPlayerByPlayerNum(State S, int idx);
 
 void ShowPlayer(State S);
 
-void insPlayerSkill (State *S, int num);
+void insPlayerSkill (Player *P);
 /* I.S. Skill Player mungkin kosong  */
 /* F.S. Skill baru ditambahkan ke dalam list skill player */
 
-void DoubleMirror(State *S, int num);
+void DoubleMirror(Player *P);
 /* I.S.  terdapat skill Cermin Pengganda di dalam list skillnya.*/
 /* F.S. Skill Cermin Pengganda -> Menghapus dirinya sendiri dan mendapatkan 2 buah skill baru */
 
