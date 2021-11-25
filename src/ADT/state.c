@@ -51,21 +51,19 @@ void CreateRound (State *S){
   NPLAYER(*S) = 0;
 }
 
-void AddPlayerToGame(int nPlayer){
+void AddPlayerToGame(State *newState,int nPlayer){
   /* I.S. Sembarang  */
 /* F.S. Player ditambahkan ke dalam sebanyak yang diinginkan */
-  State newState;
-  CreateRound(&newState);
-  NPLAYER(newState) = nPlayer;
+  NPLAYER(*newState) = nPlayer;
   for(int i = 1; i <= nPlayer; i++){
     Player newPlayer;
     addrPlayer turn;
-    char Name[50];
+    char Name[100];
     printf("\nMasukkan nama player ke-%d: ", i);
     scanf("%s",&Name);
     CreatePlayer(&newPlayer, Name, i);
     turn = PlayerTurn(newPlayer, 1);
-    AddTurn(&newState, turn);
+    AddTurn(&(*newState), turn);
     printf("Player %s berhasil ditambahkan!", Name);
   }
 }
@@ -80,10 +78,10 @@ addrPlayer SearchPlayer(State S, Player P){
   return loc; 
 }
 
-Player SearchPlayerByName(State S, char name[50]){
+Player SearchPlayerByName(State S, char *name){
   addrPlayer loc;
   loc = FIRSTPLAYER(S);
-  while (loc != Nil && NAME(loc -> pemain) != name[50]){
+  while (loc != Nil && NAME(loc -> pemain) != name){
     loc = NextPlayer(loc);
   }
   return loc -> pemain;
@@ -92,7 +90,7 @@ Player SearchPlayerByName(State S, char name[50]){
 Player SearchPlayerByPlayerNum(State S, int idx){
   addrPlayer loc;
   loc = FIRSTPLAYER(S);
-  while (loc != Nil && NAME(loc -> pemain) != idx){
+  while (loc != Nil && INFOPLAYER(loc -> pemain) != idx){
     loc = NextPlayer(loc);
   }
   return loc -> pemain;
@@ -110,7 +108,7 @@ void ShowPlayer(State S){
   addrPlayer loc;
   loc = FIRSTPLAYER(S);
   for(int i=1; i <= NPLAYER(S); i++) {
-    printf("%d. %c\n",INFOPLAYER(loc -> pemain),  NAME(loc -> pemain));
+    printf("%d. %s\n",INFOPLAYER(loc -> pemain),  NAME(loc -> pemain));
     loc = NextPlayer(loc);
   }
 }
@@ -147,4 +145,59 @@ void UseTukarPosisiPlayer (State *S, int Playernum1){
 
     ChangePlayerPosition (&Plyr1, PLAYERPOS(Plyr2));
     ChangePlayerPosition (&Plyr2, temp);
+}
+
+
+void insPlayerSkill (State *S, int num){
+
+    int X ;
+    Player P = SearchPlayerByPlayerNum(*S, num);
+
+    X = GetSkills() ;
+
+    if (X == 6){
+        /*DO NOTHING*/
+        printf("Maaf, anda kurang beruntung :D\n");
+    }
+    else{
+        InsVLast (&INFOSKILL(P), X);
+
+        if (X == 1){
+            printf("Pintu Ga Ke Mana Mana berhasil dimasukkan ke dalam list!\n");
+        }
+        else if (X == 2){
+            printf("Cermin Pengganda berhasil dimasukkan ke dalam list!\n");
+        }
+        else if (X == 3){
+            printf("Senter Pembesar Hoki berhasil dimasukkan ke dalam list!\n");
+        }
+        else if (X == 4){
+            printf("Senter Pengecil Hoki berhasil dimasukkan ke dalam list!\n");
+        }
+        else if (X == 5){
+            printf("Mesin Penukar Posisi berhasil dimasukkan ke dalam list!\n");
+        }
+    }
+}
+
+
+void DoubleMirror(State *S, int num){
+    
+    List X;
+    Player P = SearchPlayerByPlayerNum(*S, num);
+
+    int i;
+
+    X = INFOSKILL(P);
+
+    if (NbElmt(X) < 9){
+        DelP(&X, 2);
+
+        for (i=0; i=1; i++){
+            insPlayerSkill(S, num);
+        }
+    }
+    else{
+        printf("Kamu tidak memiliki space cukup untuk skill ini. Skill terhapus dan kamu tidak mendapat apa apa !\n");
+    }
 }

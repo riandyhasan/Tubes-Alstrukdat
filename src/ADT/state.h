@@ -38,7 +38,7 @@ addrPlayer SearchPlayer(State S, Player P);
 addrPlayer PlayerTurn(Player p, int post);
 /* Mengembalikan sebuah addrPlayer yang menyimpan turn pemain  */
 
-void AddPlayerToGame(int nPlayer);
+void AddPlayerToGame(State *newState,int nPlayer);
   /* I.S. Sembarang  */
 /* F.S. Player ditambahkan ke dalam sebanyak yang diinginkan */
 
@@ -55,5 +55,13 @@ Player SearchPlayerByName(State S, char name[50]);
 Player SearchPlayerByPlayerNum(State S, int idx);
 
 void ShowPlayer(State S);
+
+void insPlayerSkill (State *S, int num);
+/* I.S. Skill Player mungkin kosong  */
+/* F.S. Skill baru ditambahkan ke dalam list skill player */
+
+void DoubleMirror(State *S, int num);
+/* I.S.  terdapat skill Cermin Pengganda di dalam list skillnya.*/
+/* F.S. Skill Cermin Pengganda -> Menghapus dirinya sendiri dan mendapatkan 2 buah skill baru */
 
 #endif
