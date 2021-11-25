@@ -4,7 +4,9 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <windows.h>
 #include "console.h"
+
 Map M;
 Stack S;
 State turn;
@@ -55,7 +57,7 @@ void printLoading(){
 
         // Print numDots number of dots, one every trigger milliseconds.
         for (int i = 0; i < numDots; i++) {
-            usleep(trigger * 1000);
+            uSleep(trigger * 1000);
             fputc('.', stdout);
             fflush(stdout);
         }
@@ -74,11 +76,36 @@ void printRoll(){
 
     // Print numDots number of dots, one every trigger milliseconds.
     for (int i = 0; i < numDots; i++) {
-        usleep(trigger * 1000);
+        uSleep(trigger * 1000);
         fputc('.', stdout);
         fflush(stdout);
     }
     printf("\n");
+}
+
+void newGame() {
+	char name[100];
+    int nPlayer;
+	printf("Masukkan nama file konfigurasi permainan: ");
+    scanf("%s", &name);
+    inisialisasiMap(&(M));
+    readMap(&M, name);
+    CreateEmptyStack(&S);
+    if (pita != NULL){
+        printLoading();
+        printf("Berhasil memuat konfigurasi. Permainan dimulai!\n\n");
+        printf("Konfigurasi player!\n");
+        printf("Masukkan jumlah pemain: ");
+        scanf("%d", &nPlayer);
+        printf("Menambahkan player!\n");
+        CreateRound(&turn);
+        AddPlayerToGame(&turn, nPlayer);
+        printf("%d Player telah ditambahkan!\n", nPlayer);
+        playerturn = 1;
+        printf("\nPemain pada game ini adalah:\n");
+        ShowPlayer(turn);
+        printf("\n");
+    }
 }
 
 void mainMenu(){
@@ -186,6 +213,14 @@ void CommandSkill (Player *P){
             else if (Info_Skill(T) == 5){
                 UseTukarPosisiPlayer(&turn, playerturn) ;
                 DelP (&INFOSKILL(*P), 5) ;
+            }
+            else if (Info_Skill(T) == 7){
+                printf("%s memakai skill Mesin Waktu. Membuat player lain mundur :D\n", NAME(*P));
+                DelP (&INFOSKILL(*P), 7) ;
+            }
+            else if (Info_Skill(T) == 8){
+                printf("%s memakai skill Baling-Baling Jambu. Membuat player lain maju :D\n", NAME(*P));
+                DelP (&INFOSKILL(*P), 8) ;
             }
         }
         else if (UseSkill < 0){
@@ -329,32 +364,144 @@ void playerTurn(State *St){
     cmdPlayer();
 }
 
+void startGame(){
+    playerTurn(&turn);
+}
 
-void newGame() {
-	char name[100];
-    int nPlayer;
-	printf("Masukkan nama file konfigurasi permainan: ");
-    scanf("%s", &name);
-    inisialisasiMap(&(M));
-    readMap(&M, name);
-    CreateEmptyStack(&S);
-    if (pita != NULL){
-        printLoading();
-        printf("Berhasil memuat konfigurasi. Permainan dimulai!\n\n");
-        printf("Konfigurasi player!\n");
-        printf("Masukkan jumlah pemain: ");
-        scanf("%d", &nPlayer);
-        printf("Menambahkan player!\n");
-        CreateRound(&turn);
-        AddPlayerToGame(&turn, nPlayer);
-        printf("%d Player telah ditambahkan!\n", nPlayer);
-        playerturn = 1;
-        printf("\nPemain pada game ini adalah:\n");
-        ShowPlayer(turn);
-        printf("\n");
+
+void UseMesinWaktu (State *S, Player *T){
+
+    int maxN = MAXROLL(M);
+    int rollresult;
+
+    srand (time(NULL));
+    rollresult = (rand() % maxN) + 1;
+    
+    Player P1 = *T ;
+    int X;
+    ShowPlayer(*S);
+    printf("Pemain yang ingin dimajukan : ");
+    scanf("%d\n", &X);
+
+    Player P2 = SearchPlayerByPlayerNum(*S, X);
+    addrPlayer AP = SearchPlayer(*S, P2);
+    boolean same;
+
+    same = isSamePlayer(P1, P2);
+    while (same){
+        printf("Tidak dapat menukar dengan diri sendiri!\n");
+        printf("Silahkan masukkan no pemain yang ingin dimajukan: ");
+        scanf("%d", &X);
+        P2 = SearchPlayerByPlayerNum(*S, X);
+        addrPlayer AP = SearchPlayer(*S, P2);
+        same = isSamePlayer(P1, P2);
+    }
+
+    int pos = PLAYERPOS(AP) - rollresult;
+    if (pos > M.mapConfig.Neff) pos = pos % M.mapConfig.Neff;
+    
+    printf("Hasil roll mendapatkan angka %d\n", rollresult);
+    
+    if (isForbidden(M, pos)){
+        pos = PLAYERPOS(AP) - rollresult;
+        if (pos < 0){
+            pos = (PLAYERPOS(AP) + rollresult) % M.mapConfig.Neff;
+        }
+
+        if(!isForbidden(M, pos)){
+            printf("%s akan mundur.\n", NAME(P2));
+            printf("%s mundur %d langkah.\n", NAME(P2), rollresult);
+            ChangePlayerPosition(&AP, pos);
+            printf("%s berada di petak %d.\n", NAME(P2), PLAYERPOS(AP));
+
+            if (IsTeleport(M.tele, PLAYERPOS(AP))){
+                printf("%s menemukan teleporter.\n", NAME(P2));
+                if ((P2).buff[0] = true){
+                    char Choose;
+                    printf("%s memiliki buff imunitas teleport, apakah ingin digunakan ? (Y/N)", NAME(P2));
+                    scanf("%s", &Choose);
+
+                    if (Choose == "Y"){
+                        /*Do Nothing*/
+                    }
+                    else if (Choose == "N"){
+                        printf("%s teleport ke petak %d\n", NAME(P2), PetakOut(M.tele, PLAYERPOS(AP)));
+                        ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
+                    }
+                }
+            }
+        }
+        else{
+            printf("%s Kamu tidak bergerak karena menemukan petak terlarang ! hohohooo\n", NAME(P2));
+        }
     }
 }
 
-void startGame(){
-    playerTurn(&turn);
+
+void BalingBalingJambu (State *S, Player *T){
+    
+    int maxN = MAXROLL(M);
+    int rollresult;
+
+    srand (time(NULL));
+    rollresult = (rand() % maxN) + 1;
+    
+    Player P1 = *T ;
+    int X;
+    ShowPlayer(*S);
+    printf("Pemain yang ingin dimajukan : ");
+    scanf("%d\n", &X);
+
+    Player P2 = SearchPlayerByPlayerNum(*S, X);
+    addrPlayer AP = SearchPlayer(*S, P2);
+    boolean same;
+
+    same = isSamePlayer(P1, P2);
+    while (same){
+        printf("Tidak dapat menukar dengan diri sendiri!\n");
+        printf("Silahkan masukkan no pemain yang ingin dimajukan: ");
+        scanf("%d", &X);
+        P2 = SearchPlayerByPlayerNum(*S, X);
+        addrPlayer AP = SearchPlayer(*S, P2);
+        same = isSamePlayer(P1, P2);
+    }
+
+    int pos = PLAYERPOS(AP) + rollresult;
+    if (pos > M.mapConfig.Neff) pos = pos % M.mapConfig.Neff;
+    
+    printf("Hasil roll mendapatkan angka %d\n", rollresult);
+    
+    if (isForbidden(M, pos)){
+        pos = PLAYERPOS(AP) - rollresult;
+        if (pos < 0){
+            pos = (PLAYERPOS(AP) + rollresult) % M.mapConfig.Neff;
+        }
+
+        if(!isForbidden(M, pos)){
+            printf("%s akan mundur.\n", NAME(P2));
+            printf("%s mundur %d langkah.\n", NAME(P2), rollresult);
+            ChangePlayerPosition(&AP, pos);
+            printf("%s berada di petak %d.\n", NAME(P2), PLAYERPOS(AP));
+
+            if (IsTeleport(M.tele, PLAYERPOS(AP))){
+                printf("%s menemukan teleporter.\n", NAME(P2));
+                if ((P2).buff[0] = true){
+                    char Choose;
+                    printf("%s memiliki buff imunitas teleport, apakah ingin digunakan ? (Y/N)", NAME(P2));
+                    scanf("%s", &Choose);
+
+                    if (Choose == "Y"){
+                        /*Do Nothing*/
+                    }
+                    else if (Choose == "N"){
+                        printf("%s teleport ke petak %d\n", NAME(P2), PetakOut(M.tele, PLAYERPOS(AP)));
+                        ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
+                    }
+                }
+            }
+        }
+        else{
+            printf("%s Kamu tidak bergerak karena menemukan petak terlarang ! hohohooo\n", NAME(P2));
+        }
+    }
 }
