@@ -27,6 +27,7 @@ void SalinKata()
     int i = 1;
     CKata.Length = 0;
     while(CC != BLANK && CC != ENTER ){
+        IgnoreBlank();
         CKata.TabKata[i] = CC;
         i++;
         ADV();
@@ -86,10 +87,18 @@ void ADVKATA()
 
 int KataToInt(Kata CKata){
     char kata[CKata.Length];
-    for (int i = 0; i < CKata.Length; i++){
-        kata[i] = CKata.TabKata[i+1];
+    if (CKata.Length == 1) {
+        char kata[2];
+        kata[0] = CKata.TabKata[1];
+        char temp[2] = { kata[0], '\0'} ;
+        return atoi(temp);
     }
-    return atoi(kata);
+    else{
+        for (int i = 0; i < CKata.Length; i++){
+            kata[i] = CKata.TabKata[i+1];
+        }
+        return atoi(kata);
+    }
 }
 
 void printKata(Kata kata){

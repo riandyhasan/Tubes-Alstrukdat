@@ -22,7 +22,6 @@ void START(char *filename) {
     strcpy(file, dir);
     strcat(file, filename);
     printf("Membuka file pada directory %s\n", filename);
-    printf("Loading.....\n");
     pita = fopen(file, "r");
     if (pita == NULL) {
 		printf("Punten, file gak bisa dibuka!\n");
