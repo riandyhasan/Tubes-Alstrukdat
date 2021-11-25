@@ -58,12 +58,4 @@ Player SearchPlayerByPlayerNum(State S, int idx);
 
 void ShowPlayer(State S);
 
-void insPlayerSkill (Player *P);
-/* I.S. Skill Player mungkin kosong  */
-/* F.S. Skill baru ditambahkan ke dalam list skill player */
-
-void DoubleMirror(Player *P);
-/* I.S.  terdapat skill Cermin Pengganda di dalam list skillnya.*/
-/* F.S. Skill Cermin Pengganda -> Menghapus dirinya sendiri dan mendapatkan 2 buah skill baru */
-
 #endif
