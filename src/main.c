@@ -4,7 +4,8 @@
 #include "console.c"
 
 int main(){
-    newGame();
+    printBanner();
+    mainMenu();
     startGame();
     return 0;
 }
