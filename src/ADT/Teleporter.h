@@ -51,10 +51,6 @@ boolean IsTeleport(arrayTele aT, int nomorPetak);
 int PetakOut (arrayTele aT, int nomorPetak);
 /* Mendapatkan petak keluar dari sebuah kumpulan tele pada petak masuk tertentu */
 
-void MovePemain (PlayerState * PS, arrayTele T);
-/* I.S T terdefinisi dan tidak kosong */
-/* F.S Teleporter ditemukan dan Mengarahkan player ke petak keluar jika player tidak mempunyai buff imunitas */
-
 void PrintTele (arrayTele T);
 /* I.S T terdefinisi dan tidak kosong */
 /* F.S Mengirimkan indeks petak masuk dan petak keluar */
