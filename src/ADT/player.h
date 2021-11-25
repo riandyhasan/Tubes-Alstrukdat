@@ -52,10 +52,14 @@ void PrintSkill ();
 /* I.S. Sembarang  */
 /* F.S. Mengeluarkan list skill yang dimiliki oleh player */
 
+void insPlayerSkill (Player *P);
+/* I.S. Skill Player mungkin kosong  */
+/* F.S. Skill baru ditambahkan ke dalam list skill player */
 
-// void CommandSkill (State *S, int id);
-// /* I.S. Sembarang  */
-// /* F.S. mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
+void DoubleMirror(Player *P);
+/* I.S.  terdapat skill Cermin Pengganda di dalam list skillnya.*/
+/* F.S. Skill Cermin Pengganda -> Menghapus dirinya sendiri dan mendapatkan 2 buah skill baru */
+
 
 
 // void TukarPosisiPlayer (Player P1, Player P2, State *S);

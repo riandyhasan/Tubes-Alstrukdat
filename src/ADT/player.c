@@ -147,9 +147,8 @@ void PrintSkill (Player P){
         printf("Kamu gapunya skill apa apa, Kasian banget :(\n");
     }
     else{
-
+        printf("%s memiliki skill:\n", NAME(P));
         while (T != Nil){
-            printf("%s memiliki skill:\n", NAME(P));
             printf("%d. ", i);
 
             if (Info_Skill(T) == 1){
@@ -169,8 +168,56 @@ void PrintSkill (Player P){
             }
             T = Next(T);
             i++ ;
-
-            printf("\n");
         }
+    }
+}
+
+
+
+void insPlayerSkill (Player *P){
+
+    int X ;
+    X = GetSkills() ;
+    if (NbElmt(INFOSKILL(*P)) == 10) printf("Tidak mendapatkan skill! Jangan maruk ya :D\n");
+    else{
+        if (X == 6){
+            /*DO NOTHING*/
+            printf("Maaf, anda kurang beruntung :D\n");
+        }
+        else{
+            InsVLast (&INFOSKILL(*P), X);
+            printf("%s mendapatkan skill!\n", NAME(*P));
+
+            if (X == 1){
+                printf("Pintu Ga Ke Mana Mana berhasil dimasukkan ke dalam list!\n");
+            }
+            else if (X == 2){
+                printf("Cermin Pengganda berhasil dimasukkan ke dalam list!\n");
+            }
+            else if (X == 3){
+                printf("Senter Pembesar Hoki berhasil dimasukkan ke dalam list!\n");
+            }
+            else if (X == 4){
+                printf("Senter Pengecil Hoki berhasil dimasukkan ke dalam list!\n");
+            }
+            else if (X == 5){
+                printf("Mesin Penukar Posisi berhasil dimasukkan ke dalam list!\n");
+            }
+        }
+    }
+}
+
+
+void DoubleMirror(Player *P){
+
+    int i;
+
+    if (NbElmt(INFOSKILL(*P)) < 9){
+        for (i=0; i<2; i++){
+            insPlayerSkill(P);
+        }
+    }
+    else{
+        printf("Kamu tidak memiliki space cukup untuk skill ini. Skill terhapus dan kamu tidak mendapat apa apa !\n");
     }
 }
