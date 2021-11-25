@@ -100,6 +100,14 @@ void printKata(Kata kata){
 }
 
 void readInput(){
+    printf("\nMasukkan command: ");
     STARTCOMMAND();
-    printKata(CKata);
+}
+
+boolean IsKataSama(Kata k1, char *k2){
+    boolean sama = true;
+    for(int i=0; i < k1.Length; i++){
+        if (k2[i] != k1.TabKata[i+1]) sama = false;
+    }
+    return sama;
 }
