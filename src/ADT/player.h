@@ -7,7 +7,7 @@
 /* Deklarasi type elemen */
 typedef struct {
 int playernum;
-char name;
+char name[100];
 List skill;
 boolean buff[4];
 } Player;
@@ -17,7 +17,7 @@ boolean buff[4];
 #define INFOSKILL(p) (p).skill
 #define NAME(p) (p).name
 
-void CreatePlayer(Player *p, char name[50], int id);
+void CreatePlayer(Player *p, char *name, int id);
 
 boolean isSamePlayer(Player p1, Player p2);
 
@@ -46,10 +46,6 @@ int printRandoms (int lower, int upper, int count);
 int GetSkills ();
 /* Mengirimkan hasil skill yang didapat menggunakan randomizer */
 
-void insPlayerSkill (Player *P);
-/* I.S. Skill Player mungkin kosong  */
-/* F.S. Skill baru ditambahkan ke dalam list skill player */
-
 /******************************* PROSES SKILL *******************************/
 
 void PrintSkill ();
@@ -69,10 +65,5 @@ void PrintSkill ();
 // void UseTukarPosisiPlayer (State *S, int Playernum1);
 // /* I.S. Posisi Player berada pada posisi sebenarnya (posisi aslinya) */
 // /* F.S. Posisi Player 1 berubah menjadi posisi Player 2 dan begitu sebaliknya */
-
-void DoubleMirror(Player *P);
-/* I.S.  terdapat skill Cermin Pengganda di dalam list skillnya.*/
-/* F.S. Skill Cermin Pengganda -> Menghapus dirinya sendiri dan mendapatkan 2 buah skill baru */
-
 
 #endif

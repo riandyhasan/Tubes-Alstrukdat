@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "player.h"
 
-void CreatePlayer(Player *p, char name[50], int id){
+void CreatePlayer(Player *p, char *name, int id){
     List skill;
     boolean buff[4];
     CreateEmptyList(&skill);
     resetBuff(&buff);
     INFOPLAYER(*p) = id;
-    NAME(*p) = name[50];
+    strcpy(NAME(*p),name);
+    printf("Nama pemain: %s\n", NAME(*p));
     INFOSKILL(*p) = skill;
 }
 
@@ -106,37 +108,6 @@ int GetSkills (){
     return SkillGet;
 }
 
-void insPlayerSkill (Player *P){
-
-    int X ;
-
-    X = GetSkills() ;
-
-    if (X == 6){
-        /*DO NOTHING*/
-        printf("Maaf, anda kurang beruntung :D\n");
-    }
-    else{
-        InsVLast (&INFOSKILL(*P), X);
-
-        if (X == 1){
-            printf("Pintu Ga Ke Mana Mana berhasil dimasukkan ke dalam list!\n");
-        }
-        else if (X == 2){
-            printf("Cermin Pengganda berhasil dimasukkan ke dalam list!\n");
-        }
-        else if (X == 3){
-            printf("Senter Pembesar Hoki berhasil dimasukkan ke dalam list!\n");
-        }
-        else if (X == 4){
-            printf("Senter Pengecil Hoki berhasil dimasukkan ke dalam list!\n");
-        }
-        else if (X == 5){
-            printf("Mesin Penukar Posisi berhasil dimasukkan ke dalam list!\n");
-        }
-    }
-}
-
 
 /****************** PROSES SKILL ******************/
 
@@ -181,23 +152,4 @@ void PrintSkill (Player P){
     }
 
     printf("Tekan 0 untuk keluar. Masukkan bilangan negatif untuk membuang skill.");
-}
-
-void DoubleMirror(Player *P){
-    
-    List X;
-    int i;
-
-    X = INFOSKILL(*P);
-
-    if (NbElmt(X) < 9){
-        DelP(&X, 2);
-
-        for (i=0; i=1; i++){
-            insPlayerSkill(P);
-        }
-    }
-    else{
-        printf("Kamu tidak memiliki space cukup untuk skill ini. Skill terhapus dan kamu tidak mendapat apa apa !\n");
-    }
 }
