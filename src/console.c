@@ -3,12 +3,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "adt.h"
+#include "console.h"
 
 Map M;
 Stack S;
 State turn;
 int playerturn = 1;
+boolean endgame = false;
 
 int roll(){
     int maxN;
@@ -31,7 +32,8 @@ int roll(){
 
 void endturn(State turn){
     Push(&S, turn);
-    playerturn = (playerturn + 1) % turn.nPlayer;
+    if ((playerturn + 1) > turn.nPlayer) playerturn = (playerturn + 1) % turn.nPlayer;
+    else playerturn ++;
 }
 
 void undo(){
@@ -52,49 +54,47 @@ void save(char filename[50]){
     fclose(f);
 }
 
-void CommandSkill (){
+void CommandSkill (Player P){
 /* mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
     int UseSkill, i;
     address T;
-    Player P;
-
-    P = SearchPlayerByPlayerNum(turn, playerturn);
+    PrintSkill(P);
 
     T = First(INFOSKILL(P));
+    if (T != Nil){
+        printf("Masukkan skill : ");
+        scanf("%d", &UseSkill);
+        if ( UseSkill > 0){
+            
+            for (i=1; i<UseSkill; i++){
+                T = Next(T);
+            }
 
-    printf("Masukkan skill : ");
-    scanf("%d", &UseSkill);
-
-    if ( UseSkill > 0){
-        
-        for (i=1; i<UseSkill; i++){
-            T = Next(T);
-        }
-
-        if ( Info_Skill(T) == 1){
-            printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!\n", INFOPLAYER(P));
-            P.buff[0] = true;
-            DelP (&INFOSKILL(P), 1) ;
-        }
-        else if (Info_Skill(T) == 2){
-            printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", INFOPLAYER(P));
-            P.buff[1] = true;
-            DelP (&INFOSKILL(P), 2) ;
-        }
-        else if (Info_Skill(T) == 3){
-            printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll\n", INFOPLAYER(P));
-            P.buff[2] = true;
-            DelP (&INFOSKILL(P), 3) ;
-        }
-        else if (Info_Skill(T) == 4){
-            printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll\n", INFOPLAYER(P));
-            P.buff[3] = true;
-            DelP (&INFOSKILL(P), 4) ;
-        }
-        else if (Info_Skill(T) == 5){
-            UseTukarPosisiPlayer(&turn, playerturn) ;
-            DelP (&INFOSKILL(P), 5) ;
+            if ( Info_Skill(T) == 1){
+                printf("%d memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!\n", INFOPLAYER(P));
+                P.buff[0] = true;
+                DelP (&INFOSKILL(P), 1) ;
+            }
+            else if (Info_Skill(T) == 2){
+                printf("%d memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", INFOPLAYER(P));
+                P.buff[1] = true;
+                DelP (&INFOSKILL(P), 2) ;
+            }
+            else if (Info_Skill(T) == 3){
+                printf("%d memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll\n", INFOPLAYER(P));
+                P.buff[2] = true;
+                DelP (&INFOSKILL(P), 3) ;
+            }
+            else if (Info_Skill(T) == 4){
+                printf("%d memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll\n", INFOPLAYER(P));
+                P.buff[3] = true;
+                DelP (&INFOSKILL(P), 4) ;
+            }
+            else if (Info_Skill(T) == 5){
+                UseTukarPosisiPlayer(&turn, playerturn) ;
+                DelP (&INFOSKILL(P), 5) ;
+            }
         }
     }
     else if (UseSkill < 0){
@@ -135,8 +135,6 @@ void CommandSkill (){
 // }
 
 
-
-
 void cmdPlayer(){
     char MAP[] = "MAP";
     char SKILL[] = "SKILL";
@@ -146,42 +144,57 @@ void cmdPlayer(){
     char SAVE[] = "SAVE";
     char ENDTURN[] = "ENDTURN";
     char UNDO[] = "UNDO";
+    Player P = SearchPlayerByPlayerNum(turn, playerturn);
+    addrPlayer AP = SearchPlayer(turn, P);
+    while (!endgame){
     readInput();
     if (IsKataSama(CKata, SKILL)){
-        CommandSkill();
+        CommandSkill(P);
     }
     else if (IsKataSama(CKata, MAP)){
-        printf("MAP");
+        printf("Posisi player: ");
+        showPlayerPos(M, PLAYERPOS(AP));
     }
     else if (IsKataSama(CKata, BUFF)){
-        printf("BUFF");
+        printBuff(P);
     }
     else if (IsKataSama(CKata, INSPECT)){
-        printf("INSPECT");
+        CmdInspect(M);
     }
     else if (IsKataSama(CKata, ROLL)){
-        printf("ROLL");
+        if (ROLLED(AP)){
+            printf("Punten, kamu udah ngeroll! jangan maruk ya :D\n");
+        }else{
+            printf("Roll....\n");
+            int nRoll;
+            nRoll = roll();
+            printf("Kamu mendapatkan angka %d\n", nRoll);
+            ChangePlayerPosition(&AP, nRoll);
+            ROLLED(AP) = true;
+        }
     }
     else if (IsKataSama(CKata, SAVE)){
         printf("SAVE");
     }
     else if (IsKataSama(CKata, ENDTURN)){
-        printf("ENDTURN");
+        endturn(turn);
+        playerTurn(&turn);
     }
     else if (IsKataSama(CKata, UNDO)){
         printf("UNDO");
     }
+    }
 }
 
 
-void playerTurn(){
-
-    printf("Saatnya turn player ke-%d\n", playerturn);
-    Player P = SearchPlayerByPlayerNum(turn, playerturn);
-    addrPlayer Pt = SearchPlayer(turn,P);
+void playerTurn(State *St){
+    Player P = SearchPlayerByPlayerNum(*St, playerturn);
+    addrPlayer Pt = SearchPlayer(*St,P);
+    ROLLED(Pt) = false;
+    printf("Giliran %s bermain!\n", NAME(P));
     printf("Posisi player: ");
     showPlayerPos(M, PLAYERPOS(Pt));
-    insPlayerSkill(&turn, playerturn);
+    insPlayerSkill(&(Pt -> pemain));
     cmdPlayer();
 }
 
@@ -199,16 +212,17 @@ void newGame() {
         printf("Konfigurasi player!\n");
         printf("Masukkan jumlah pemain: ");
         scanf("%d", &nPlayer);
-        printf("\nMenambahkan player!");
+        printf("Menambahkan player!\n");
         CreateRound(&turn);
         AddPlayerToGame(&turn, nPlayer);
-        printf("\n%d Player telah ditambahkan!\n", nPlayer);
+        printf("%d Player telah ditambahkan!\n", nPlayer);
         playerturn = 1;
+        printf("Pemain pada game ini adalah:\n");
+        ShowPlayer(turn);
+        printf("\n");
     }
 }
 
 void startGame(){
-    printf("Pemain pada game ini adalah:\n");
-    ShowPlayer(turn);
-    playerTurn();
+    playerTurn(&turn);
 }
