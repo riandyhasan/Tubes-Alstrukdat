@@ -1,3 +1,4 @@
+#include "boolean.h"
 #include "./ADT/listlinier.c"
 #include "./ADT/array.c"
 #include "./ADT/mesin_kar.c"
@@ -7,3 +8,4 @@
 #include "./ADT/state.c"
 #include "./ADT/teleporter.c"
 #include "./ADT/map.c"
+#include "./ADT/queue.c"
