@@ -1,4 +1,4 @@
-/* File: prioqueuelist.h */
+/* File: player.h */
 #ifndef _PEMAIN_H
 #define _PEMAIN_H
 #include "../boolean.h"
@@ -59,7 +59,6 @@ void insPlayerSkill (Player *P);
 void DoubleMirror(Player *P);
 /* I.S.  terdapat skill Cermin Pengganda di dalam list skillnya.*/
 /* F.S. Skill Cermin Pengganda -> Menghapus dirinya sendiri dan mendapatkan 2 buah skill baru */
-
 
 
 // void TukarPosisiPlayer (Player P1, Player P2, State *S);

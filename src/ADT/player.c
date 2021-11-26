@@ -38,23 +38,28 @@ void printBuff (Player P) {
 
         int i = 1;
         while (i <= pbuff){
-            if (P.buff[i-1]){
-                printf ("%d. ", i);
-                switch(i){
-                    case 1:
+            for (int j = i-1;j < 4; j++){
+                if (P.buff[j]){
+                    if (j == 0){
+                        printf("%d. ", i);
                         printf("Imunitas teleport. Anda tidak akan kemana-mana.\n");
                         break;
-                    case 2:
+                    }
+                    else if(j == 1){
+                        printf("%d. ", i);
                         printf("Cermin pengganda. Anda bisa mendapatkan 2 skill baru!\n");
                         break;
-                    case 3:
+                    }
+                    else if (j == 2){
+                        printf("%d. ", i);
                         printf("Senter pembesar hoki. Roll anda akan membesar!\n");
                         break;
-                    case 4:
+                    }
+                    else if (j == 3){
+                        printf("%d. ", i);
                         printf("Senter pengecil hoki. Roll anda akan mengecil\n");
                         break;
-                    default:
-                        break;
+                    }
                 }
             }
             i ++;
@@ -191,11 +196,11 @@ void insPlayerSkill (Player *P){
 
     int X ;
     X = GetSkills() ;
-    if (NbElmt(INFOSKILL(*P)) == 10) printf("Tidak mendapatkan skill! Jangan maruk ya :D\n");
+    if (NbElmt(INFOSKILL(*P)) == 10) printf("Tidak mendapatkan skill karena sudah penuh! Jangan maruk ya :D\n");
     else{
         if (X == 6){
             /*DO NOTHING*/
-            printf("Maaf, anda kurang beruntung :D\n");
+            printf("Gacha kamu lagi ampas! %s tidak mendapat skill apa-apa :D\n", NAME(*P));
         }
         else{
             InsVLast (&INFOSKILL(*P), X);
