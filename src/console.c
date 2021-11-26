@@ -26,11 +26,11 @@ char* banner[]={"                                                               
                 ":!:          :   : : : ::.: : ::.: :     :     :   : :  :.:: :   :   ::: :: :  :  : :: ::  :   : : :: :  :                  :!:",   
                 ": :                                                                                                                         : :",   
                 "@@@                                                                                                                         @@@",   
-                "@@@         @@@@@@@@@@   @@@@@@  @@@@@@@  @@@ @@@@@@@ @@@@@@  @@@  @@@  @@@@@@@   @@@@@@@   @@@@@@                          @@@",   
-                "@@!         @@! @@! @@! @@!  @@@ @@!  @@@ @@!   @!!  @@!  @@@ @@!@!@@@ !@@       !@@       @@!  @@@                         @@!",   
-                "            @!! !!@ @!@ @!@  !@! @!@!@!@  !!@   @!!  @!@!@!@! @!@@!!@! !@! @!@!@ !@! @!@!@ @!@!@!@!                            ",   
-                "!!!         !!:     !!: !!:  !!! !!:  !!! !!:   !!:  !!:  !!! !!:  !!! :!!   !!: :!!   !!: !!:  !!!                         !!!",   
-                ":!:          :      :    : :. :  :: : ::  :      :    :   : : ::    :   :: :: :   :: :: :   :   : :                         :!:",   
+                "@@@            @@@@@@@@@@   @@@@@@  @@@@@@@  @@@ @@@@@@@ @@@@@@  @@@  @@@  @@@@@@@   @@@@@@@   @@@@@@                       @@@",   
+                "@@!            @@! @@! @@! @@!  @@@ @@!  @@@ @@!   @!!  @@!  @@@ @@!@!@@@ !@@       !@@       @@!  @@@                      @@!",   
+                "               @!! !!@ @!@ @!@  !@! @!@!@!@  !!@   @!!  @!@!@!@! @!@@!!@! !@! @!@!@ !@! @!@!@ @!@!@!@!                         ",   
+                "!!!            !!:     !!: !!:  !!! !!:  !!! !!:   !!:  !!:  !!! !!:  !!! :!!   !!: :!!   !!: !!:  !!!                      !!!",   
+                ":!:            :      :    : :. :  :: : ::  :      :    :   : : ::    :   :: :: :   :: :: :   :   : :                       :!:",   
                 ": :                                                                                                                         : :",   
                 "@@@                                                                                                                        @@@ ",   
                 "@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@   @@@ ",   
@@ -56,7 +56,7 @@ void printLoading(){
 
         // Print numDots number of dots, one every trigger milliseconds.
         for (int i = 0; i < numDots; i++) {
-            uSleep(trigger * 1000);
+            usleep(trigger * 1000);
             fputc('.', stdout);
             fflush(stdout);
         }
@@ -75,7 +75,7 @@ void printRoll(){
 
     // Print numDots number of dots, one every trigger milliseconds.
     for (int i = 0; i < numDots; i++) {
-        uSleep(trigger * 1000);
+        usleep(trigger * 1000);
         fputc('.', stdout);
         fflush(stdout);
     }
@@ -128,19 +128,21 @@ void mainMenu(){
     }
 }
 
-int roll(){
+int roll(Player p){
     int maxN;
-    Player p = SearchPlayerByPlayerNum(turn, playerturn);
     maxN = MAXROLL(M);
-    if (p.buff[2] == true){
+    printBuff(p);
+    if (p.buff[2]){
+        printf("Hoki kamu besar, roll akan menjadi lebih besar\n");
         srand (time(NULL));
-        return (rand() % maxN) + (maxN/2);
+        return (rand() % (maxN + 1 - (maxN/2))) + maxN/2;
     }
-    else if (p.buff[3] == true){
+    else if (p.buff[3]){
+        printf("Hoki kamu kecil, roll akan jadi lebih kecil\n");
         srand (time(NULL));
         return (rand() % (maxN/2)) + 1;
     }
-    else{
+    else if (!p.buff[2] && !p.buff[3]){
         srand (time(NULL));
         return (rand() % maxN) + 1;
     }
@@ -194,18 +196,21 @@ void CommandSkill (Player *P){
                 DelP (&INFOSKILL(*P), 1) ;
             }
             else if (Info_Skill(T) == 2){
-                printf("%s memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", NAME(*P));
-                (*P).buff[1] = true;
-                DelP (&INFOSKILL(*P), 2) ;
-                DoubleMirror(P);
+                if ((*P).buff[1]) printf("Punten, %s telah memakai Cermin Pengganda sebelumnya! Jangan maruk ya :D\n", NAME(*P));
+                else{
+                    printf("%s memakai skill Cermin Pengganda. Skill ini akan dibuang digantikan dengan 2 skill baru.\n", NAME(*P));
+                    (*P).buff[1] = true;
+                    DelP (&INFOSKILL(*P), 2) ;
+                    DoubleMirror(P);
+                }
             }
             else if (Info_Skill(T) == 3){
-                printf("%s memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka MaxRoll atau setengah dari MaxRoll\n", NAME(*P));
+                printf("%s memakai skill Senter Pembesar Hoki. Dadu hanya akan menghasilkan angka setengah dari MaxRoll hingga\n", NAME(*P));
                 (*P).buff[2] = true;
                 DelP (&INFOSKILL(*P), 3) ;
             }
             else if (Info_Skill(T) == 4){
-                printf("%s memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 0 atau setengah dari MaxRoll\n", NAME(*P));
+                printf("%s memakai skill Senter Pengecil Hoki. Dadu hanya akan menghasilkan angka 1 hingga setengah dari MaxRoll\n", NAME(*P));
                 (*P).buff[3] = true;
                 DelP (&INFOSKILL(*P), 4) ;
             }
@@ -260,15 +265,25 @@ void CommandSkill (Player *P){
 
 // }
 
-void playerRoll(){
+void teleportPlayer(){
     Player P = SearchPlayerByPlayerNum(turn, playerturn);
+    addrPlayer AP = SearchPlayer(turn, P);
+    if (IsTeleport(M.tele, PLAYERPOS(AP))){
+        printf("%s menemukan teleporter.\n", NAME(P));
+        int tele = PetakOut(M.tele, PLAYERPOS(AP));
+        printf("%s teleport ke petak %d\n", NAME(P), tele);
+        ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
+    }
+}
+
+void playerRoll(Player P){
     addrPlayer AP = SearchPlayer(turn, P);
     if (ROLLED(AP)){
         printf("Punten, kamu udah ngeroll! jangan maruk ya :D\n");
     }else{
         printRoll();
         int nRoll;
-        nRoll = roll();
+        nRoll = roll(P);
         int pos = PLAYERPOS(AP) + nRoll;
         if (pos > M.mapConfig.Neff) pos = pos % M.mapConfig.Neff;
         printf("%s mendapatkan angka %d\n", NAME(P), nRoll);
@@ -280,11 +295,7 @@ void playerRoll(){
                 printf("%s mundur %d langkah.\n", NAME(P), nRoll);
                 ChangePlayerPosition(&AP, pos);
                 printf("%s berada di petak %d.\n", NAME(P), PLAYERPOS(AP));
-                if (IsTeleport(M.tele, PLAYERPOS(AP))){
-                    printf("%s menemukan teleporter.\n", NAME(P));
-                    printf("%s teleport ke petak %d\n", NAME(P), PetakOut(M.tele, PLAYERPOS(AP)));
-                    ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
-                }
+                teleportPlayer();
             }
             else{
                 printf("%s tidak dapat bergerak! Sabar yaa:(\n", NAME(P));
@@ -295,11 +306,7 @@ void playerRoll(){
             printf("%s maju %d langkah.\n", NAME(P), nRoll);
             ChangePlayerPosition(&AP, pos);
             printf("%s berada di petak %d.\n", NAME(P), PLAYERPOS(AP));
-            if (IsTeleport(M.tele, PLAYERPOS(AP))){
-                printf("%s menemukan teleporter.\n", NAME(P));
-                printf("%s teleport ke petak %d\n", NAME(P), PetakOut(M.tele, PLAYERPOS(AP)));
-                ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
-            }
+            teleportPlayer();
         }
 
         ROLLED(AP) = true;
@@ -335,7 +342,7 @@ void cmdPlayer(){
         CmdInspect(M);
     }
     else if (IsKataSama(CKata, ROLL)){
-        playerRoll();
+        playerRoll(P);
     }
     else if (IsKataSama(CKata, SAVE)){
         printf("SAVE");
@@ -366,6 +373,7 @@ void playerTurn(State *St){
 void startGame(){
     playerTurn(&turn);
 }
+
 
 
 void UseMesinWaktu (State *S, Player *T){

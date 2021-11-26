@@ -23,7 +23,7 @@ void mainMenu();
 /* I.S. Sembarang  */
 /* F.S. Mengeluarkan tampilan awal berupa pilihan untuk memulai permainan baru atau memainkan permainan yang sudah ada sebelumnya */
 
-int roll();
+int roll(Player p);
 /* Menghasilkan sebuah angka hasil rolling dadu sesuai kondisi */
 
 void endturn(State turn);
@@ -42,7 +42,7 @@ void CommandSkill (Player *P);
 /* F.S. mengeluarkan command untuk meminta masukkan skill yang ingin dipakai */
 
 
-void playerRoll();
+void playerRoll(Player P);
 /* I.S. Sembarang  */
 /* F.S. Pemain melakukan roll dadu dan melakukan langkahnya pada map menyesuaikan pada kondisi player (buff) */
 
@@ -57,6 +57,7 @@ void playerTurn(State *St);
 void startGame();
 /* I.S. Sembarang  */
 /* F.S. Permainan dimulai */
+
 
 void UseMesinWaktu (State *S, Player *T);
 /* I.S. Sembarang  */
