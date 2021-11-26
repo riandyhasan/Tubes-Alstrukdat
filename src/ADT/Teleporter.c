@@ -48,12 +48,25 @@ void PetakInAndOut (Teleporter * T, int X, int Y) {
 
 boolean IsTeleport (arrayTele aT, int nomorPetak){
 /* Mengecek apakah sebuah petak merupakan sebuah teleport */
-    return aT.bufferTele[nomorPetak].IdxMasuk > -1 && aT.bufferTele[nomorPetak].IdxKeluar > -1;
+   boolean cek = false;
+   int i = 1;
+   while (i <= aT.Neff && !cek){
+       if (aT.bufferTele[i].IdxMasuk == nomorPetak) cek = true;
+       else i++;
+   }
+   return cek;
 }
 
 int PetakOut (arrayTele aT, int nomorPetak){
 /* Mendapatkan petak keluar dari sebuah kumpulan tele pada petak masuk tertentu */
-    return aT.bufferTele[nomorPetak].IdxKeluar;
+   boolean cek = false;
+   int i = 1;
+   while (i <= aT.Neff && !cek){
+       if (aT.bufferTele[i].IdxMasuk == nomorPetak) cek = true;
+       else i++;
+   }
+   return aT.bufferTele[i].IdxKeluar;
+    
 }
 
 void PrintTele (arrayTele T) { 
