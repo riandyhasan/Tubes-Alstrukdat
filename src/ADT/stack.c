@@ -16,7 +16,7 @@ boolean IsEmptyStack (Stack S){
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
     return (Top(S) == NilStack);
 }
-boolean IsFull (Stack S){
+boolean IsFullStack (Stack S){
 /* Mengirim true jika tabel penampung NilStackai elemen stack penuh */
     return (Top(S) == MaxEl);
 }

@@ -9,7 +9,7 @@
 #include "state.h"
 
 #define NilStack 0
-#define MaxEl 100
+#define MaxEl 400
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
@@ -43,7 +43,7 @@ void CreateEmptyStack (Stack *S);
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack (Stack S);
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
-boolean IsFull (Stack S);
+boolean IsFullStack (Stack S);
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
