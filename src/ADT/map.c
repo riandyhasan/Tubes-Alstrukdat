@@ -33,6 +33,7 @@ void readMap(Map *M, char *filename){
         telPred = KataToInt(CKata);
         PetakInAndOut(&(*M).tele.bufferTele[i], telSucc, telPred);
     }
+    // PrintTele((*M).tele);
 }
 
 boolean isForbidden(Map M, int loc){

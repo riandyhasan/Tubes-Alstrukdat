@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "../boolean.h"
 
-#define IdxMax 100
+#define IdxMax 500
 #define IdxMin 1
 
 typedef int IdxType;
