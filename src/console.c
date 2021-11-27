@@ -8,9 +8,13 @@
 
 Map M;
 Stack S;
+Queue Q;
 State turn;
+State dummy;
 int playerturn = 1;
+int ronde;
 boolean endgame = false;
+char namefile[100];
 
 char* banner[]={"                                                                                                                              ",
                 "@@@                                                                                                                        @@@",    
@@ -83,12 +87,11 @@ void printRoll(){
 }
 
 void newGame() {
-	char name[100];
     int nPlayer;
 	printf("Masukkan nama file konfigurasi permainan: ");
-    scanf("%s", &name);
+    scanf("%s", &namefile);
     inisialisasiMap(&(M));
-    readMap(&M, name);
+    readMap(&M, namefile);
     CreateEmptyStack(&S);
     if (pita != NULL){
         printLoading();
@@ -96,11 +99,16 @@ void newGame() {
         printf("Konfigurasi player!\n");
         printf("Masukkan jumlah pemain: ");
         scanf("%d", &nPlayer);
+        while (nPlayer < 1){
+            printf("Masukkan jumlah pemain: ");
+            scanf("%d", &nPlayer);
+        }
         printf("Menambahkan player!\n");
         CreateRound(&turn);
         AddPlayerToGame(&turn, nPlayer);
         printf("%d Player telah ditambahkan!\n", nPlayer);
         playerturn = 1;
+        ronde = 1;
         printf("\nPemain pada game ini adalah:\n");
         ShowPlayer(turn);
         printf("\n");
@@ -109,11 +117,16 @@ void newGame() {
 
 void mainMenu(){
     int pil;
-    printf("================== MAIN MENU ========================\n");
+    printf("\n================== MAIN MENU ========================\n");
     printf("%d. NEW GAME\n", 1);
     printf("%d. LOAD GAME\n", 2);
     printf("Masukkan pilihan (1/2): ");
     scanf("%d", &pil);
+    while (pil != 1 && pil != 2){
+        printf("Punten, inputnya masih gak sesuai!\n");
+        printf("Masukkan pilihan (1/2): ");
+        scanf("%d", &pil);
+    }
     switch(pil){
         case 1:
             newGame();
@@ -121,17 +134,12 @@ void mainMenu(){
         case 2:
             printf("Load game;\n");
             break;
-        default:
-            printf("Punten, inputnya masih gak sesuai!\n");
-            printf("Masukkan pilihan (1/2): ");
-            scanf("%d", &pil);
     }
 }
 
 int roll(Player p){
     int maxN;
     maxN = MAXROLL(M);
-    printBuff(p);
     if (p.buff[2]){
         printf("Hoki kamu besar, roll akan menjadi lebih besar\n");
         srand (time(NULL));
@@ -151,25 +159,81 @@ int roll(Player p){
 
 void endturn(State turn){
     Push(&S, turn);
-    if ((playerturn + 1) > turn.nPlayer) playerturn = (playerturn + 1) % turn.nPlayer;
+    if ((playerturn + 1) > turn.nPlayer) {
+        playerturn = (playerturn + 1) % turn.nPlayer;
+        ronde ++;
+    }
     else playerturn ++;
 }
 
 void undo(){
     State pop;
-    for (int i = 0; i < NPLAYER(InfoTop(S)); i++){
-        Pop(&S, &pop);
-   }
+    if (ronde > 1){
+        if (playerturn == 1){
+            for (int i = 0; i < NPLAYER(InfoTop(S)); i++){
+                Pop(&S, &turn);
+            }
+            ronde --;
+        }
+        else{
+            for (int i = 0; i < playerturn; i++){
+                Pop(&S, &turn);
+            }
+        }
+        playerturn = 1;
+        playerTurn(&turn);
+    }else{
+        if(playerturn > 1){
+            for (int i = 0; i < playerturn; i++){
+                Pop(&S, &turn);
+            }
+        }
+        ResetStatePlayer(&turn);
+        playerturn = 1;
+        playerTurn(&turn);
+        ronde = 1;
+    }
 }
 
-void save(char filename[50]){
-    FILE *f = fopen(filename, "w");
-    if (f == NULL)
-    {
-        printf("Punten, file gak bisa dibuka!\n");
+void save(){
+    char savefile[100];
+    char *dir = "../bin/";
+    char savedir[150];
+    printf("Masukkan file name: ");
+    scanf("%s", &savefile);
+    strcpy(savedir, dir);
+    strcat(savedir, savefile);
+    FILE *f = fopen(savedir, "w");
+    fprintf(f,"%s\n",namefile);
+    fprintf(f,"%d\n",NPLAYER(turn));
+    addrPlayer AP = FIRSTPLAYER(turn);
+    for (int i = 0; i < NPLAYER(turn); i++){
+        fprintf(f,"%d ",INFOPLAYER(AP->pemain));
+        fprintf(f,"%s\n",NAME(AP->pemain));
+        AP = NextPlayer(AP);
     }
-
-    //Write something
+    fprintf(f,"%d\n",ronde);
+    fprintf(f,"%d\n",playerturn);
+    QueueSave();
+    while(!IsEmptyQ(Q)){
+        Del(&Q, &dummy);
+        addrPlayer APS = FIRSTPLAYER(dummy);
+        while(APS != Nil){
+            fprintf(f,"%d ",INFOPLAYER(APS->pemain));
+            for (int i = 0; i < 4; i++){
+                fprintf(f,"%d ",(APS->pemain.buff[i]));
+            }
+            fprintf(f,"%d ",NbElmt(INFOSKILL(APS->pemain)));
+            address skill;
+            skill = First(INFOSKILL(APS->pemain));
+            while (skill != Nil){
+                fprintf(f,"%d ",Info_Skill(skill));
+                skill = Next(skill);
+            }
+            APS = NextPlayer(APS);
+        }
+        fprintf(f, "\n");
+    }    
     fclose(f);
 }
 
@@ -265,14 +329,25 @@ void CommandSkill (Player *P){
 
 // }
 
-void teleportPlayer(){
-    Player P = SearchPlayerByPlayerNum(turn, playerturn);
+void teleportPlayer(Player P){
     addrPlayer AP = SearchPlayer(turn, P);
     if (IsTeleport(M.tele, PLAYERPOS(AP))){
         printf("%s menemukan teleporter.\n", NAME(P));
-        int tele = PetakOut(M.tele, PLAYERPOS(AP));
-        printf("%s teleport ke petak %d\n", NAME(P), tele);
-        ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
+        if (P.buff[0]){
+            char check;
+            printf("Apakah %s ingin teleport(Y/N)? ", NAME(P));
+            scanf("%c", &check);
+            while (check != 'Y' && check != 'N') scanf("%c", &check);
+            if (check == 'Y'){
+                int tele = PetakOut(M.tele, PLAYERPOS(AP));
+                printf("%s teleport ke petak %d\n", NAME(P), tele);
+                ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
+            }
+        }else{
+            int tele = PetakOut(M.tele, PLAYERPOS(AP));
+            printf("%s teleport ke petak %d\n", NAME(P), tele);
+            ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
+        }
     }
 }
 
@@ -295,7 +370,7 @@ void playerRoll(Player P){
                 printf("%s mundur %d langkah.\n", NAME(P), nRoll);
                 ChangePlayerPosition(&AP, pos);
                 printf("%s berada di petak %d.\n", NAME(P), PLAYERPOS(AP));
-                teleportPlayer();
+                teleportPlayer(P);
             }
             else{
                 printf("%s tidak dapat bergerak! Sabar yaa:(\n", NAME(P));
@@ -306,7 +381,7 @@ void playerRoll(Player P){
             printf("%s maju %d langkah.\n", NAME(P), nRoll);
             ChangePlayerPosition(&AP, pos);
             printf("%s berada di petak %d.\n", NAME(P), PLAYERPOS(AP));
-            teleportPlayer();
+            teleportPlayer(P);
         }
 
         ROLLED(AP) = true;
@@ -345,24 +420,24 @@ void cmdPlayer(){
         playerRoll(P);
     }
     else if (IsKataSama(CKata, SAVE)){
-        printf("SAVE");
+        save();
     }
     else if (IsKataSama(CKata, ENDTURN)){
         endturn(turn);
         playerTurn(&turn);
     }
     else if (IsKataSama(CKata, UNDO)){
-        printf("UNDO");
+        undo();
     }
     else printf("Punten, input tidak sesuai! Silahkan input lagi\n");
     }
 }
 
-
 void playerTurn(State *St){
     Player P = SearchPlayerByPlayerNum(*St, playerturn);
     addrPlayer Pt = SearchPlayer(*St,P);
     ROLLED(Pt) = false;
+    printf("Ronde %d\n", ronde);
     printf("Giliran %s bermain!\n", NAME(P));
     printf("Posisi player: ");
     showPlayerPos(M, PLAYERPOS(Pt));
@@ -510,5 +585,15 @@ void BalingBalingJambu (State *S, Player *T){
         else{
             printf("%s Kamu tidak bergerak karena menemukan petak terlarang ! hohohooo\n", NAME(P2));
         }
+    }
+}
+
+void QueueSave(){
+    Stack dummyS;
+    CopyStack(&dummyS,S);
+    CreateEmptyQ(&Q, NElStack(S));
+    while(!IsEmptyStack(dummyS)){
+        Pop(&dummyS, &dummy);
+        Add(&Q, dummy);
     }
 }

@@ -21,6 +21,25 @@ boolean IsFullStack (Stack S){
     return (Top(S) == MaxEl);
 }
 
+int NElStack(Stack S){
+    int count = 0;
+    while(!IsEmptyStack(S)){
+        State dummy;
+        count++;
+        Pop(&S, &dummy);
+    }
+    return count;
+}
+
+void CopyStack(Stack *S1, Stack S2){
+    CreateEmptyStack(S1);
+    while(!IsEmptyStack(S2)){
+        State dummy;
+        Pop(&S2, &dummy);
+        Push(S1, dummy);
+    }
+}
+
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
 void Push (Stack * S, infostack X){
 /* Menambahkan X sebagai elemen Stack S. */
@@ -35,6 +54,6 @@ void Pop (Stack* S, infostack* X){
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah NilStackai elemen TOP yang lama, TOP berkurang 1 */
-    *X = InfoTop(*S);
+    CopyState(X, InfoTop(*S));
     Top(*S)--;
 }

@@ -34,6 +34,8 @@ void CreateRound (State *S);
 boolean IsEmptyState(State S);
 /* Mengirim true jika state kosong */
 
+void CopyState (State *S1, State S2);
+
 addrPlayer SearchPlayer(State S, Player P);
 /* Mencari addrPlayer dari Player */
 

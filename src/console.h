@@ -34,7 +34,7 @@ void undo();
 /* I.S. Ronde sekarang (yang sedang berlangsung) */
 /* F.S. Kembali ke ronde sebelumnya */
 
-void save(char filename[50]);
+void save();
 
 
 void CommandSkill (Player *P);

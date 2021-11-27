@@ -12,6 +12,32 @@ boolean IsEmptyState (State S){
     return FIRSTPLAYER(S) == Nil;
 }
 
+void CopyState (State *S1, State S2) {
+  NPLAYER(*S1) = NPLAYER(S2);
+  FIRSTPLAYER(*S1) = Nil;
+  addrPlayer P1,P2;
+  P2 = FIRSTPLAYER(S2);
+  P1 = P2;
+  FIRSTPLAYER(*S1) = P1;
+  while(P2 != Nil){
+    CreatePlayer(&(P1->pemain), NAME(P2 -> pemain), INFOPLAYER(P2-> pemain));
+    SalinSkill(&(P1->pemain), (P2-> pemain));
+    PLAYERPOS(P1) = PLAYERPOS(P2);
+    P1 = NextPlayer(P1);
+    P2 = NextPlayer(P2);
+  }
+}
+
+void ResetStatePlayer(State *S){
+  addrPlayer loc;
+  loc = FIRSTPLAYER(*S);
+  while(loc != Nil){
+    ResetPlayer(&(loc->pemain));
+    PLAYERPOS(loc) = 1;
+    loc = NextPlayer(loc);
+  }
+}
+
 addrPlayer PlayerTurn(Player p, int post){
   /* Mengembalikan sebuah addrPlayer yang menyimpan turn pemain  */
   addrPlayer turn;
