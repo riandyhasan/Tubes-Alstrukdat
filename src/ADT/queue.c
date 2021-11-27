@@ -76,7 +76,7 @@ void Del (Queue * Q, infoqueue * X){
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = NilQai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
-    *X = InfoHead(*Q);
+    CopyState(X, InfoHead(*Q));
     if (Head(*Q) == Tail(*Q)){
         Head(*Q) = NilQ;
         Tail(*Q) = NilQ;

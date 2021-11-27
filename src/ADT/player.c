@@ -17,6 +17,11 @@ boolean isSamePlayer(Player p1, Player p2){
     return INFOPLAYER(p1) == INFOPLAYER(p2) && NAME(p1) == NAME(p2);
 }
 
+void ResetPlayer(Player *P){
+    CreateEmptyList(&INFOSKILL(*P));
+    resetBuff(P);
+}
+
 /******************************* BUFF *******************************/
 
 
@@ -190,6 +195,14 @@ void PrintSkill (Player P){
     }
 }
 
+void SalinSkill (Player *P1, Player P2){
+    address skill;
+    skill = First(INFOSKILL(P2));
+    while (skill != Nil){
+        InsVLast (&(INFOSKILL(*P1)), Info_Skill(skill));
+        skill = Next(skill);
+    }
+}
 
 
 void insPlayerSkill (Player *P){
