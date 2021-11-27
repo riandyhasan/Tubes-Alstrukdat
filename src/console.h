@@ -59,10 +59,10 @@ void startGame();
 /* F.S. Permainan dimulai */
 
 
-void UseMesinWaktu (State *S, Player *T);
+void UseMesinWaktu (Player *T);
 /* I.S. Sembarang  */
 /* F.S. Pemain yang dipilih dimundurkan posisinya dari posisi sebelumnya */
 
-void BalingBalingJambu (State *S, Player *T);
+void UseBalingBalingJambu (Player *T);
 /* I.S. Sembarang  */
 /* F.S. Pemain yang dipilih dimajukan posisinya dari posisi sebelumnya */

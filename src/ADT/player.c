@@ -14,7 +14,7 @@ void CreatePlayer(Player *p, char *name, int id){
 
 
 boolean isSamePlayer(Player p1, Player p2){
-    return INFOPLAYER(p1) == INFOPLAYER(p2) && NAME(p1) == NAME(p2);
+    return INFOPLAYER(p1) == INFOPLAYER(p2);
 }
 
 void ResetPlayer(Player *P){
@@ -37,6 +37,7 @@ int countBuff (Player P){
 void printBuff (Player P) {
 /* mengeluarkan list Buff yang dimiliki player */
     int pbuff = countBuff(P);
+    printf("\n");
     if (pbuff == 0) printf("%s tidak memiliki buff!\n", NAME(P));
     else{
         printf ("%s memiliki buff:\n", NAME(P));
@@ -139,7 +140,8 @@ int GetSkills (){
         else if ((i >= 90) && (i <= 99)){
             TabSkill[i] = 8 ;
         }
-        i++ ;
+        // TabSkill[i] = 8 ;
+        // i++ ;
     }
 
     SkillDrop = printRandoms(0, 100, 1);
@@ -160,6 +162,7 @@ void PrintSkill (Player P){
     T = First(INFOSKILL(P));
     i = 1;
 
+    printf("\n");
     if (T == Nil){
         printf("Kamu gapunya skill apa apa, Kasian banget :(\n");
     }
@@ -192,7 +195,9 @@ void PrintSkill (Player P){
             T = Next(T);
             i++ ;
         }
+        printf("Tekan 0 untuk keluar. Masukkan bilangan negatif untuk membuang skill.\n");
     }
+    printf("\n");
 }
 
 void SalinSkill (Player *P1, Player P2){

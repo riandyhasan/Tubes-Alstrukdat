@@ -16,31 +16,31 @@ int ronde;
 boolean endgame = false;
 char namefile[100];
 
-char* banner[]={"                                                                                                                              ",
-                "@@@                                                                                                                        @@@",    
-                "@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@   @@@",  
-                "@!@!@!@!@                                                                                                                  @!@!@!@!@",
-                "!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!!   !!!",    
-                ": :                                                                                                                        : :",   
-                "@@@                                                                                                                         @@@",   
-                "@@@          @@@@@@  @@@       @@@@@@ @@@@@@@ @@@@@@@  @@@  @@@ @@@  @@@ @@@@@@@  @@@@@@@@ @@@@@@  @@@@@@@                  @@@",   
-                "@@!         @@!  @@@ @@!      !@@       @!!   @@!  @@@ @@!  @@@ @@!  !@@ @@!  @@@ @@!     @@!  @@@ @@!  @@@                 @@!",   
-                "            @!@!@!@! @!!       !@@!!    @!!   @!@!!@!  @!@  !@! @!@@!@!  @!@  !@! @!!!:!  @!@!@!@! @!@  !@!                    ",   
-                "!!!         !!:  !!! !!:          !:!   !!:   !!: :!!  !!:  !!! !!: :!!  !!:  !!! !!:     !!:  !!! !!:  !!!                 !!!",   
-                ":!:          :   : : : ::.: : ::.: :     :     :   : :  :.:: :   :   ::: :: :  :  : :: ::  :   : : :: :  :                  :!:",   
+char* banner[]={"                                                                                                                               ",
+                "@@@                                                                                                                         @@@",    
+                "@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@  @@@@@",  
+                "@!@!@!@!@                                                                                                             @!@!@!@!@",
+                "!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!!  !!!!!",    
                 ": :                                                                                                                         : :",   
                 "@@@                                                                                                                         @@@",   
-                "@@@            @@@@@@@@@@   @@@@@@  @@@@@@@  @@@ @@@@@@@ @@@@@@  @@@  @@@  @@@@@@@   @@@@@@@   @@@@@@                       @@@",   
-                "@@!            @@! @@! @@! @@!  @@@ @@!  @@@ @@!   @!!  @@!  @@@ @@!@!@@@ !@@       !@@       @@!  @@@                      @@!",   
-                "               @!! !!@ @!@ @!@  !@! @!@!@!@  !!@   @!!  @!@!@!@! @!@@!!@! !@! @!@!@ !@! @!@!@ @!@!@!@!                         ",   
-                "!!!            !!:     !!: !!:  !!! !!:  !!! !!:   !!:  !!:  !!! !!:  !!! :!!   !!: :!!   !!: !!:  !!!                      !!!",   
-                ":!:            :      :    : :. :  :: : ::  :      :    :   : : ::    :   :: :: :   :: :: :   :   : :                       :!:",   
+                "@@@                @@@@@@  @@@       @@@@@@ @@@@@@@ @@@@@@@  @@@  @@@ @@@  @@@ @@@@@@@  @@@@@@@@ @@@@@@  @@@@@@@            @@@",   
+                "@@!               @@!  @@@ @@!      !@@       @!!   @@!  @@@ @@!  @@@ @@!  !@@ @@!  @@@ @@!     @@!  @@@ @@!  @@@           @@!",   
+                "                  @!@!@!@! @!!       !@@!!    @!!   @!@!!@!  @!@  !@! @!@@!@!  @!@  !@! @!!!:!  @!@!@!@! @!@  !@!              ",   
+                "!!!               !!:  !!! !!:          !:!   !!:   !!: :!!  !!:  !!! !!: :!!  !!:  !!! !!:     !!:  !!! !!:  !!!           !!!",   
+                ":!:                :   : : : ::.: : ::.: :     :     :   : :  :.:: :   :   ::: :: :  :  : :: ::  :   : : :: :  :            :!:",   
                 ": :                                                                                                                         : :",   
-                "@@@                                                                                                                        @@@ ",   
-                "@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@   @@@ ",   
-                "@!@!@!@!@                                                                                                                  @!@!@!@!@", 
-                "!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!!   !!!",    
-                ": :                                                                                                                        : :"};
+                "@@@                                                                                                                         @@@",   
+                "@@@                  @@@@@@@@@@   @@@@@@  @@@@@@@  @@@ @@@@@@@ @@@@@@  @@@  @@@  @@@@@@@   @@@@@@@   @@@@@@                 @@@",   
+                "@@!                  @@! @@! @@! @@!  @@@ @@!  @@@ @@!   @!!  @@!  @@@ @@!@!@@@ !@@       !@@       @@!  @@@                @@!",   
+                "                     @!! !!@ @!@ @!@  !@! @!@!@!@  !!@   @!!  @!@!@!@! @!@@!!@! !@! @!@!@ !@! @!@!@ @!@!@!@!                   ",   
+                "!!!                  !!:     !!: !!:  !!! !!:  !!! !!:   !!:  !!:  !!! !!:  !!! :!!   !!: :!!   !!: !!:  !!!                !!!",   
+                ":!:                  :      :    : :. :  :: : ::  :      :    :   : : ::    :   :: :: :   :: :: :   :   : :                 :!:",   
+                ": :                                                                                                                         : :",   
+                "@@@                                                                                                                        @@@@",   
+                "@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@ @@@!@@@@   @@@@",   
+                "@!@!@!@!@                                                                                                             @!@!@!@!@", 
+                "!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!! !!!:!!!!  !!!!!",    
+                ": :                                                                                                                         : :"};
 
 void printBanner(){
     for (int i = 0; i< 25; i++){
@@ -73,6 +73,7 @@ void printRoll(){
     const int numDots = 6;
     const char prompt[] = "Roll";
 
+    printf("\n");
     // Return and clear with spaces, then return and print prompt.
     printf("\r%*s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
     fflush(stdout);
@@ -88,6 +89,7 @@ void printRoll(){
 
 void newGame() {
     int nPlayer;
+    printf("\n");
 	printf("Masukkan nama file konfigurasi permainan: ");
     scanf("%s", &namefile);
     inisialisasiMap(&(M));
@@ -95,10 +97,12 @@ void newGame() {
     CreateEmptyStack(&S);
     if (pita != NULL){
         printLoading();
+        printf("\n");
         printf("Berhasil memuat konfigurasi. Permainan dimulai!\n\n");
         printf("Konfigurasi player!\n");
         printf("Masukkan jumlah pemain: ");
         scanf("%d", &nPlayer);
+        printf("\n");
         while (nPlayer < 1){
             printf("Masukkan jumlah pemain: ");
             scanf("%d", &nPlayer);
@@ -107,6 +111,7 @@ void newGame() {
         CreateRound(&turn);
         AddPlayerToGame(&turn, nPlayer);
         printf("%d Player telah ditambahkan!\n", nPlayer);
+        printf("\n");
         playerturn = 1;
         ronde = 1;
         printf("\nPemain pada game ini adalah:\n");
@@ -117,10 +122,11 @@ void newGame() {
 
 void mainMenu(){
     int pil;
-    printf("\n================== MAIN MENU ========================\n");
-    printf("%d. NEW GAME\n", 1);
-    printf("%d. LOAD GAME\n", 2);
-    printf("Masukkan pilihan (1/2): ");
+    printf("\n========================================================= MAIN MENU =========================================================\n");
+    printf("\n");
+    printf("                                                        %d. NEW GAME\n", 1);
+    printf("                                                        %d. LOAD GAME\n", 2);
+    printf("                                                  Masukkan pilihan (1/2): ");
     scanf("%d", &pil);
     while (pil != 1 && pil != 2){
         printf("Punten, inputnya masih gak sesuai!\n");
@@ -140,13 +146,17 @@ void mainMenu(){
 int roll(Player p){
     int maxN;
     maxN = MAXROLL(M);
+    
+    printf("\n");
     if (p.buff[2]){
         printf("Hoki kamu besar, roll akan menjadi lebih besar\n");
+        printf("\n");
         srand (time(NULL));
         return (rand() % (maxN + 1 - (maxN/2))) + maxN/2;
     }
     else if (p.buff[3]){
         printf("Hoki kamu kecil, roll akan jadi lebih kecil\n");
+        printf("\n");
         srand (time(NULL));
         return (rand() % (maxN/2)) + 1;
     }
@@ -163,7 +173,10 @@ void endturn(State turn){
         playerturn = (playerturn + 1) % turn.nPlayer;
         ronde ++;
     }
-    else playerturn ++;
+    else{
+        printf("\n");
+        playerturn ++;
+    }
 }
 
 void undo(){
@@ -214,7 +227,7 @@ void save(){
     }
     fprintf(f,"%d\n",ronde);
     fprintf(f,"%d\n",playerturn);
-    QueueSave();
+    // QueueSave();
     while(!IsEmptyQ(Q)){
         Del(&Q, &dummy);
         addrPlayer APS = FIRSTPLAYER(dummy);
@@ -254,6 +267,8 @@ void CommandSkill (Player *P){
                 T = Next(T);
             }
 
+            printf("\n");
+
             if ( Info_Skill(T) == 1){
                 printf("%s memakai skill Pintu Ga Ke Mana Mana. Anda mendapatkan imunitas terhadap teleport!\n", NAME(*P));
                 (*P).buff[0] = true;
@@ -284,12 +299,15 @@ void CommandSkill (Player *P){
             }
             else if (Info_Skill(T) == 7){
                 printf("%s memakai skill Mesin Waktu. Membuat player lain mundur :D\n", NAME(*P));
+                UseMesinWaktu (P);
                 DelP (&INFOSKILL(*P), 7) ;
             }
             else if (Info_Skill(T) == 8){
                 printf("%s memakai skill Baling-Baling Jambu. Membuat player lain maju :D\n", NAME(*P));
+                UseBalingBalingJambu (P);
                 DelP (&INFOSKILL(*P), 8) ;
             }
+            printf("\n");
         }
         else if (UseSkill < 0){
 
@@ -297,6 +315,7 @@ void CommandSkill (Player *P){
                 T = Next(T);
             }
 
+            printf("\n");
             if (Info_Skill(T) == 1){
                 printf("%s membuang skill Pintu Ga Ke Mana Mana.\n", NAME(*P));
                 DelP (&INFOSKILL(*P), 1) ;
@@ -317,10 +336,20 @@ void CommandSkill (Player *P){
                 printf("%s membuang skill Mesin Penukar Posisi.\n", NAME(*P));
                 DelP (&INFOSKILL(*P), 5) ;
             }
+            else if (Info_Skill(T) == 7){
+                printf("%s membuang skill Mesin Waktu\n", NAME(*P));
+                DelP (&INFOSKILL(*P), 7) ;
+            }
+            else if (Info_Skill(T) == 8){
+                printf("%s membuang skill Baling-Baling Jambu.\n", NAME(*P));
+                DelP (&INFOSKILL(*P), 8) ;
+            }
         }
         else if (UseSkill == 0){
             return;
         }
+
+        printf("\n");
     }
 }
 
@@ -348,6 +377,7 @@ void teleportPlayer(Player P){
             printf("%s teleport ke petak %d\n", NAME(P), tele);
             ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
         }
+        printf("\n");
     }
 }
 
@@ -371,9 +401,11 @@ void playerRoll(Player P){
                 ChangePlayerPosition(&AP, pos);
                 printf("%s berada di petak %d.\n", NAME(P), PLAYERPOS(AP));
                 teleportPlayer(P);
+                printf("\n");
             }
             else{
                 printf("%s tidak dapat bergerak! Sabar yaa:(\n", NAME(P));
+                printf("\n");
             }
         }
         else{
@@ -382,6 +414,7 @@ void playerRoll(Player P){
             ChangePlayerPosition(&AP, pos);
             printf("%s berada di petak %d.\n", NAME(P), PLAYERPOS(AP));
             teleportPlayer(P);
+            printf("\n");
         }
 
         ROLLED(AP) = true;
@@ -401,46 +434,51 @@ void cmdPlayer(){
     char UNDO[] = "UNDO";
     Player P = SearchPlayerByPlayerNum(turn, playerturn);
     addrPlayer AP = SearchPlayer(turn, P);
+    printf("\n");
     while (!endgame){
-    readInput();
-    if (IsKataSama(CKata, SKILL)){
-        CommandSkill(&P);
+        readInput();
+        if (IsKataSama(CKata, SKILL)){
+            CommandSkill(&P);
+        }
+        else if (IsKataSama(CKata, MAP)){
+            printAllPos (M, turn);
+        }
+        else if (IsKataSama(CKata, BUFF)){
+            printBuff(P);
+        }
+        else if (IsKataSama(CKata, INSPECT)){
+            CmdInspect(M);
+        }
+        else if (IsKataSama(CKata, ROLL)){
+            playerRoll(P);
+        }
+        else if (IsKataSama(CKata, SAVE)){
+            save();
+        }
+        else if (IsKataSama(CKata, ENDTURN)){
+            endturn(turn);
+            playerTurn(&turn);
+        }
+        else if (IsKataSama(CKata, UNDO)){
+            undo();
+        }
+        else {
+            printf("Punten, input tidak sesuai! Silahkan input lagi\n");
+        }
     }
-    else if (IsKataSama(CKata, MAP)){
-        printf("Posisi player: ");
-        showPlayerPos(M, PLAYERPOS(AP));
-    }
-    else if (IsKataSama(CKata, BUFF)){
-        printBuff(P);
-    }
-    else if (IsKataSama(CKata, INSPECT)){
-        CmdInspect(M);
-    }
-    else if (IsKataSama(CKata, ROLL)){
-        playerRoll(P);
-    }
-    else if (IsKataSama(CKata, SAVE)){
-        save();
-    }
-    else if (IsKataSama(CKata, ENDTURN)){
-        endturn(turn);
-        playerTurn(&turn);
-    }
-    else if (IsKataSama(CKata, UNDO)){
-        undo();
-    }
-    else printf("Punten, input tidak sesuai! Silahkan input lagi\n");
-    }
+    printf("\n");
 }
 
 void playerTurn(State *St){
     Player P = SearchPlayerByPlayerNum(*St, playerturn);
     addrPlayer Pt = SearchPlayer(*St,P);
     ROLLED(Pt) = false;
-    printf("Ronde %d\n", ronde);
+    printf("\n");
+    printf("============ Ronde %d ============\n", ronde);
+    printf("\n");
     printf("Giliran %s bermain!\n", NAME(P));
-    printf("Posisi player: ");
-    showPlayerPos(M, PLAYERPOS(Pt));
+    printAllPos (M, turn);
+    printf("\n");
     insPlayerSkill(&(Pt -> pemain));
     cmdPlayer();
 }
@@ -451,7 +489,7 @@ void startGame(){
 
 
 
-void UseMesinWaktu (State *S, Player *T){
+void UseMesinWaktu (Player *T){
 
     int maxN = MAXROLL(M);
     int rollresult;
@@ -459,24 +497,26 @@ void UseMesinWaktu (State *S, Player *T){
     srand (time(NULL));
     rollresult = (rand() % maxN) + 1;
     
-    Player P1 = *T ;
+    // Player P;
     int X;
-    ShowPlayer(*S);
-    printf("Pemain yang ingin dimajukan : ");
-    scanf("%d\n", &X);
 
-    Player P2 = SearchPlayerByPlayerNum(*S, X);
-    addrPlayer AP = SearchPlayer(*S, P2);
+    // P = *T ;
+    ShowPlayer(turn);
+    printf("Pemain yang ingin dimajukan : ");
+    scanf("%d", &X);
+
+    Player P2; 
+    P2 = SearchPlayerByPlayerNum(turn, X);
+    addrPlayer AP;
+    AP = SearchPlayer(turn, P2);
     boolean same;
 
-    same = isSamePlayer(P1, P2);
-    while (same){
+    while (isSamePlayer(*T, P2)){
         printf("Tidak dapat menukar dengan diri sendiri!\n");
         printf("Silahkan masukkan no pemain yang ingin dimajukan: ");
         scanf("%d", &X);
-        P2 = SearchPlayerByPlayerNum(*S, X);
-        addrPlayer AP = SearchPlayer(*S, P2);
-        same = isSamePlayer(P1, P2);
+        P2 = SearchPlayerByPlayerNum(turn, X);
+        addrPlayer AP = SearchPlayer(turn, P2);
     }
 
     int pos = PLAYERPOS(AP) - rollresult;
@@ -498,15 +538,17 @@ void UseMesinWaktu (State *S, Player *T){
 
             if (IsTeleport(M.tele, PLAYERPOS(AP))){
                 printf("%s menemukan teleporter.\n", NAME(P2));
+                printf("\n");
                 if ((P2).buff[0] = true){
                     char Choose;
-                    printf("%s memiliki buff imunitas teleport, apakah ingin digunakan ? (Y/N)", NAME(P2));
+                    printf("memiliki buff imunitas teleport.\n");
+                    printf("%s apakah ingin digunakan ? (Y/N)\n", NAME(P2));
                     scanf("%s", &Choose);
 
-                    if (Choose == "Y"){
+                    if (&Choose == "Y"){
                         /*Do Nothing*/
                     }
-                    else if (Choose == "N"){
+                    else if (&Choose == "N"){
                         printf("%s teleport ke petak %d\n", NAME(P2), PetakOut(M.tele, PLAYERPOS(AP)));
                         ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
                     }
@@ -520,7 +562,7 @@ void UseMesinWaktu (State *S, Player *T){
 }
 
 
-void BalingBalingJambu (State *S, Player *T){
+void UseBalingBalingJambu (Player *T){
     
     int maxN = MAXROLL(M);
     int rollresult;
@@ -528,24 +570,26 @@ void BalingBalingJambu (State *S, Player *T){
     srand (time(NULL));
     rollresult = (rand() % maxN) + 1;
     
-    Player P1 = *T ;
+    // Player P;
     int X;
-    ShowPlayer(*S);
-    printf("Pemain yang ingin dimajukan : ");
-    scanf("%d\n", &X);
 
-    Player P2 = SearchPlayerByPlayerNum(*S, X);
-    addrPlayer AP = SearchPlayer(*S, P2);
+    // P = *T ;
+    ShowPlayer(turn);
+    printf("Pemain yang ingin dimajukan : ");
+    scanf("%d", &X);
+
+    Player P2; 
+    P2 = SearchPlayerByPlayerNum(turn, X);
+    addrPlayer AP;
+    AP = SearchPlayer(turn, P2);
     boolean same;
 
-    same = isSamePlayer(P1, P2);
-    while (same){
+    while (isSamePlayer(*T, P2)){
         printf("Tidak dapat menukar dengan diri sendiri!\n");
         printf("Silahkan masukkan no pemain yang ingin dimajukan: ");
         scanf("%d", &X);
-        P2 = SearchPlayerByPlayerNum(*S, X);
-        addrPlayer AP = SearchPlayer(*S, P2);
-        same = isSamePlayer(P1, P2);
+        P2 = SearchPlayerByPlayerNum(turn, X);
+        addrPlayer AP = SearchPlayer(turn, P2);
     }
 
     int pos = PLAYERPOS(AP) + rollresult;
@@ -567,15 +611,17 @@ void BalingBalingJambu (State *S, Player *T){
 
             if (IsTeleport(M.tele, PLAYERPOS(AP))){
                 printf("%s menemukan teleporter.\n", NAME(P2));
+                printf("\n");
                 if ((P2).buff[0] = true){
                     char Choose;
-                    printf("%s memiliki buff imunitas teleport, apakah ingin digunakan ? (Y/N)", NAME(P2));
+                    printf("memiliki buff imunitas teleport.\n");
+                    printf("%s apakah ingin digunakan ? (Y/N)\n", NAME(P2));
                     scanf("%s", &Choose);
 
-                    if (Choose == "Y"){
+                    if (&Choose == "Y"){
                         /*Do Nothing*/
                     }
-                    else if (Choose == "N"){
+                    else if (&Choose == "N"){
                         printf("%s teleport ke petak %d\n", NAME(P2), PetakOut(M.tele, PLAYERPOS(AP)));
                         ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
                     }
@@ -588,12 +634,13 @@ void BalingBalingJambu (State *S, Player *T){
     }
 }
 
-void QueueSave(){
-    Stack dummyS;
-    CopyStack(&dummyS,S);
-    CreateEmptyQ(&Q, NElStack(S));
-    while(!IsEmptyStack(dummyS)){
-        Pop(&dummyS, &dummy);
-        Add(&Q, dummy);
-    }
-}
+
+// void QueueSave(){
+//     Stack dummyS;
+//     CopyStack(&dummyS,S);
+//     CreateEmptyQ(&Q, NElStack(S));
+//     while(!IsEmptyStack(dummyS)){
+//         Pop(&dummyS, &dummy);
+//         Add(&Q, dummy);
+//     }
+// }

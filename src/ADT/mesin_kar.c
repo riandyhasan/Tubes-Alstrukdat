@@ -27,6 +27,7 @@ void START(char *filename) {
 		printf("Punten, file gak bisa dibuka!\n");
 	} else {
 		printf("Memuat konfigurasi dari file %s\n", filename);
+      printf("\n");
 	}
    ADV();
 }

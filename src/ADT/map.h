@@ -29,6 +29,9 @@ void readMap(Map *M, char *filename);
 boolean isForbidden(Map M, int loc);
 /* Mengecek apakah isi map merupakan #, true jika # */
 
+void showPlayerPos(Map M, int loc);
+
+void printAllPos (Map M, State ST);
 
 /* COMMAND INSPECT */
 void CmdInspect (Map peta);
