@@ -116,32 +116,32 @@ int GetSkills (){
 
     while (i < 100){
 
-        // if ((i >= 0) && (i <= 9)){
-        //     TabSkill[i] = 1 ;
-        // }
-        // else if ((i >= 10) && (i <= 15)){
-        //     TabSkill[i] = 2 ;
-        // }
-        // else if ((i >= 16) && (i <= 30)){
-        //     TabSkill[i] = 3 ;
-        // }
-        // else if ((i >= 31) && (i <= 45)){
-        //     TabSkill[i] = 4 ;
-        // }
-        // else if ((i >= 46) && (i <= 49)){
-        //     TabSkill[i] = 5 ;
-        // }
-        // else if ((i >= 50) && (i <= 79)){
-        //     TabSkill[i] = 6 ;
-        // }
-        // else if ((i >= 80) && (i <= 89)){
-        //     TabSkill[i] = 7 ;
-        // }
-        // else if ((i >= 90) && (i <= 99)){
-        //     TabSkill[i] = 8 ;
-        // }
-        TabSkill[i] = 8 ;
+        if ((i >= 0) && (i <= 9)){
+            TabSkill[i] = 1 ;
+        }
+        else if ((i >= 10) && (i <= 15)){
+            TabSkill[i] = 2 ;
+        }
+        else if ((i >= 16) && (i <= 30)){
+            TabSkill[i] = 3 ;
+        }
+        else if ((i >= 31) && (i <= 45)){
+            TabSkill[i] = 4 ;
+        }
+        else if ((i >= 46) && (i <= 49)){
+            TabSkill[i] = 5 ;
+        }
+        else if ((i >= 50) && (i <= 79)){
+            TabSkill[i] = 6 ;
+        }
+        else if ((i >= 80) && (i <= 89)){
+            TabSkill[i] = 7 ;
+        }
+        else if ((i >= 90) && (i <= 99)){
+            TabSkill[i] = 8 ;
+        }
         i++ ;
+
     }
 
     SkillDrop = printRandoms(0, 100, 1);
