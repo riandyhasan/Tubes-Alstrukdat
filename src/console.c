@@ -54,7 +54,7 @@ void printLoading(){
 
     for (int i= 0; i < 3; i++) {
         // Return and clear with spaces, then return and print prompt.
-        printf("\r%*s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
+        printf("\r%s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
         fflush(stdout);
 
         // Print numDots number of dots, one every trigger milliseconds.
@@ -75,7 +75,7 @@ void printLoadGame(){
 
     for (int i= 0; i < 3; i++) {
         // Return and clear with spaces, then return and print prompt.
-        printf("\r%*s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
+        printf("\r%s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
         fflush(stdout);
 
         // Print numDots number of dots, one every trigger milliseconds.
@@ -95,7 +95,7 @@ void printConLoad(){
 
     for (int i= 0; i < 3; i++) {
         // Return and clear with spaces, then return and print prompt.
-        printf("\r%*s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
+        printf("\r%s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
         fflush(stdout);
 
         // Print numDots number of dots, one every trigger milliseconds.
@@ -115,7 +115,7 @@ void printRoll(){
 
     printf("\n");
     // Return and clear with spaces, then return and print prompt.
-    printf("\r%*s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
+    printf("\r%s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
     fflush(stdout);
 
     // Print numDots number of dots, one every trigger milliseconds.
@@ -159,7 +159,7 @@ void newGame() {
     int nPlayer;
     printf("\n");
 	printf("Masukkan nama file konfigurasi permainan: ");
-    scanf("%s", &namefile);
+    scanf("%s", namefile);
     inisialisasiMap(&(M));
     readMap(&M, namefile);
     CreateEmptyStack(&S);
@@ -293,7 +293,7 @@ void save(){
     char savedir[150];
     Push(&S, turn);
     printf("Masukkan file name: ");
-    scanf("%s", &savefile);
+    scanf("%s", savefile);
     strcpy(savedir, dir);
     strcat(savedir, savefile);
     FILE *f = fopen(savedir, "w");
@@ -706,7 +706,7 @@ void UseMesinWaktu (Player *T){
                             printf("%s teleport ke petak %d\n", NAME(P2), tele);
                             ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
                         }else if (check == 'N'){
-                            printf("%s tidak teleport.\n");
+                            printf("%s tidak teleport.\n", NAME(P2));
                             printf("Buff imunitas teleport hilang.\n");
                             (AP -> pemain).buff[0] = false;
                         }
@@ -850,7 +850,7 @@ void UseBalingBalingJambu (Player *T){
 void loadGame(){
     char loadfile[100];
     printf("Masukkan file name: ");
-    scanf("%s", &loadfile);
+    scanf("%s", loadfile);
     STARTLOADFILE(loadfile);
     char copyy[LoadKata.Length];
     for (int i = 0; i < LoadKata.Length; i++){
