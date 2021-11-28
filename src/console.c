@@ -414,6 +414,8 @@ void CommandSkill (Player *P){
             else if (Info_Skill(T) == 5){
                 UseTukarPosisiPlayer(&turn, playerturn) ;
                 DelP (&INFOSKILL(*P), 5) ;
+                printAllPos ();
+                printf ("\n");
             }
             else if (Info_Skill(T) == 7){
                 printf("%s memakai skill Mesin Waktu. Membuat player lain mundur :D\n", NAME(*P));
