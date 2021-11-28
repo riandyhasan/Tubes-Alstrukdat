@@ -13,9 +13,13 @@ yang dibuat demi memenuhi kebutuhan program dalam permainan.
 ## Anggota Kelompok 09
 
 > Riandy Hasan 	              18220058 
+
 > Calvin 				              18220062 
+
 > Christian Michael Mozart S 	18220068 
+
 > Alifiya Brizita Shary 		  18220069 
+
 > Yosafat Raditya 			      18220078 
 
 ## Alur Program 
