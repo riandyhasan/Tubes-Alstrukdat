@@ -214,7 +214,9 @@ void insPlayerSkill (Player *P){
 
     int X ;
     X = GetSkills() ;
-    if (NbElmt(INFOSKILL(*P)) == 10) printf("Tidak mendapatkan skill karena sudah penuh! Jangan maruk ya :D\n");
+    if (NbElmt(INFOSKILL(*P)) >= 10){
+        printf("Tidak mendapatkan skill karena sudah penuh! Jangan maruk ya :D\n");
+    }
     else{
         if (X == 6){
             /*DO NOTHING*/
