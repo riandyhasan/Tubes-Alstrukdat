@@ -667,8 +667,8 @@ void UseMesinWaktu (Player *T){
     boolean same;
 
     while (isSamePlayer(*T, P2)){
-        printf("Tidak dapat memajukan diri sendiri!\n");
-        printf("Silahkan masukkan no pemain yang ingin dimajukan: ");
+        printf("Tidak dapat memundurkan diri sendiri!\n");
+        printf("Silahkan masukkan no pemain yang ingin dimundurkan: ");
         scanf("%d", &X);
         P2 = SearchPlayerByPlayerNum(turn, X);
         addrPlayer AP = SearchPlayer(turn, P2);
@@ -729,8 +729,10 @@ void UseMesinWaktu (Player *T){
 void UseBalingBalingJambu (Player *T){
     
     int maxN = MAXROLL(M);
+    int rollresult;
+
     srand (time(NULL));
-    int nRoll = (rand() % maxN) + 1;
+    rollresult = (rand() % maxN) + 1;
     
     // Player P;
     int X;
@@ -754,70 +756,94 @@ void UseBalingBalingJambu (Player *T){
         addrPlayer AP = SearchPlayer(turn, P2);
     }
 
-    printf("Hasil roll mendapatkan angka %d\n", nRoll);
+    printf("Hasil roll mendapatkan angka %d\n", rollresult);
 
-        int pos = PLAYERPOS(AP) + nRoll;
-        printf("%s mendapatkan angka %d\n", NAME(P2), nRoll);
-        if (pos > M.mapConfig.Neff) {
-            pos = PLAYERPOS(AP) - nRoll;
-            if(!isForbidden(M, pos)){
-                printf("%s akan mundur.\n", NAME(P2));
-                printf("%s mundur %d langkah.\n", NAME(P2), nRoll);
-                ChangePlayerPosition(&AP, pos);
-                printf("%s berada di petak %d.\n", NAME(P2), PLAYERPOS(AP));
-                teleportPlayer(P2);
-                printf("\n");
-                }
-            else{
-                printf("%s tidak dapat bergerak! Sabar yaa:(\n", NAME(P2));
-                printf("\n");
-                }
-            }
+    int pos = PLAYERPOS(AP) + rollresult;
+
+    if (pos > M.mapConfig.Neff){
+        pos = PLAYERPOS(AP) - rollresult;
+
+        if (isForbidden(M, pos)){
+            printf("%s Kamu tidak bergerak karena menemukan petak terlarang ! hohohooo\n", NAME(P2));
+        }
         else{
-            if(isForbidden(M, pos)){
-                pos = PLAYERPOS(AP) - nRoll;
-                if ( pos > 0 && !isForbidden(M, pos)){
-                    printf("%s akan mundur.\n", NAME(P2));
-                    printf("%s mundur %d langkah.\n", NAME(P2), nRoll);
-                    ChangePlayerPosition(&AP, pos);
-                    printf("%s berada di petak %d.\n", NAME(P2), PLAYERPOS(AP));
-                    teleportPlayer(P2);
-                    printf("\n");
-                }else{
-                    printf("%s tidak dapat bergerak! Sabar yaa:(\n", NAME(P2));
-                    printf("\n");
-                    }
-                }
-            else{
-                if ( pos == M.mapConfig.Neff &&(PLAYERPOS(AP) - nRoll > 0) && !isForbidden(M, PLAYERPOS(AP) - nRoll)){
-                    printf("%s dapat maju dan mundur.\n", NAME(P2));
-                    printf("Ke mana %s mau bergerak:\n", NAME(P2));
-                    printf("%d. %d", 1, pos);
-                    printf("%d. %d", 2, PLAYERPOS(AP) - nRoll);
-                    int pil;
+            printf("%s akan mundur.\n", NAME(P2));
+            printf("%s mundur %d langkah.\n", NAME(P2), rollresult);
+            ChangePlayerPosition(&AP, pos);
+            printf("%s berada di petak %d.\n", NAME(P2), PLAYERPOS(AP));
+
+        }
+    }
+    else{ 
+        if (isForbidden(M, pos)){
+            printf("%s Kamu tidak bergerak karena menemukan petak terlarang ! hohohooo\n", NAME(P2));
+        }
+        else if(!isForbidden(M, pos)){
+            printf("%d\n", pos);
+            
+            if (pos == M.mapConfig.Neff && (PLAYERPOS(AP) - rollresult > 0) && !isForbidden(M, PLAYERPOS(AP) - rollresult)){
+                printf("%s dapat maju dan mundur.\n", NAME(P2));
+                printf("Ke mana %s mau bergerak:\n", NAME(P2));
+                printf("%d. %d", 1, pos);
+                printf("%d. %d", 2, PLAYERPOS(AP) - rollresult);
+                
+                int pil;
+                printf("Masukkan pilihan: ");
+                scanf("%d", &pil);
+                
+                while(pil != 1 && pil != 2){
+                    printf("Input tidak sesuai!\n");
                     printf("Masukkan pilihan: ");
                     scanf("%d", &pil);
-                    while(pil != 1 && pil != 2){
-                        printf("Input tidak sesuai!\n");
-                        printf("Masukkan pilihan: ");
-                        scanf("%d", &pil);
-                    }
-                    if (pil == 1)  ChangePlayerPosition(&AP, pos);
-                    else ChangePlayerPosition(&AP, PLAYERPOS(AP) - nRoll);
+                }
+                
+                if (pil == 1){
+                    ChangePlayerPosition(&AP, pos);
+                }
+                else{
+                    ChangePlayerPosition(&AP, PLAYERPOS(AP) - rollresult);
                     teleportPlayer(P2);
                 }
-                printf("%s dapat maju.\n", NAME(P2));
-                printf("%s maju %d langkah.\n", NAME(P2), nRoll);
+            }
+            else{
+
+                printf("%s akan maju.\n", NAME(P2));
+                printf("%s maju %d langkah.\n", NAME(P2), rollresult);
                 ChangePlayerPosition(&AP, pos);
                 printf("%s berada di petak %d.\n", NAME(P2), PLAYERPOS(AP));
-                teleportPlayer(P2);
-                printf("\n");
+
+
+                if (IsTeleport(M.tele, PLAYERPOS(AP))){
+                    printf("%s menemukan teleporter.\n", NAME(P2));
+                    if (P2.buff[0]){
+                        char check;
+                        printf("Apakah %s ingin teleport(Y/N)? ", NAME(P2));
+                        scanf("%c", &check);
+                        while (check != 'Y' && check != 'N') scanf("%c", &check);
+                        if (check == 'Y'){
+                            int tele = PetakOut(M.tele, PLAYERPOS(AP));
+                            printf("%s teleport ke petak %d\n", NAME(P2), tele);
+                            ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
+                        }
+                    }else{
+                        int tele = PetakOut(M.tele, PLAYERPOS(AP));
+                        printf("%s teleport ke petak %d\n", NAME(P2), tele);
+                        ChangePlayerPosition(&AP, PetakOut(M.tele,PLAYERPOS(AP)));
+                    }
+                    printf("\n");
+                }
+
+                ROLLED(AP) = true;
+                if (PLAYERPOS(AP) == M.mapConfig.Neff){
+                    endgame = true;
+                    endGame(AP -> pemain);
+                }
             }
         }
-        if (PLAYERPOS(AP) == M.mapConfig.Neff){
-            endgame = true;
-            endGame(AP -> pemain);
-        } 
+        else{
+            printf("%s Kamu tidak bergerak karena menemukan petak terlarang ! hohohooo\n", NAME(P2));
+        }    
+    }
 }
 
 
