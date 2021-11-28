@@ -54,7 +54,7 @@ void printLoading(){
 
     for (int i= 0; i < 3; i++) {
         // Return and clear with spaces, then return and print prompt.
-        printf("\r%s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
+        printf("\r%s\r%s", "", prompt);
         fflush(stdout);
 
         // Print numDots number of dots, one every trigger milliseconds.
@@ -75,7 +75,7 @@ void printLoadGame(){
 
     for (int i= 0; i < 3; i++) {
         // Return and clear with spaces, then return and print prompt.
-        printf("\r%s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
+        printf("\r%s\r%s", "", prompt);
         fflush(stdout);
 
         // Print numDots number of dots, one every trigger milliseconds.
@@ -95,7 +95,7 @@ void printConLoad(){
 
     for (int i= 0; i < 3; i++) {
         // Return and clear with spaces, then return and print prompt.
-        printf("\r%s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
+        printf("\r%s\r%s", "", prompt);
         fflush(stdout);
 
         // Print numDots number of dots, one every trigger milliseconds.
@@ -115,7 +115,7 @@ void printRoll(){
 
     printf("\n");
     // Return and clear with spaces, then return and print prompt.
-    printf("\r%s\r%s", sizeof(prompt) - 1 + numDots, "", prompt);
+    printf("\r%s\r%s", "", prompt);
     fflush(stdout);
 
     // Print numDots number of dots, one every trigger milliseconds.
