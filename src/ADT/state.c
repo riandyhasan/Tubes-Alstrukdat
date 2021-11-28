@@ -96,7 +96,7 @@ void AddPlayerToGame(State *newState,int nPlayer){
   for(int i = 1; i <= nPlayer; i++){
     Player newPlayer;
     addrPlayer turn;
-    char Name[100];
+    char *Name;
     printf("Masukkan nama player ke-%d: ", i);
     scanf("%s",&Name);
     CreatePlayer(&newPlayer, Name, i);
