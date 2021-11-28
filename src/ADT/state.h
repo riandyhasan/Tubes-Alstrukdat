@@ -43,7 +43,7 @@ addrPlayer PlayerTurn(Player p, int post);
 /* Mengembalikan sebuah addrPlayer yang menyimpan turn pemain  */
 
 void AddPlayerToGame(State *newState,int nPlayer);
-  /* I.S. Sembarang  */
+/* I.S. Sembarang  */
 /* F.S. Player ditambahkan ke dalam sebanyak yang diinginkan */
 
 void ChangePlayerPosition(addrPlayer *P, int newPost);

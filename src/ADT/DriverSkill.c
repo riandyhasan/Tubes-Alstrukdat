@@ -1,18 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "listlinier.h"
-#include "player.h"
-#include "boolean.h"
-#include "state.h"
-#include "skill.h"
+#include "./adt.h"
 
 int main(){
 
     Player P1;
     int X;
 
-    CreatePlayer(&P1, "Valorant", 1010);
+    CreatePlayer(&P1, "Valorant", 1);
 
     insPlayerSkill(&P1);
 
@@ -20,6 +16,6 @@ int main(){
 
     printf("\n");
 
-    CommandSkill(&P1, &PintuGaKemanaMana, &CerminPengganda, &SenterPembesarHoki, &SenterPengecilHoki, &MesinPenukarPosisi) ;
+    CommandSkill(&P1) ;
 
 }
