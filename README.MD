@@ -29,3 +29,67 @@ tergantung pada command yang dimasukkan pemain. Permainan dijalankan dengan bata
 dan melakukan pemutaran dadu. Setiap ronde yang sudah dijalankan (sudah berlalu) akan disimpan datanya dan seorang pemain dapat melakukan undo untuk mengembalikan 
 keadaan permainan menjadi keadaan seperti ronde sebelumnya. Permainan akan berakhir ketika terdapat seorang pemain yang sudah mencapai petak akhir dari map permainan.
 Apabila permainan tidak ingin dilanjutkan, dapat dilakukan save yaitu untuk menyimpan state permainan saat itu. 
+
+## Directory 
+
+|   README.MD
+|   
++---bin
+|       Mobitangga.bat
+|       Mobitangga.exe
+|       sample_save.txt
+|       test.txt
+|       testlagi.txt
+|       
++---data
+|       100.txt
+|       30.txt
+|       40.txt
+|       50.txt
+|       70.txt
+|       test.txt
+|       
++---docs
+|       Form Asistensi Tugas Besar.docx.pdf
+|       Spesifikasi Tugas Besar IF2111 2021_2022.pdf
+|       
+\---src
+    |   adt.h
+    |   boolean.h
+    |   console.c
+    |   console.h
+    |   main.c
+    |   
+    \---ADT
+            array.c
+            array.h
+            driverarray.c
+            driverlistlinier.c
+            drivermap.c
+            drivermesinkarkata.c
+            driverplayer.c
+            driverstate.c
+            driverteleporter.c
+            listlinier.c
+            listlinier.h
+            map.c
+            map.h
+            mesin_kar.c
+            mesin_kar.h
+            mesin_kata.c
+            mesin_kata.h
+            player.c
+            player.h
+            stack.c
+            stack.h
+            state.c
+            state.h
+            teleporter.c
+            teleporter.h
+
+## How to start play
+1. Pergi ke folder bin lalu buka Mobitangga.bat
+2. Pilih new gama atau load game
+3. Pilih konfigurasi map
+4. Selamat bermain :D 
+
