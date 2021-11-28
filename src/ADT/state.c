@@ -212,4 +212,7 @@ void UseTukarPosisiPlayer (State *S, int Playernum1){
 
     ChangePlayerPosition (&Plyr1, PLAYERPOS(Plyr2));
     ChangePlayerPosition (&Plyr2, temp);
+    printf ("%s telah bertukar posisi dengan %s\n", NAME(P1), NAME(P2));
+    printAllPos ();
+    printf ("\n");
 }

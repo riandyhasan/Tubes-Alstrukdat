@@ -257,6 +257,7 @@ void DoubleMirror(Player *P){
     if (NbElmt(INFOSKILL(*P)) < 9){
         for (i=0; i<2; i++){
             insPlayerSkill(P);
+            usleep(500 * 1000);
         }
     }
     else{
