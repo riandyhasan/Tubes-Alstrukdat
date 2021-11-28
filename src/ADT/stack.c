@@ -33,8 +33,9 @@ int NElStack(Stack S){
 
 void CopyStack(Stack *S1, Stack S2){
     CreateEmptyStack(S1);
+    State dummy;
+    FIRSTPLAYER(dummy) = Nil;
     while(!IsEmptyStack(S2)){
-        State dummy;
         Pop(&S2, &dummy);
         Push(S1, dummy);
     }
@@ -46,7 +47,7 @@ void Push (Stack * S, infostack X){
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
     Top(*S)++;
-    InfoTop(*S) = X;
+    PushState(&(InfoTop(*S)), X);
 }
 
 /* ************ Menghapus sebuah elemen Stack ************ */
@@ -54,6 +55,6 @@ void Pop (Stack* S, infostack* X){
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah NilStackai elemen TOP yang lama, TOP berkurang 1 */
-    CopyState(X, InfoTop(*S));
+    PushState(X, InfoTop(*S));
     Top(*S)--;
 }

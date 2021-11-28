@@ -6,6 +6,5 @@
 int main(){
     printBanner();
     mainMenu();
-    startGame();
     return 0;
 }

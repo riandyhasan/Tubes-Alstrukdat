@@ -66,3 +66,5 @@ void UseMesinWaktu (Player *T);
 void UseBalingBalingJambu (Player *T);
 /* I.S. Sembarang  */
 /* F.S. Pemain yang dipilih dimajukan posisinya dari posisi sebelumnya */
+
+void loadGame();

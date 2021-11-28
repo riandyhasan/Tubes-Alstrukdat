@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 boolean EndKata;
+boolean EndKataLoad;
 Kata CKata;
+Kata LoadKata;
 
 void IgnoreBlank()
 /* Mengabaikan satu atau beberapa BLANK
@@ -13,6 +15,16 @@ void IgnoreBlank()
 {
     while(CC == BLANK || CC == ENTER){
         ADV();
+    }
+}
+
+void IgnoreBlankLoad()
+/* Mengabaikan satu atau beberapa BLANK
+   I.S. : CC sembarang
+   F.S. : CC ≠ BLANK atau CC = MARK */
+{
+    while(CL == BLANK || CL == ENTER){
+        ADVLOAD();
     }
 }
 
@@ -48,6 +60,59 @@ void STARTKATA(char *filename)
     {
         EndKata = false;
         SalinKata();
+    }
+}
+
+void STARTLOADFILE(char *filename)
+/* I.S. : CC sembarang
+   F.S. : EndKata = true, dan CC = MARK;
+          atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
+{
+    STARTLOAD(filename);
+    IgnoreBlankLoad();
+    if (CL == EOF) EndKataLoad = true;
+    else /* CC != MARK */
+    {
+        EndKataLoad = false;
+        SalinLKata();
+    }
+}
+
+void SalinLKata()
+/* Mengakuisisi kata, menyimpan dalam CKata
+   I.S. : CC adalah karakter pertama dari kata
+   F.S. : CKata berisi kata yang sudah diakuisisi;
+          CC = BLANK atau CC = MARK;
+          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+          Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+{
+    int i = 1;
+    LoadKata.Length = 0;
+    while(CL != BLANK && CL != ENTER ){
+        IgnoreBlankLoad();
+        LoadKata.TabKata[i] = CL;
+        i++;
+        ADVLOAD();
+    }
+    LoadKata.Length = i-1;
+}
+
+void ADVKATALOAD()
+    /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
+   F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
+          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika CC = MARK, EndKata = true.
+   Proses : Akuisisi kata menggunakan procedure SalinKata */
+{
+    IgnoreBlankLoad();
+    if (CL == EOF) 
+    {
+        EndKataLoad = true;
+    }
+    else /* CC != MARK */
+    {
+        SalinLKata();
     }
 }
 

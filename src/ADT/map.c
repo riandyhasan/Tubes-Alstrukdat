@@ -33,7 +33,6 @@ void readMap(Map *M, char *filename){
         telPred = KataToInt(CKata);
         PetakInAndOut(&(*M).tele.bufferTele[i], telSucc, telPred);
     }
-    // PrintTele((*M).tele);
 }
 
 boolean isForbidden(Map M, int loc){
@@ -49,17 +48,6 @@ void showPlayerPos(Map M, int loc){
     }
     printf(" %d", loc);
     printf("\n");
-}
-
-void printAllPos (Map M, State ST){
-    printf("Posisi player: \n");
-
-    addrPlayer AP = FIRSTPLAYER(ST);
-    while (AP != Nil){
-        printf("%s : ", NAME(AP -> pemain));
-        showPlayerPos(M, PLAYERPOS(AP));
-        AP = NextPlayer(AP);
-    }
 }
 
 void CmdInspect (Map peta) {

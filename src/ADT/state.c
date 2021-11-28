@@ -12,22 +12,6 @@ boolean IsEmptyState (State S){
     return FIRSTPLAYER(S) == Nil;
 }
 
-void CopyState (State *S1, State S2) {
-  NPLAYER(*S1) = NPLAYER(S2);
-  FIRSTPLAYER(*S1) = Nil;
-  addrPlayer P1,P2;
-  P2 = FIRSTPLAYER(S2);
-  P1 = P2;
-  FIRSTPLAYER(*S1) = P1;
-  while(P2 != Nil){
-    CreatePlayer(&(P1->pemain), NAME(P2 -> pemain), INFOPLAYER(P2-> pemain));
-    SalinSkill(&(P1->pemain), (P2-> pemain));
-    PLAYERPOS(P1) = PLAYERPOS(P2);
-    P1 = NextPlayer(P1);
-    P2 = NextPlayer(P2);
-  }
-}
-
 void ResetStatePlayer(State *S){
   addrPlayer loc;
   loc = FIRSTPLAYER(*S);
@@ -70,6 +54,34 @@ void AddTurn (State *S, addrPlayer turn){
     }
 }
 
+addrPlayer SalinPlayer(Player p, int pos){
+  /* Mengembalikan sebuah addrPlayer yang menyimpan pemain  */
+  addrPlayer turn;
+  turn = (addrPlayer) malloc (sizeof(PlayerState));
+  if (turn != Nil){
+        strcpy(NAME(turn-> pemain), NAME(p));
+        INFOPLAYER(turn -> pemain) = INFOPLAYER(p);
+        SalinSkill(&(turn->pemain), p);
+        PLAYERPOS(turn) = pos;
+        NextPlayer(turn) = Nil;
+   }
+  return turn;
+}
+
+void PushState(State *S1, State S2){
+  addrPlayer P1, P2;
+  P2 = FIRSTPLAYER(S2);
+  P1 = SalinPlayer((P2 -> pemain), PLAYERPOS(P2));
+  FIRSTPLAYER(*S1) = P1;
+  P2 = NextPlayer(P2);
+  while (P2 != Nil){
+    addrPlayer now;
+    now = SalinPlayer((P2 -> pemain), PLAYERPOS(P2));
+    NextPlayer(P1) = now;
+    P2 = NextPlayer(P2);
+  }
+}
+
 
 void CreateRound (State *S){
   /* Membuat sebuah State baru */
@@ -91,6 +103,25 @@ void AddPlayerToGame(State *newState,int nPlayer){
     turn = PlayerTurn(newPlayer, 1);
     AddTurn(&(*newState), turn);
     printf("Player %s berhasil ditambahkan!\n", Name);
+  }
+}
+
+void LoadPlayerToGame(State *newState,int nPlayer){
+  /* I.S. Sembarang  */
+/* F.S. Player ditambahkan ke dalam sebanyak yang diinginkan */
+  NPLAYER(*newState) = nPlayer;
+  for(int i = 1; i <= nPlayer; i++){
+    Player newPlayer;
+    addrPlayer turn;
+    ADVKATALOAD();
+    ADVKATALOAD();
+    char copyy[LoadKata.Length];
+    for (int i = 0; i <LoadKata.Length; i++){
+        copyy[i] = LoadKata.TabKata[i+1];
+    }
+    CreatePlayer(&newPlayer, copyy, i);
+    turn = PlayerTurn(newPlayer, 1);
+    AddTurn(&(*newState), turn);
   }
 }
 
@@ -133,12 +164,22 @@ void ChangePlayerPosition(addrPlayer *P, int newPost){
 void ShowPlayer(State S){
   addrPlayer loc;
   loc = FIRSTPLAYER(S);
-  for(int i=1; i <= NPLAYER(S); i++) {
+  int i = 1;
+  while (loc != Nil) {
     printf("%d. %s\n",INFOPLAYER(loc -> pemain),  NAME(loc -> pemain));
     loc = NextPlayer(loc);
+    i++;
   }
 }
 
+void ResetAllPlayerBuff(State *S){
+  addrPlayer P;
+  P = FIRSTPLAYER(*S);
+  while(P != Nil){
+    resetBuff(&(P -> pemain));
+    P = NextPlayer(P);
+  }
+}
 
 void UseTukarPosisiPlayer (State *S, int Playernum1){
     int playernum2;

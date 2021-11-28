@@ -31,8 +31,6 @@ boolean isForbidden(Map M, int loc);
 
 void showPlayerPos(Map M, int loc);
 
-void printAllPos (Map M, State ST);
-
 /* COMMAND INSPECT */
 void CmdInspect (Map peta);
 /* I.S T terdefinisi dan tidak kosong */

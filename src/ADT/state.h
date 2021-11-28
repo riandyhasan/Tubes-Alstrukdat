@@ -60,4 +60,6 @@ Player SearchPlayerByPlayerNum(State S, int idx);
 
 void ShowPlayer(State S);
 
+void PushState(State *S1, State S2);
+
 #endif
