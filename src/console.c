@@ -127,6 +127,26 @@ void printRoll(){
     printf("\n");
 }
 
+void printSave(){
+    const int trigger = 300; // ms
+    const int numDots = 4;
+    const char prompt[] = "Saving";
+
+    for (int i= 0; i < 3; i++) {
+        // Return and clear with spaces, then return and print prompt.
+        printf("\r%s\r%s", "", prompt);
+        fflush(stdout);
+
+        // Print numDots number of dots, one every trigger milliseconds.
+        for (int i = 0; i < numDots; i++) {
+            usleep(trigger * 1000);
+            fputc('.', stdout);
+            fflush(stdout);
+        }
+    }
+    printf("\n");
+}
+
 void endGame(Player P){
     printf("\n========================================================= SELAMAT TELAH MENAMATKAN MOBITANGGA =========================================================\n");
     printf("========================================================= %s MENJADI JUARA PERMAINAN INI =========================================================\n", NAME(P));
@@ -278,6 +298,17 @@ void undo(){
         // PushState(&turn, pop);
         playerturn = 1;
         ronde --;
+        while(ronde > 1){
+            printf("Ingin melakukan undo lagi? (Y/N): ");
+            char pil;
+            scanf("%c", &pil);
+            if (pil == 'Y') {
+                printf("Akan undo ke ronde %d\n", ronde-1);
+                undo();
+            }else if (pil == 'N'){
+                break;
+            }
+        }
         playerTurn(&turn);
     }else{
         if (ronde == 2){
@@ -310,6 +341,7 @@ void save(){
     scanf("%s", savefile);
     strcpy(savedir, dir);
     strcat(savedir, savefile);
+    printSave();
     FILE *f = fopen(savedir, "w");
     fprintf(f,"%s\n",namefile);
     fprintf(f,"%d\n",NPLAYER(turn));
@@ -358,6 +390,7 @@ void save(){
         }
 
     }
+    printf("Berhasil di save!\n");
 
     fclose(f);
 }
