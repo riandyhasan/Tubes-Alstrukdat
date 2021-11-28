@@ -19,6 +19,10 @@ void newGame();
 /* I.S. Sembarang  */
 /* F.S. Permainan baru telah dimulai, mengisi data terkait permainan (player & map) */
 
+void printAllPos ();
+/* I.S.: Sembarang */
+/* F.S: Memapilkan semua posisi player di game*/
+
 void mainMenu();
 /* I.S. Sembarang  */
 /* F.S. Mengeluarkan tampilan awal berupa pilihan untuk memulai permainan baru atau memainkan permainan yang sudah ada sebelumnya */
