@@ -29,19 +29,3 @@ tergantung pada command yang dimasukkan pemain. Permainan dijalankan dengan bata
 dan melakukan pemutaran dadu. Setiap ronde yang sudah dijalankan (sudah berlalu) akan disimpan datanya dan seorang pemain dapat melakukan undo untuk mengembalikan 
 keadaan permainan menjadi keadaan seperti ronde sebelumnya. Permainan akan berakhir ketika terdapat seorang pemain yang sudah mencapai petak akhir dari map permainan.
 Apabila permainan tidak ingin dilanjutkan, dapat dilakukan save yaitu untuk menyimpan state permainan saat itu. 
-
-## Struktur Program
-.
-|
-|_ bin
-| |_ sample_save.txt
-| |_ test.txt
-| |_ testlagi.txt
-|
-|_ data
-| |_ 100.txt
-| |_ 30.txt
-| |_ 40.txt
-| |_ 50.txt
-| |_ 70.txt
-| |_ test.text
